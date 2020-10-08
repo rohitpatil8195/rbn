@@ -88,10 +88,13 @@ export function triggerAuthForgot(obj, callback, errCallback) {
             headers: {},
             params: obj,
             callback,
-            errCallback
+            errCallback,
         }
         makeAPICall(params)
+        console.log(params)
+     
     }
+    
 }
 
 export function triggerLogout() {
@@ -132,6 +135,7 @@ export function triggerAuthCity(obj, callback, errCallback) {
             callback,
             errCallback
         }
+        console.log(params)
         makeAPICall(params)
     }
 }

@@ -15,7 +15,7 @@ export const makeAPICall = apiData => {
         headers,
         params = {}
     } = apiData;
-
+    
     if (!url || url.indexOf("http://") === 1) {
         dispatch({
             type: null,
@@ -51,7 +51,7 @@ export const makeAPICall = apiData => {
     // axios.interceptors.response.use(response => {
     //     return response.headers['content-type'] === 'application/json' ? response : Promise.reject(response);
     //   }, error => Promise.reject(error));
-
+    console.log(apiObj)
     return axios(apiObj)
         .then(response => {
             try {
@@ -70,6 +70,8 @@ export const makeAPICall = apiData => {
                     }
                     if (callback) {
                         callback(response, params)
+               
+                       
                     }
                 }
                 else {
@@ -83,6 +85,8 @@ export const makeAPICall = apiData => {
                     }
                     if (errCallback) {
                         errCallback(response, params)
+                      
+               
                     }
                 }
             } catch (e) {

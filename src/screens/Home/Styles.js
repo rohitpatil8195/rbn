@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     one: {
         height: '70%',
@@ -28,7 +28,8 @@ export default StyleSheet.create({
         marginTop: 50,
         elevation: 10,
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+      
     },
     one1: {
         height: '33%',
@@ -38,7 +39,8 @@ export default StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: 'white',
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
+        
     },
     two2: {
         height: '33%',
@@ -70,11 +72,13 @@ export default StyleSheet.create({
         height: Dimensions.get('window').height*0.1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     },
     header : {
         height: '10%',
         width: '90%', 
+        
     },
     back: {
         height: 30,
@@ -99,14 +103,20 @@ export default StyleSheet.create({
         width: '48%',
         alignItems: 'center',
         justifyContent: 'center',
+        
+     
     },
     scroll: {
         alignItems: 'center',
+        
     },
     scrl: {
         height: '90%',
         width: '100%',
-        alignSelf: 'center',
+        alignSelf: 'center'
+        
+        
+      
     },
     icon : {
         height: 15,
@@ -122,7 +132,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         alignSelf: 'center',
         elevation: 10,
-        justifyContent: 'center',
+        justifyContent: 'center'
+        
     },
     qt: {
         fontSize: 15,
@@ -137,14 +148,15 @@ export default StyleSheet.create({
         elevation: 10,
         justifyContent: 'center',
         marginVertical: 1,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     card11: {
         height: '50%',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        
     },
     card12: {
         height: '40%',
@@ -156,7 +168,8 @@ export default StyleSheet.create({
         width: '30%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
+        
     },
     card1111: {
         height: '100%',
@@ -164,6 +177,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
+        
     },
     dep: {
         fontSize: 15,
@@ -180,7 +194,11 @@ export default StyleSheet.create({
     },
     card21: {
         height: '90%',
-        width: '90%',
+        width: '90%'
+    },
+     card22: {
+        height: '80%',
+        width: '80%'
     },
     viewHolder: {
         height: 55,
@@ -219,6 +237,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 1
+        
     },
     card4: {
         height: 280,
@@ -246,7 +265,8 @@ export default StyleSheet.create({
     },
     n90: {
         height: '100%',
-        width: '100%',
+        width: '100%'
+
     },
     n91: {
         height: '100%',
@@ -334,7 +354,7 @@ export default StyleSheet.create({
         left: 0,
         right: 0,
         height: "100%",
-        justifyContent: "flex-end",
+        justifyContent: "flex-end"
       },
       popup: {
         backgroundColor: "#FFF",

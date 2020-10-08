@@ -130,15 +130,20 @@ class Login extends Component {
     let formdata = new FormData();
     formdata.append("user_name", this.state.userName.toLowerCase().trim())
     formdata.append("user_password", this.state.password.trim())
-    this.props.triggerAuthLogin(formdata, this.onLoginSuccess, this.onLoginError)
+    this.props.triggerAuthLogin(formdata, this.onLoginSuccess, this.onLoginError);
+    //console.log(this.state.userName.toLowerCase().trim());
+    //this.props.navigation.navigate('email', { data:this.state.userName.toLowerCase().trim()}) 
   }
+ 
+  
 
   onLoginSuccess = (data) => {
     this.setState({ isProcessing: false });
+    console.log("login data "+JSON.stringify(data))
+   // console.log(formdata)
+     //this.onProfileDetails(data)
 
-    // this.onProfileDetails(data)
-
-    this.props.navigation.replace('HomeScreen', {})
+    this.props.navigation.replace('HomeScreen',  {})
 
   }
 
@@ -164,12 +169,12 @@ class Login extends Component {
       await AsyncStorage.setItem('USER_ID', this.state.userId.toString())
       await AsyncStorage.setItem('FIRST_NAME', this.state.userName1.toString())
       await AsyncStorage.setItem('EMAIL', this.state.email.toString())
-
+   console.log(USER_ID)
     } catch (error) {
       console.error("Something Token Went Wrong");
     }
   }
-
+ 
   onLoginError = () => {
     console.log('errorlogin')
     this.setState({ isProcessing: false });

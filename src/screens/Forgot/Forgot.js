@@ -74,19 +74,19 @@ class ForgotScreen extends Component {
     }
     let formdata = new FormData();
     formdata.append("user_email", this.state.email.toLowerCase())
-
+ console.log("fomfata: "+formdata)
     this.props.triggerAuthForgot(formdata, this.onForgotSuccess, this.onForgotError)
 
   }
 
   onForgotSuccess = () => {
     this.setState({ isProcessing: false });
-    alert('Email has been sent')
+    alert('Email has been sent Successfully')
   }
 
   onForgotError = () => {
     this.setState({ isProcessing: false });
-
+  
     alert('Something went wrong')
   }
 

@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, ScrollView, Animated, Dimensions, FlatList, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image,FlatList, TouchableOpacity, ScrollView, Animated, Dimensions, BackHandler } from 'react-native';
 import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
 import Scroller from '../../components/Scroller';
@@ -9,11 +9,15 @@ import TabNav from '../../components/TabNav';
 import Contactscrl from '../../components/Contactscrl';
 import i18n from "i18n-js";
 import DropDown from '../../components/DropDown';
+import SearchableDropdown from 'react-native-searchable-dropdown';
+//import SearchableFlatlist from "searchable-flatlist";
 import DateTime from '../../components/DateTimePickerModal';
 import moment from 'moment/moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerAuthCity, triggerSearch } from '../../actions';
+import { TextInput } from 'react-native-gesture-handler';
+
 
 const data = [
   {
@@ -49,6 +53,18 @@ const data = [
 ];
 
 
+
+renderItem = ({ item }) => (
+  <View style={{ minHeight: 70, padding: 5 }}>
+    <Text style={{ color: '#bada55', fontWeight: 'bold', fontSize: 26 }}>
+      {item.city_name + ' '}
+      {item.city_district}
+    </Text>
+    <Text style={{ color: 'white', fontWeight: 'bold' }}>
+      {item.phoneNumbers[0].digits}
+    </Text>
+  </View>
+);
 let backPressed = 0;
 
 // create a component
@@ -84,6 +100,7 @@ class Home extends Component {
       cityList: [],
       citySelect: '',
       cityId: '',
+      City_name: [],
       cityZip: '',
       desCountryList: [],
       desCountrySelect: '',
@@ -98,6 +115,7 @@ class Home extends Component {
       DOB: '',
       valueArray: [],
       disabled: false,
+      addPackage:[],
       Array: [
         [
           {
@@ -112,7 +130,10 @@ class Home extends Component {
       depCountryId: '',
       arrCountryId: '',
       date: '',
-      servId: ''
+      servId: '',
+
+     
+
     }
     this.index = 0;
     this.animatedValue = new Animated.Value(0);
@@ -124,7 +145,7 @@ class Home extends Component {
     var result = data.result.map(function (el) {
       // var o = Object.assign({}, el);
       // var a = Object.assign({}, el)
-      el.label = el.cntry_name;
+      el.label = el.cntry_name ;
       el.value = el.cntry_name;
       el.id = el.cntry_id;
       el.code = el.cntry_code;
@@ -149,7 +170,7 @@ class Home extends Component {
         })
       }
     })
-    // console.log('countryId', this.state.countryId)
+   //console.log('countryId', this.state.countryId)
     this.onCity(this.state.countryId)
   }
 
@@ -168,13 +189,15 @@ class Home extends Component {
     this.onDesCity(this.state.desCountryId)
   }
 
+
   onCity = (countryId) => {
     // console.log('countryId', countryId)
     let formdata = new FormData();
     formdata.append('cntry_id', countryId)
     this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
+   // console.log("cc"+formdata)
   }
-
+    
   onDesCity = (desCountryId) => {
     // console.log('countryId', countryId)
     let formdata = new FormData();
@@ -182,11 +205,12 @@ class Home extends Component {
     this.props.triggerAuthCity(formdata, this.onDesCitySuccess, this.onDesCityError)
   }
 
+
   onCitySuccess = (data) => {
 
     var result = data.result.map(function (el) {
-      el.label = el.city_zip + ', ' + el.city_name;
-      el.value = el.city_zip + ', ' + el.city_name;
+      el.label = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
+      el.value = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
       el.id = el.city_id;
       el.zip = el.city_zip;
       return el;
@@ -196,15 +220,20 @@ class Home extends Component {
       // desCityList: result
       // cityResponse: data.result
     })
-    // console.log("citylist", this.state.cityList)
+    // const newObject = {};
+    // delete Object.assign(newObject, o, {['name']: o['city_name'] })['city_name'];
+    //console.log("citylist", this.state.cityList)
     // console.log("desCityList", this.state.desCityList)
 
   }
 
+ 
+
+
   onDesCitySuccess = (data) => {
     var result = data.result.map(function (el) {
-      el.label = el.city_zip + ', ' + el.city_name;
-      el.value = el.city_zip + ', ' + el.city_name;
+      el.label = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
+      el.value = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
       el.id = el.city_id;
       el.zip = el.city_zip;
       return el;
@@ -214,39 +243,80 @@ class Home extends Component {
       desCityList: result
       // cityResponse: data.result
     })
-    // console.log("citylist", this.state.cityList)
+    //console.log("citylist", this.state.cityList)
     // console.log("desCityList", this.state.desCityList)
   }
+ 
+
 
   onCitySelect = (val) => {
+
     this.state.citySelect = val
+    console.log("cty"+this.state.citySelect);
+    let cc_list = []
     this.state.cityList.map(item => {
-      if (item.value == val) {
-        this.state.cityId = item.id
-        this.setState({
-          cityId: this.state.cityId,
-        })
+      if (item.city_name.toLowerCase().startsWith(val.toLowerCase())) {
+        //this.state.desCityId = item.id
+        let final = item.city_name 
+        cc_list.push(final)
       }
     })
-    // console.log('cityId', this.state.cityId)
+    this.setState({
+      City_name: cc_list
+      
+    })
+    this.setState({City_name:this.state.City_name.split(',')})
+    // let citylist = this.state.cityList.filter((item) => item.city_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    // console.log(":::"+citylist)
+    // this.setState({
+    //         City_name:citylist,
+    //       })
+    // this.state.cityList.filter(item => {
+    //   if (item.city_name == val) {
+    //     //this.state.City_name = item.city_name
+    //     this.setState({
+    //       City_name: item.city_name,
+    //     })
+    //   }
+    // })
+    console.log("cty"+this.state.City_name);
   }
+
+
+
+  // onCitySelect = (val) => {
+  //   this.state.citySelect = val
+  //   this.state.cityList.map(item => {
+  //     if (item.value == val) {
+  //       this.state.cityId = item.id
+  //       this.setState({
+  //         cityId: this.state.cityId,
+  //       })
+  //     }
+  //   })
+  //   // console.log('cityId', this.state.cityId)
+  // }
+
+  
 
   onDesCitySelect = (val) => {
     this.state.desCitySelect = val
+    console.log("city "+this.state.desCitySelect);
     this.state.desCityList.map(item => {
       if (item.value == val) {
         this.state.desCityId = item.id
         this.setState({
           desCityId: this.state.desCityId
         })
+      
       }
     })
   }
-
+     
   componentDidMount = () => {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
   }
-
+   
   handleBackButton = () => {
     if (this.props.navigation.isFocused()) {
       if (backPressed == 0) {
@@ -267,23 +337,54 @@ class Home extends Component {
     this.setState.Array = array1
   }
 
-  addMore = () => {
-    this.animatedValue.setValue(0);
-    let newlyAddedValue = { index: this.index }
-    this.setState({ disabled: true, valueArray: [...this.state.valueArray, newlyAddedValue] }, () => {
-      Animated.timing(
-        this.animatedValue,
-        {
-          toValue: 1,
-          duration: 500,
-          useNativeDriver: true
-        }
-      ).start(() => {
-        this.index = this.index + 1;
-        this.setState({ disabled: false });
-      });
-    });
+  addMore = (key) => {
+      
+    let addPackage =this.state.addPackage;
+    addPackage.push(
+        
+      <View style={styles.card22}>
+  
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
+        {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
+          underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
+          underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+        {/* </View> */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+          <Text style={styles.dim}>Dimensions (cm) :</Text>
+          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
+            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
+          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
+            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
+          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
+            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+        </View>
+      
+    </View>
+
+    );
+    this.setState({addPackage})
+    
+
+    // this.animatedValue.setValue(0);
+    // let newlyAddedValue = { index: this.index }
+    // this.setState({ disabled: true, valueArray: [...this.state.valueArray, newlyAddedValue] }, () => {
+    //   Animated.timing(
+    //     this.animatedValue,
+    //     {
+    //       toValue: 1,
+    //       duration: 500,
+    //       useNativeDriver: true
+    //     }
+    //   ).start(() => {
+    //     this.index = this.index + 1;
+    //     this.setState({ disabled: false });
+    //   });
+    // });
   }
+   
+ 
+
 
   _showDateTimePicker = () => {
     this.setState({ isDatePickerVisible: true });
@@ -455,6 +556,7 @@ class Home extends Component {
   }
 
   render() {
+    
     const screenHeight = Dimensions.get("window").height;
 
     const animationValue = this.animatedValue.interpolate(
@@ -462,7 +564,7 @@ class Home extends Component {
         inputRange: [0, 1],
         outputRange: [-59, 0]
       });
-
+     
     let newArray = this.state.valueArray.map((item, key) => {
       if ((key) == this.index) {
         return (
@@ -547,10 +649,12 @@ class Home extends Component {
       value: null,
       color: '#9EA0A4',
     };
+
     let fCityPlaceholder = {
       label: 'City',
       value: null,
       color: '#9EA0A4',
+    
     };
     let tCategoryPlaceholder = {
       label: 'Country',
@@ -564,7 +668,8 @@ class Home extends Component {
     };
 
     return (
-      <View styl={styles.container}>
+      
+      <View style={styles.container}>
         <ImageBackground source={require('../../Images/header-bg-white.jpg')} style={styles.imagebg} resizeMode='cover'>
           <View style={styles.one}>
             <View style={styles.view1}>
@@ -692,8 +797,8 @@ class Home extends Component {
                       style={{ marginTop: '-9%' }}
                       errorStyle={{ paddingBottom: 7, marginTop: '-2%' }}
                       source={require('../../Images/arrow-point-to-right.png')}
-                      textInputProps={{ underlineColorAndroid: 'black' }} />
-                    <DropDown
+                      textInputProps={{ underlineColorAndroid: 'black' }} /> 
+                   {/* <DropDown
                       placeholder={fCityPlaceholder}
                       data={this.state.cityList}
                       onValueChange={this.onCitySelect}
@@ -701,8 +806,117 @@ class Home extends Component {
                       style={{ marginTop: '-9%' }}
                       errorStyle={{ paddingBottom: 7, marginTop: '-2%' }}
                       source={require('../../Images/arrow-point-to-right.png')}
-                      textInputProps={{ underlineColorAndroid: 'black' }} />
-                    <View style={styles.remember}>
+                      textInputProps={{ underlineColorAndroid: 'black' }} /> */}
+
+            
+          
+             
+
+            <TextInput
+          placeholder="city"
+          placeholderTextColor="#dddddd"
+          style={{
+            paddingLeft: 30,
+  fontSize: 22,
+  height: 10,
+  flex: .1,
+  borderWidth: 9,
+  borderColor: '#E4E4E4'
+          }}
+          onChangeText={value => this.onCitySelect(value)}
+          value={this.state.value}
+
+        />
+        {/* <ScrollView><Text>{this.state.City_name}</Text></ScrollView> */}
+
+      {/* <View >
+        <TextInput
+          placeholder={"Search"}
+          style={{paddingHorizontal: 10,
+            margin: 10,
+            height: 50,
+            borderColor: "gray",
+            borderWidth: 1,
+            fontSize: 18}}
+          onChangeText={value => this.onCitySelect(value)}
+        />
+        <SearchableFlatlist
+          searchProperty={"name"}
+          searchTerm={this.onCitySelect(value)}
+          data={this.state.cityList}
+          containerStyle={{ flex: 1 }}
+          renderItem={({ item }) => <Text style={{height: 50,
+            width: "100%",
+            textAlign: "center",
+            textAlignVertical: "center",
+            fontSize: 18}}>{item.name}</Text>}
+          keyExtractor={item => item.id}
+        />
+      </View>
+    */}
+     
+      
+    {/* <SearchableDropdown
+          // onTextChange={value => this.onCitySelect(value)}
+          //On text change listner on the searchable input
+          onItemSelect={item => alert(JSON.parse(item))}
+          //onItemSelect called after the selection from the dropdown
+          containerStyle={{ padding: 5 }}
+          //suggestion container style
+          textInputStyle={{
+            //inserted text style
+            padding: 12,
+            borderWidth: 1,
+            borderColor: '#ccc',
+            backgroundColor: '#FAF7F6',
+          }}
+          itemStyle={{
+            //single dropdown item style
+            padding: 10,
+            marginTop: 2,
+            backgroundColor: '#FAF9F8',
+            borderColor: '#bbb',
+            borderWidth: 1,
+          }}
+          itemTextStyle={{
+            //text style of a single dropdown item
+            color: '#222',
+          }}
+          itemsContainerStyle={{
+            //items container style you can pass maxHeight
+            //to restrict the items dropdown hieght
+            maxHeight: '50%',
+          }}
+          items={this.state.cityList}
+          //mapping of item array
+          defaultIndex={this.state.value}
+          //default selected item index
+          placeholder="placeholder"
+          //place holder for the search input
+          resetValue={false}
+          //reset textInput Value with true and false state
+          underlineColorAndroid="transparent"
+          //To remove the underline from the android input
+        />  */}
+
+
+
+   {/* <View style={{borderColor:'blue',borderWidth:2,height:85}}>
+
+    <FlatList
+   
+            data={this.state.City_name}
+            renderItem={({item})=>{
+            
+              <Text style={{fontSize:50,color:'black'}}>{item}</Text>
+            }}
+            // keyExtractor={(City_name) => City_name.city_zip}
+          //  
+          />
+          </View> */}
+  
+                       
+                    {/* <View style={styles.remember}>
                       <TouchableOpacity onPress={this.isCheck1Pressed}>{
                         this.state.isCheck1 ?
                           <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -712,7 +926,7 @@ class Home extends Component {
 
                       }</TouchableOpacity>
                       <Text style={styles.email}>{i18n.t('Business Address')}</Text>
-                    </View>
+                    </View> */}
                     <View style={styles.btm}>
                       <Text style={styles.dep}>{i18n.t('Destination')}</Text>
                     </View>
@@ -763,6 +977,7 @@ class Home extends Component {
                       <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
                         underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
                       {/* </View> */}
+                      <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                         <Text style={styles.dim}>Dimensions (cm) :</Text>
                         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
@@ -771,14 +986,24 @@ class Home extends Component {
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
                         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+              
                       </View>
+                                  
+                      {this.state.addPackage.map((value, index) => {
+          return value
+        })}
+        </View>
+         
                     </>
+               
+           
                     {/* <View>
                       {
                         newArray
                       }
                     </View> */}
-                    <TouchableOpacity onPress={this.addMore}>
+                    
+                    <TouchableOpacity onPress={() => this.addMore(this.state.addPackage.length)}>
                       <Text style={styles.textb}>{i18n.t('+ Add Package')}</Text>
                     </TouchableOpacity>
                     <DateTime

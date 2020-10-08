@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect,useState } from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, } from 'react-native';
 import i18n from "i18n-js";
 import { useNavigation } from '@react-navigation/native';
@@ -8,21 +8,44 @@ import AsyncStorage from '@react-native-community/async-storage';
 let FIRSTNAME, EMAIL, USER_IMAGE
 
 const SubDrawerComponent = (props) => {
-
+const [Email , setEmail] = useState('');
+const [Name , setName] = useState('')
   const navigation = useNavigation();
 
   useEffect(() => {
-    userInfo()
-  })
-
+  
+  
   userInfo = async () => {
     FIRSTNAME = await AsyncStorage.getItem('FIRST_NAME');
     EMAIL = await AsyncStorage.getItem('EMAIL');
     // USER_IMAGE = await AsyncStorage.getItem('USER_IMAGE');
     console.log('firstname', FIRSTNAME)
     console.log('email', FIRSTNAME)
+
+    let chech = await AsyncStorage.getItem('persist:sampleRedux');
     
+    let js = JSON.parse(chech)
+    //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
+    //console.log(finlaAuth)
+   let authreducer = JSON.parse(js['authReducer'])
+   let loginobj = authreducer['loginObj'];
+   let logindata = loginobj['data']
+    console.log(logindata['result'][0])
+   let email = logindata['result'][0]['user_email']
+   let fName = logindata['result'][0]['user_f_name']
+    setEmail(email);
+    setName(fName);
+   //console.log("data is : " + Email)
+    const keys = await AsyncStorage.getAllKeys();
+   // console.log("keyss;;"+keys)
+    //console.log("name is"+ Email); 
   }
+  userInfo()
+})
+console.log("name issssss"+ Email);
+  //const parsed  = JSON.stringify(FIRSTNAME)
+  //console.log("data isaa : " + userInfo(Email))
+
 
   return (
     <View>
@@ -31,8 +54,8 @@ const SubDrawerComponent = (props) => {
           <Image source={require('../Images/settings.png')} style={Styles.setting} resizeMode='center' />
         </TouchableOpacity>
         <Image source={require('../Images/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.jpg')} style={Styles.proImage} resizeMode='contain' />
-        <Text style={{ fontSize: 20, color: 'white' }}>{FIRSTNAME}</Text>
-        <Text style={{ fontSize: 12, color: 'white' }}>{EMAIL}</Text>
+        <Text style={{ fontSize: 20, color: 'white' }}>{Name}</Text>
+        <Text style={{ fontSize: 12, color: 'white' }}>{Email}</Text>
       </ImageBackground>
       <View style={Styles.v3}>
         <TouchableOpacity onPress={() => navigation.navigate('Bookings', {})} style={Styles.v4}>
