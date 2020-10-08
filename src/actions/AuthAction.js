@@ -55,6 +55,7 @@ export function triggerAuthRegister(obj, callback, errCallback) {
             errCallback
         }
         makeAPICall(params)
+        console.log("Auth reg: "+para)
     }
 }
 
@@ -135,7 +136,7 @@ export function triggerAuthCity(obj, callback, errCallback) {
             callback,
             errCallback
         }
-        console.log(params)
+        //console.log(params)
         makeAPICall(params)
     }
 }

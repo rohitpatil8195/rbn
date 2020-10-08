@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { Component ,useEffect} from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, ScrollView, Animated, Dimensions } from 'react-native';
 import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
@@ -8,6 +8,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import Loader from '../../components/Loader';
 import { triggerAuthLogin, triggerLogout } from '../../actions';
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+
+
 
 // create a component
 class Services extends Component {
@@ -20,14 +25,56 @@ class Services extends Component {
             isAir: false,
             isMaritime: false,
             isRoad: false,
-            animation: new Animated.Value(0)
+            animation: new Animated.Value(0),
+            disp_add:'',
+            des_add:''
+
         }
     }
 
+
+    userInfo = async () => {
+         
+      
+        let chech = await AsyncStorage.getItem('persist:sampleRedux');
+    //     let conv = JSON.parse(chech)
+    //  console.log('redux data'+conv);
+    //   let convStr = JSON.stringify(conv);
+    //   console.log("conv Str "+convStr)
+        let js = JSON.parse(chech);
+        //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
+     //  let authreducer = JSON.parse(js['authReducer'])
+       let authreducer = JSON.parse(js['authReducer'])
+       let loginobj = authreducer['searchObj'];
+       let logindata = (loginobj['data'])
+       let dc_data = (logindata['result'][0]['dc_addr']);
+       this.disp_add = (logindata['result'][0]['dc_addr']); 
+       this.des_add = (logindata['result'][0]['ac_addr']); 
+    // console.log("---"+ this.disp_add)
+        // let email = logindata['result'][0]['user_email']
+    //    let convStr = JSON.stringify(authreducer);
+    //    console.log("auth red "+convStr)
+      //  let loginobj = authreducer['loginObj'];
+      //  let logindata = loginobj['data']
+      //   console.log(logindata['result'][0])
+      //  let email = logindata['result'][0]['user_email']
+      //  let fName = logindata['result'][0]['user_f_name']
+      //   setEmail(email);
+      //   setName(fName);
+      //  //console.log("data is : " + Email)
+      //   const keys = await AsyncStorage.getAllKeys();
+       // console.log("keyss;;"+keys)
+        //console.log("name is"+ Email); 
+      };
+    
+     
     componentDidMount = (searchObj) => {
         console.log('search', this.props.searchObj)
+        this.userInfo();
+        
     }
 
+   
     handleOpen = () => {
         Animated.timing(this.state.animation, {
             toValue: 1,
@@ -151,6 +198,7 @@ class Services extends Component {
         };
 
         return (
+            
             <View>
                 <ImageBackground source={require('../../Images/header-bg-white.jpg')} style={styles.imagebg} resizeMode='cover'>
                     <View style={styles.one}>
@@ -190,7 +238,7 @@ class Services extends Component {
                                 </View>
                                 <View style={styles.vertical1}>
                                     <Text style={{ fontSize: 12, color: 'grey' }}>Departure</Text>
-                                    <Text style={{ fontSize: 15 }}>Lorem Ipsum</Text>
+                                    <Text style={{ fontSize: 12 }}>{this.disp_add}</Text>
                                     <View style={styles.remember}>
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
                                             this.state.isCheck ?
@@ -208,7 +256,8 @@ class Services extends Component {
                                         <View style={styles.line2} />
                                     </View>
                                     <Text style={{ fontSize: 12, color: 'grey' }}>Destination</Text>
-                                    <Text style={{ fontSize: 15 }}>Lorem Ipsum</Text>
+                                    <Text style={{ fontSize: 12 }}>{this.des_add}</Text>
+                            
                                     <View style={styles.remember}>
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
                                             this.state.isCheck ?

@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component, useEffect,useState } from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, } from 'react-native';
 import i18n from "i18n-js";
@@ -13,8 +12,7 @@ const [Name , setName] = useState('')
   const navigation = useNavigation();
 
   useEffect(() => {
-  
-  
+   
   userInfo = async () => {
     FIRSTNAME = await AsyncStorage.getItem('FIRST_NAME');
     EMAIL = await AsyncStorage.getItem('EMAIL');
@@ -23,10 +21,12 @@ const [Name , setName] = useState('')
     console.log('email', FIRSTNAME)
 
     let chech = await AsyncStorage.getItem('persist:sampleRedux');
-    
-    let js = JSON.parse(chech)
+//     let conv = JSON.parse(chech)
+//  console.log('redux data'+conv);
+//   let convStr = JSON.stringify(conv);
+//   console.log("conv Str "+convStr)
+    let js = JSON.parse(chech);
     //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
-    //console.log(finlaAuth)
    let authreducer = JSON.parse(js['authReducer'])
    let loginobj = authreducer['loginObj'];
    let logindata = loginobj['data']
@@ -41,7 +41,7 @@ const [Name , setName] = useState('')
     //console.log("name is"+ Email); 
   }
   userInfo()
-})
+  })
 console.log("name issssss"+ Email);
   //const parsed  = JSON.stringify(FIRSTNAME)
   //console.log("data isaa : " + userInfo(Email))

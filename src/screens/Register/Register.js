@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, ScrollView, Modal, Animated, Dimensions, } from 'react-native';
 import styles from "./Styles";
@@ -25,6 +24,7 @@ class Register extends Component {
       islang: false,
       ismodalVisible: false,
       islang: false,
+      lodd:false,
       isHome: false,
       isAbout: false,
       isPersonal: false,
@@ -143,7 +143,7 @@ class Register extends Component {
 
   onSignUp = () => {
     console.log('insignup')
-    this.setState({ isProcessing: true });
+    this.setState({ isProcessing: true,lodd:true });
     console.log("------CALL----" + this.state.FirstName + "--" + this.state.Surname + this.state.CompanyName + this.state.Country + this.state.City + this.state.Zip + this.state.password + this.state.mobile);
     let formdata = new FormData();
     formdata.append("user_f_name", this.state.FirstName)
@@ -205,7 +205,7 @@ class Register extends Component {
   onCitySuccess = (data) => {
 
     var result = data.result.map(function (el) {
-      el.label = el.city_name;
+      el.label = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
       el.value = el.city_name;
       el.id = el.city_id;
       el.zip = el.city_zip;
@@ -405,7 +405,7 @@ class Register extends Component {
           </View>
 
           <View style={styles.card}>
-            <Loader loading={this.props.registerObj.loading} />
+        { this.state.lodd ===true ? <Loader loading={this.props.registerObj.loading} />: null} 
             <Text style={styles.signin}>{i18n.t('Create An Account')}</Text>
             <View style={styles.b1}>
               <Text style={styles.email}>{i18n.t('First Name')} *</Text>

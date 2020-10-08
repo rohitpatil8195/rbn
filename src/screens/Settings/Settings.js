@@ -6,6 +6,7 @@ import i18n from "i18n-js";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerLogout } from '../../actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // create a component
 class Settings extends Component {
@@ -19,6 +20,7 @@ class Settings extends Component {
     logout=()=>{
         this.props.navigation.replace('Login', {})
         this.props.triggerLogout();
+        //AsyncStorage.clear()
     }
 
     render() {

@@ -107,14 +107,14 @@ export default StyleSheet.create({
      
     },
     scroll: {
-        alignItems: 'center',
+        alignItems: 'center'
+       
         
     },
     scrl: {
         height: '90%',
         width: '100%',
         alignSelf: 'center'
-        
         
       
     },
@@ -194,11 +194,12 @@ export default StyleSheet.create({
     },
     card21: {
         height: '90%',
-        width: '90%'
+        width: '90%',
+        
     },
      card22: {
         height: '80%',
-        width: '80%'
+        width: '90%'
     },
     viewHolder: {
         height: 55,
@@ -247,7 +248,30 @@ export default StyleSheet.create({
         elevation: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 70
+        marginBottom: 0,
+        backgroundColor:"white"
+    },
+    cardN: {
+        height: 240,
+        width: '90%',
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        elevation: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 0,
+        backgroundColor:"white"
+    },
+    cardM: {
+        height: 150,
+        width: '90%',
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        elevation: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 70,
+        backgroundColor:"white"
     },
     dim: {
         marginLeft: '55%',

@@ -248,54 +248,54 @@ class Home extends Component {
   }
  
 
-
-  onCitySelect = (val) => {
-
-    this.state.citySelect = val
-    console.log("cty"+this.state.citySelect);
-    let cc_list = []
-    this.state.cityList.map(item => {
-      if (item.city_name.toLowerCase().startsWith(val.toLowerCase())) {
-        //this.state.desCityId = item.id
-        let final = item.city_name 
-        cc_list.push(final)
-      }
-    })
-    this.setState({
-      City_name: cc_list
-      
-    })
-    this.setState({City_name:this.state.City_name.split(',')})
-    // let citylist = this.state.cityList.filter((item) => item.city_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    // console.log(":::"+citylist)
-    // this.setState({
-    //         City_name:citylist,
-    //       })
-    // this.state.cityList.filter(item => {
-    //   if (item.city_name == val) {
-    //     //this.state.City_name = item.city_name
-    //     this.setState({
-    //       City_name: item.city_name,
-    //     })
-    //   }
-    // })
-    console.log("cty"+this.state.City_name);
-  }
-
-
-
+//this is filter function ************
   // onCitySelect = (val) => {
+
   //   this.state.citySelect = val
+  //   console.log("cty"+this.state.citySelect);
+  //   let cc_list = []
   //   this.state.cityList.map(item => {
-  //     if (item.value == val) {
-  //       this.state.cityId = item.id
-  //       this.setState({
-  //         cityId: this.state.cityId,
-  //       })
+  //     if (item.city_name.toLowerCase().startsWith(val.toLowerCase())) {
+  //       //this.state.desCityId = item.id
+  //       let final = item.city_name 
+  //       cc_list.push(final)
   //     }
   //   })
-  //   // console.log('cityId', this.state.cityId)
+  //   this.setState({
+  //     City_name: cc_list
+      
+  //   })
+  //   this.setState({City_name:this.state.City_name.split(',')})
+  //   // let citylist = this.state.cityList.filter((item) => item.city_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+  //   // console.log(":::"+citylist)
+  //   // this.setState({
+  //   //         City_name:citylist,
+  //   //       })
+  //   // this.state.cityList.filter(item => {
+  //   //   if (item.city_name == val) {
+  //   //     //this.state.City_name = item.city_name
+  //   //     this.setState({
+  //   //       City_name: item.city_name,
+  //   //     })
+  //   //   }
+  //   // })
+  //   console.log("cty"+this.state.City_name);
   // }
+
+
+
+  onCitySelect = (val) => {
+    this.state.citySelect = val
+    this.state.cityList.map(item => {
+      if (item.value == val) {
+        this.state.cityId = item.id
+        this.setState({
+          cityId: this.state.cityId,
+        })
+      }
+    })
+    // console.log('cityId', this.state.cityId)
+  }
 
   
 
@@ -546,7 +546,7 @@ class Home extends Component {
     formdata.append("serv_ariv_cntry_id", this.state.arrCountryId)
     formdata.append("serv_ariv_city_id", this.state.arrCityId)
     formdata.append("serv_date", this.state.date)
-    console.log('formdatain', JSON.stringify(formdata))
+    console.log('formdatail: ', JSON.stringify(formdata))
     this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
     this.props.navigation.navigate('Services', {})
   }
@@ -798,7 +798,7 @@ class Home extends Component {
                       errorStyle={{ paddingBottom: 7, marginTop: '-2%' }}
                       source={require('../../Images/arrow-point-to-right.png')}
                       textInputProps={{ underlineColorAndroid: 'black' }} /> 
-                   {/* <DropDown
+                   <DropDown
                       placeholder={fCityPlaceholder}
                       data={this.state.cityList}
                       onValueChange={this.onCitySelect}
@@ -806,13 +806,13 @@ class Home extends Component {
                       style={{ marginTop: '-9%' }}
                       errorStyle={{ paddingBottom: 7, marginTop: '-2%' }}
                       source={require('../../Images/arrow-point-to-right.png')}
-                      textInputProps={{ underlineColorAndroid: 'black' }} /> */}
+                      textInputProps={{ underlineColorAndroid: 'black' }} />
 
             
           
              
 
-            <TextInput
+            {/* <TextInput
           placeholder="city"
           placeholderTextColor="#dddddd"
           style={{
@@ -826,8 +826,15 @@ class Home extends Component {
           onChangeText={value => this.onCitySelect(value)}
           value={this.state.value}
 
-        />
+        /> */}
+
+
+
+
         {/* <ScrollView><Text>{this.state.City_name}</Text></ScrollView> */}
+
+
+
 
       {/* <View >
         <TextInput
@@ -916,7 +923,7 @@ class Home extends Component {
           </View> */}
   
                        
-                    {/* <View style={styles.remember}>
+                    <View style={styles.remember}>
                       <TouchableOpacity onPress={this.isCheck1Pressed}>{
                         this.state.isCheck1 ?
                           <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -926,7 +933,7 @@ class Home extends Component {
 
                       }</TouchableOpacity>
                       <Text style={styles.email}>{i18n.t('Business Address')}</Text>
-                    </View> */}
+                    </View>
                     <View style={styles.btm}>
                       <Text style={styles.dep}>{i18n.t('Destination')}</Text>
                     </View>
@@ -968,7 +975,7 @@ class Home extends Component {
                     </View>
                   </View>
                 </View>
-                <View style={styles.card4}>
+                <View style={styles.cardN}>
                   <View style={styles.card21}>
                     <>
                       {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
@@ -1006,7 +1013,11 @@ class Home extends Component {
                     <TouchableOpacity onPress={() => this.addMore(this.state.addPackage.length)}>
                       <Text style={styles.textb}>{i18n.t('+ Add Package')}</Text>
                     </TouchableOpacity>
-                    <DateTime
+                   
+                  </View>
+                </View>
+                <View style={styles.cardM}>
+                <DateTime
                       placeholder='Date'
                       showPicker={() => this._showDateTimePicker()}
                       isVisible={this.state.isDatePickerVisible}
@@ -1022,7 +1033,6 @@ class Home extends Component {
                     <TouchableOpacity onPress={this.services} style={styles.search}>
                       <Text style={{ color: 'white' }}>{i18n.t('Search')}</Text>
                     </TouchableOpacity>
-                  </View>
                 </View>
               </View>
               :

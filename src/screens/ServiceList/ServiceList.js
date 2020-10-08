@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image, Animated, Dimensions } from 'react-native';
 import styles from "./Styles";
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 // import Scroller from '../../components/Scroller';
 
 
