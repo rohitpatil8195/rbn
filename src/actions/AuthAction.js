@@ -246,6 +246,7 @@ export function triggerCustom(obj, callback, errCallback) {
             errCallback
         }
         makeAPICall(params)
+
     }
 }
 

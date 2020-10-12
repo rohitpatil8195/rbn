@@ -63,9 +63,10 @@ export default StyleSheet.create({
         height: 100,
       },
       cover: {
-        backgroundColor: "rgba(0,0,0,.5)",
+        backgroundColor: "rgba(0,0,0,.5)",borderColor:'black',borderWidth:1
       },
       sheet: {
+          
         position: "absolute",
         top: Dimensions.get("window").height,
         left: 0,
@@ -83,7 +84,7 @@ export default StyleSheet.create({
         minHeight: 80,
       },
       blueBar: {
-        height: '8%',
+        height: '8%',marginTop:'5%',
         width: '50%',
         backgroundColor: 'dodgerblue',
         flexDirection: 'row',
@@ -180,7 +181,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'row',
         alignItems:'center',
-        justifyContent: 'center'
+        justifyContent: 'center',borderColor:'black',borderWidth:1
     },
     card2c: {
         height: '100%',
@@ -199,7 +200,7 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     card4: {
-        height: '20%',
+        height: '100%',
         width: '90%',
         backgroundColor: 'white',
         alignSelf: 'center',
@@ -207,6 +208,18 @@ export default StyleSheet.create({
         elevation: 10,
         justifyContent: 'center',
         marginVertical: 5
+    },
+    //this is replaced  cardN by card 4
+    cardN: {
+        marginTop:4,
+        height: '80%',
+        width: '90%',
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderRadius: 10,
+        elevation: 10,
+        justifyContent: 'center',
+        marginVertical:55
     },
     slot: {
         height: '80%',

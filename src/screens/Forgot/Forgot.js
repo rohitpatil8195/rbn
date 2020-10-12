@@ -68,6 +68,7 @@ class ForgotScreen extends Component {
 
     console.log("call " + this.state.email.toLowerCase());
     const isFormValid = this.onForgotPasswordValidation();
+    console.log('isFormValid ;- ',!isFormValid)
     if (!isFormValid) {
       this.setState({ isProcessing: false });
       return false

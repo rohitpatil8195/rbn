@@ -9,7 +9,8 @@ import { bindActionCreators } from 'redux';
 // import Loader from '../../components/Loader';
 import { triggerAuthLogin, triggerLogout } from '../../actions';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import moment from 'moment/moment';
+import { triggerCustom } from '../../actions';
 
 
 
@@ -18,6 +19,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 class Services extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             isCheck: false,
             isSearch: false,
@@ -27,54 +29,160 @@ class Services extends Component {
             isRoad: false,
             animation: new Animated.Value(0),
             disp_add:'',
-            des_add:''
+            des_add:'',
+            serv_date_of_departure:'',
+            serv_date_of_arrival:'',
+            ser_type:'',
+            ser_type1:'',
+            ser_type2:'',
+            serv_date_of_departure:'',
+            serv_date_of_departure1:'',
+            serv_date_of_departure2:'',
+            serv_date_of_arrival:'',
+            serv_date_of_arrival1:'',
+            serv_date_of_arrival2:'',
+            serv_ware_dc_addr:'',
+            serv_ware_dc_addr1:'',
+            serv_ware_dc_addr2:'',
+            serv_ware_ac_addr:'',
+            serv_ware_ac_addr1:'',
+            serv_ware_ac_addr2:'',
+            serv_ofr_price:'',
+            serv_ofr_price1:'',
+            serv_ofr_price2:'',
+            sender_country:'',
+            rec_country:'',
+            service_id:'',
+            Weight:this.props.route.params.weight,
+            Diments:this.props.route.params.Dimen
 
         }
     }
 
 
     userInfo = async () => {
-         
-      
         let chech = await AsyncStorage.getItem('persist:sampleRedux');
-    //     let conv = JSON.parse(chech)
-    //  console.log('redux data'+conv);
-    //   let convStr = JSON.stringify(conv);
-    //   console.log("conv Str "+convStr)
         let js = JSON.parse(chech);
-        //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
-     //  let authreducer = JSON.parse(js['authReducer'])
        let authreducer = JSON.parse(js['authReducer'])
        let loginobj = authreducer['searchObj'];
+     console.log("async_objdata-- "+JSON.stringify(loginobj));
        let logindata = (loginobj['data'])
-       let dc_data = (logindata['result'][0]['dc_addr']);
-       this.disp_add = (logindata['result'][0]['dc_addr']); 
-       this.des_add = (logindata['result'][0]['ac_addr']); 
-    // console.log("---"+ this.disp_add)
-        // let email = logindata['result'][0]['user_email']
-    //    let convStr = JSON.stringify(authreducer);
-    //    console.log("auth red "+convStr)
-      //  let loginobj = authreducer['loginObj'];
-      //  let logindata = loginobj['data']
-      //   console.log(logindata['result'][0])
-      //  let email = logindata['result'][0]['user_email']
-      //  let fName = logindata['result'][0]['user_f_name']
-      //   setEmail(email);
-      //   setName(fName);
-      //  //console.log("data is : " + Email)
-      //   const keys = await AsyncStorage.getAllKeys();
-       // console.log("keyss;;"+keys)
-        //console.log("name is"+ Email); 
-      };
-    
-     
+       //console.log(logindata) serv_id
+           
+   let service_type = (logindata['result'][0]['serv_id']);
+   let serv = service_type
+   this.service_id = serv;
+
+console.log("service id>>"+ this.service_id)
+
+   let serv_type = (logindata['result'][0]['serv_type']);
+   let serv_type1 = (logindata['result'][1]['serv_type']);
+   let serv_type2 = (logindata['result'][2]['serv_type']);
+   this.ser_type = serv_type;
+     this.ser_type1 = serv_type1;
+   this.ser_type2 = serv_type2;
+   
+   let serv_date_of_departure = (logindata['result'][0]['serv_date_of_departure']);
+   let serv_date_of_departure1 = (logindata['result'][1]['serv_date_of_departure']);
+   let serv_date_of_departure2 = (logindata['result'][2]['serv_date_of_departure']);
+                  //let serv_date_of_departure2 =  moment().format('YY/MMM/DD');
+                   //console.log("....."+ serv_date_of_departure2)
+   this.serv_date_of_departure = serv_date_of_departure;
+     this.serv_date_of_departure1 = serv_date_of_departure1;
+   this.serv_date_of_departure2 = serv_date_of_departure2;
+   
+
+   let serv_date_of_arrival = (logindata['result'][0]['serv_date_of_arrival']);
+   let serv_date_of_arrival1 = (logindata['result'][1]['serv_date_of_arrival']);
+   let serv_date_of_arrival2 = (logindata['result'][2]['serv_date_of_arrival']);
+   this.serv_date_of_arrival = serv_date_of_arrival;
+     this.serv_date_of_arrival1 = serv_date_of_arrival1;
+   this.serv_date_of_arrival2 = serv_date_of_arrival2;
+   
+
+
+   this.serv_date_of_departure = serv_date_of_departure;
+   this.serv_date_of_departure1 = serv_date_of_departure1;
+ this.serv_date_of_departure2 = serv_date_of_departure2;
+ 
+
+ let serv_ware_dc_addr = (logindata['result'][0]['serv_ware_dc_addr']);
+ let serv_ware_dc_addr1 = (logindata['result'][1]['serv_ware_dc_addr']);
+ let serv_ware_dc_addr2 = (logindata['result'][2]['serv_ware_dc_addr']);
+ this.serv_ware_dc_addr = serv_ware_dc_addr;
+   this.serv_ware_dc_addr1 =serv_ware_dc_addr1;
+ this.serv_ware_dc_addr2 = serv_ware_dc_addr2;
+   
+
+ this.serv_date_of_departure = serv_date_of_departure;
+ this.serv_date_of_departure1 = serv_date_of_departure1;
+this.serv_date_of_departure2 = serv_date_of_departure2;
+
+
+let serv_ware_ac_addr = (logindata['result'][0]['serv_ware_ac_addr']);
+let serv_ware_ac_addr1 = (logindata['result'][1]['serv_ware_ac_addr']);
+let serv_ware_ac_addr2 = (logindata['result'][2]['serv_ware_ac_addr']);
+this.serv_ware_ac_addr = serv_ware_ac_addr;
+ this.serv_ware_ac_addr1 =serv_ware_ac_addr1;
+this.serv_ware_ac_addr2 = serv_ware_ac_addr2;
+
+
+let serv_ofr_price = (logindata['result'][0]['serv_ofr_price']);
+let serv_ofr_price1 = (logindata['result'][1]['serv_ofr_price']);
+let serv_ofr_price2 = (logindata['result'][2]['serv_ofr_price']);
+console.log("+++++ "+ serv_ofr_price1)
+this.serv_ofr_price = serv_ofr_price;
+ this.serv_ofr_price1 =serv_ofr_price1;
+this.serv_ofr_price2 = serv_ofr_price2;
+  
+
+    }
+   
+
+
     componentDidMount = (searchObj) => {
-        console.log('search', this.props.searchObj)
-        this.userInfo();
-        
+        console.log('search', this.props.searchObj);
+         this.userInfo();
+         this.getCal();
+         
+         
+    }  
+
+    componentWillFocus =() =>{
+        this.getCal();
     }
 
-   
+
+    getCal = () => {
+        let formdata = new FormData();
+        formdata.append("tranport_type", "["+ this.state.ser_type +"]")
+        formdata.append("service_type", 1)
+        formdata.append("insurance_type", "")
+        formdata.append("weight", "["+this.state.Weight+"]")
+        formdata.append("dimension", this.state.Diments);
+        formdata.append("belongings", '')
+        formdata.append("quantity", "["+1+"]")
+        formdata.append("unit_of_measure", "")
+        formdata.append("unit_value", "")
+        formdata.append("currency", "")
+        formdata.append("scat_id", "["+1+"]")
+        formdata.append("exchange_rate",  "")
+        formdata.append("serv_id",   this.service_id )
+       // console.log(this.state.countrySelect)
+console.log("service id"+ this.state.service_id )
+        console.log('formdatail: ', JSON.stringify(formdata))
+        this.props.triggerCustom(formdata, this.onSuccess, this.onError)
+     
+       
+      }
+
+
+      onSuccess = (data) => {
+        console.log('success', data)
+    
+      }
+
+
     handleOpen = () => {
         Animated.timing(this.state.animation, {
             toValue: 1,
@@ -146,6 +254,7 @@ class Services extends Component {
         this.props.isLoggedIn == false ?
             this.props.navigation.replace('Login', {})
             :
+            //console.log("countyyyyyy  "+this.state.sender_country)
             this.props.navigation.navigate('Sender', {})
     }
 
@@ -168,6 +277,31 @@ class Services extends Component {
     render() {
         const screenHeight = Dimensions.get("window").height;
 
+        const { dep_country,arr_country,time,weight,Dimen } = this.props.route.params;
+   let send_contr = Dimen;
+  console.log("-->>>"+send_contr);
+    //   this.state.sender_country = send_contr;
+
+       
+
+        let curet = new Date(time);
+        curet.getDate();
+        let monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+monthNames[curet.getMonth()];
+var gsDayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  gsDayNames[curet.getDay()];
+
+       // const { arr_country } = this.props.route.params;
         const backdrop = {
             transform: [
                 {
@@ -196,6 +330,15 @@ class Services extends Component {
                 },
             ],
         };
+   
+
+
+
+         
+     
+
+
+
 
         return (
             
@@ -238,7 +381,7 @@ class Services extends Component {
                                 </View>
                                 <View style={styles.vertical1}>
                                     <Text style={{ fontSize: 12, color: 'grey' }}>Departure</Text>
-                                    <Text style={{ fontSize: 12 }}>{this.disp_add}</Text>
+                                    <Text style={{ fontSize: 12 }} >{dep_country}</Text>
                                     <View style={styles.remember}>
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
                                             this.state.isCheck ?
@@ -249,6 +392,7 @@ class Services extends Component {
 
                                         }</TouchableOpacity>
                                         <Text style={styles.email}>Business Address</Text>
+
                                     </View>
                                     <View style={styles.line}>
                                         <View style={styles.line1} />
@@ -256,7 +400,7 @@ class Services extends Component {
                                         <View style={styles.line2} />
                                     </View>
                                     <Text style={{ fontSize: 12, color: 'grey' }}>Destination</Text>
-                                    <Text style={{ fontSize: 12 }}>{this.des_add}</Text>
+                                    <Text style={{ fontSize: 12 }}>{arr_country}</Text>
                             
                                     <View style={styles.remember}>
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
@@ -276,10 +420,10 @@ class Services extends Component {
                             <View style={styles.pcard}>
                                 <View style={styles.card1}>
                                     <Image source={require('../../Images/calendar.png')} style={styles.down} />
-                                    <Text style={{ fontSize: 35, fontWeight: 'bold', marginHorizontal: 5 }}>17</Text>
+                                    <Text style={{ fontSize: 35, fontWeight: 'bold', marginHorizontal: 5 }}>{ curet.getDate() ? curet.getDate() : null}</Text>
                                     <View style={styles.day}>
-                                        <Text style={{ fontSize: 10, fontWeight: 'bold' }}>October</Text>
-                                        <Text style={{ fontSize: 10 }}>Thursday</Text>
+                                        <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{monthNames[curet.getMonth()]}</Text>
+                                        <Text style={{ fontSize: 10 }}>{ gsDayNames[curet.getDay()]}</Text>
                                     </View>
                                 </View>
                                 <TouchableOpacity onPress={this.isSearchPressed} style={styles.search}>
@@ -311,7 +455,7 @@ class Services extends Component {
                                     <Text style={{ color: 'dodgerblue' }}>Air</Text>
                                     <Image source={require('../../Images/plane.png')} style={styles.icon} />
                                 </TouchableOpacity>
-
+ 
                                 :
                                 <TouchableOpacity onPress={this.isAirPressed} style={styles.compo}>
                                     <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon} />
@@ -349,8 +493,181 @@ class Services extends Component {
                         }
                     </View>
                 </View>
-                <ScrollView>
-                    <TouchableOpacity onPress={this.sender} style={styles.card4}>
+               
+                <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
+                   {(this.ser_type == 1 ||  this.ser_type1 == 1 || this.ser_type2 == 1) &&  this.state.isAir == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                        <View style={styles.morehalf}>
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
+                                </View>
+                            </View>
+                            <Image source={require('../../Images/send.png')} style={styles.send} />
+
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
+                                    <View style={styles.line4}></View>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.remain}>
+                                <View style={styles.charges}>
+                                    <Text >{this.serv_ofr_price}</Text>
+                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <View style={styles.line3}></View>
+                                    <Text>Type - Air</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.morehalf1}>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
+                            </View>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
+                            </View>
+                            <View style={styles.remain1}>
+                                <View style={styles.space}>
+                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableOpacity> : this.state.isMaritime == true && (this.ser_type == 2 || this.ser_type1 == 2 || this.ser_type2 == 2) ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                        <View style={styles.morehalf}>
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
+                                </View>
+                            </View>
+                            <Image source={require('../../Images/send.png')} style={styles.send} />
+
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                                    <View style={styles.line4}></View>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.remain}>
+                                <View style={styles.charges}>
+                                    <Text >{this.serv_ofr_price1}</Text>
+                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <View style={styles.line3}></View>
+                                    <Text>Type-Maritime</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.morehalf1}>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
+                            </View>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
+                            </View>
+                            <View style={styles.remain1}>
+                                <View style={styles.space}>
+                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableOpacity> : this.state.isRoad == true && (this.ser_type == 3 || this.ser_type1 == 3 || this.ser_type2 ==3 )  ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                        <View style={styles.morehalf}>
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
+                                </View>
+                            </View>
+                            <Image source={require('../../Images/send.png')} style={styles.send} />
+
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
+                                    <View style={styles.line4}></View>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.remain}>
+                                <View style={styles.charges}>
+                                    <Text >{this.serv_ofr_price2}</Text>
+                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <View style={styles.line3}></View>
+                                    <Text>Type - Road</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.morehalf1}>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
+                            </View>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
+                            </View>
+                            <View style={styles.remain1}>
+                                <View style={styles.space}>
+                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableOpacity> : null  }
+                              
+
+                    {/* <TouchableOpacity style={styles.card4}>
+                        <View style={styles.morehalf}>
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>17 Oct 19</Text>
+                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
+                                </View>
+                            </View>
+                            <Image source={require('../../Images/send.png')} style={styles.send} />
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>20 Oct 19</Text>
+                                    <View style={styles.line4}></View>
+                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
+                                </View>
+                            </View>
+                            <View style={styles.remain}>
+                                <View style={styles.charges}>
+                                    <Text >400$</Text>
+                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <View style={styles.line3}></View>
+                                    <Text>Type - Air</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.morehalf1}>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
+                            </View>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
+                            </View>
+                            <View style={styles.remain1}>
+                                <View style={styles.space}>
+                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                    </TouchableOpacity> */}
+                    {/* <TouchableOpacity style={styles.card4}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -392,51 +709,9 @@ class Services extends Component {
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >400$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card4}>
+                    </TouchableOpacity> */}
+                    {/* <TouchableOpacity style={styles.card4}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -479,8 +754,8 @@ class Services extends Component {
                             </View>
                         </View>
 
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card4}>
+                    </TouchableOpacity> */}
+                    {/* <TouchableOpacity style={styles.card4}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -506,68 +781,10 @@ class Services extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >400$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                       
+                    </TouchableOpacity> */}
                 </ScrollView>
+              
                 <Animated.View style={[StyleSheet.absoluteFill, styles.cover, backdrop]}>
                     <View style={[styles.sheet]}>
                         <Animated.View style={[styles.popup, slideUp]}>
@@ -594,16 +811,17 @@ const mapStateToProps = (state) => {
     let {
         loginObj,
         isLoggedIn, 
-        searchObj
+        searchObj,
+        customObj
     } = state.authReducer
 
 
-    return { loginObj, isLoggedIn, searchObj }
+    return { loginObj, isLoggedIn, customObj }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        triggerAuthLogin
+        triggerAuthLogin,triggerCustom
     }, dispatch)
 }
 

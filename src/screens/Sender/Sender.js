@@ -114,6 +114,7 @@ class Sender extends Component {
     }
 
     render() {
+        
         let CategoryPlaceholder = {
             label: 'Country',
             value: null,

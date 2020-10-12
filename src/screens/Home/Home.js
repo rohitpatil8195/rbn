@@ -131,6 +131,10 @@ class Home extends Component {
       arrCountryId: '',
       date: '',
       servId: '',
+      W:'',
+      L:'',
+      D:'',
+      H:''
 
      
 
@@ -170,10 +174,10 @@ class Home extends Component {
         })
       }
     })
-   //console.log('countryId', this.state.countryId)
+  // console.log('countryId', this.state.countryId)
     this.onCity(this.state.countryId)
   }
-
+ 
   onDesCountrySelect = (val) => {
     this.state.desCountrySelect = val
     this.state.desCountryList.map(item => {
@@ -327,6 +331,7 @@ class Home extends Component {
 
   addArray = () => {
     let array1 = JSON.parse(JSON.stringify(this.state.Array))
+   console.log("array is-- " , array1)
     array1.push([
       {
         textHeader: "firstname",
@@ -393,9 +398,11 @@ class Home extends Component {
   _hideDateTimePicker = () => this.setState({ isDatePickerVisible: false });
 
   _handleDatePicked = date => {
-    console.log('A date has been picked', date)
-    this.setState({ DOB: moment(date).format('DD-MM-YYYY'), isDatePickerVisible: false });
+      console.log('A date has been picked', date)
+    this.setState({ DOB: moment(date).format('YYYY-MM-DD'), isDatePickerVisible: false });
+    
   };
+
 
   onAddPressed = () => {
     if (!this.state.onAdd) {
@@ -539,20 +546,33 @@ class Home extends Component {
 
   services = () => {
     let formdata = new FormData();
-    formdata.append("serv_user_id", this.state.servUserId)
-    formdata.append("ordr_serv_id", this.state.servId)
-    formdata.append("serv_dept_cntry_id", this.state.depCountryId)
+   // formdata.append("serv_user_id", this.state.servUserId)
+   // formdata.append("ordr_serv_id", this.state.servId)
+    formdata.append("serv_dept_cntry_id", this.state.countryId)
     formdata.append("serv_dept_city_id", this.state.depCityId)
-    formdata.append("serv_ariv_cntry_id", this.state.arrCountryId)
+    formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
     formdata.append("serv_ariv_city_id", this.state.arrCityId)
-    formdata.append("serv_date", this.state.date)
+    formdata.append("serv_date", this.state.DOB);
+    formdata.append("pckg_data[0][unit]", this.state.W)
+    formdata.append("pckg_data[0][len]", this.state.L)
+    formdata.append("pckg_data[0][dept]", this.state.D)
+    formdata.append("pckg_data[0][hegt]", this.state.H)
+   // console.log(this.state.countrySelect)
+    console.log('formdatail:--- ',(this.state.L))
     console.log('formdatail: ', JSON.stringify(formdata))
+   
+   let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
+     let dimenLDH= []
+     dimenLDH.push(Dimen);   
+     
     this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
-    this.props.navigation.navigate('Services', {})
+ 
+    this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,arr_country:this.state.desCountrySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
   }
 
   onSearchSuccess = (data) => {
-    console.log('success', data)
+    console.log('success Home', data)
+
   }
 
   render() {
@@ -585,6 +605,7 @@ class Home extends Component {
                 <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
                   underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
               </View>
+              
             </>
           </Animated.View>
         );
@@ -798,6 +819,7 @@ class Home extends Component {
                       errorStyle={{ paddingBottom: 7, marginTop: '-2%' }}
                       source={require('../../Images/arrow-point-to-right.png')}
                       textInputProps={{ underlineColorAndroid: 'black' }} /> 
+                      
                    <DropDown
                       placeholder={fCityPlaceholder}
                       data={this.state.cityList}
@@ -924,6 +946,7 @@ class Home extends Component {
   
                        
                     <View style={styles.remember}>
+                   
                       <TouchableOpacity onPress={this.isCheck1Pressed}>{
                         this.state.isCheck1 ?
                           <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -981,21 +1004,44 @@ class Home extends Component {
                       {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
                       {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
                         underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+
+
+{/*                         
                       <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-                        underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
-                      {/* </View> */}
-                      <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
+                        underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} /> */}
+                     
+                      {/* <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                         <Text style={styles.dim}>Dimensions (cm) :</Text>
-                        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
+                        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })}  placeholder={i18n.t('L')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
                         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
                         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
               
+                      </View> */}
+                  
+                    
+                    
+                      <TextInputComponent onChangeText={text => this.setState({ W: text })} placeholder={i18n.t('Weight(Kg)')}
+                        underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+
+                                  <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+                        <Text style={styles.dim}>Dimensions (cm) :</Text>
+                        <TextInputComponent onChangeText={text => this.setState({ L: text })}  placeholder={i18n.t('L')}
+                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
+                        <TextInputComponent onChangeText={text => this.setState({ D: text })} placeholder={i18n.t('D')}
+                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
+                        <TextInputComponent onChangeText={text => this.setState({ H: text })} placeholder={i18n.t('H')}
+                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+              
                       </View>
-                                  
+
+
+
+                                  {/* <Text>---{this.setState.L}</Text> */}
                       {this.state.addPackage.map((value, index) => {
           return value
         })}
@@ -1025,6 +1071,7 @@ class Home extends Component {
                       onCancel={this._hideDateTimePicker}
                       is24Hour={false}
                       mode='date'
+                     
                       // errorStyle={{marginTop:'-6%'}}
                       // error={this.state.errors['DOB']}
                       // maximumDate={moment().toDate()}
