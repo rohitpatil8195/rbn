@@ -574,7 +574,7 @@ class Home extends Component {
     console.log('success Home', data)
 
   }
-
+ 
   render() {
     
     const screenHeight = Dimensions.get("window").height;

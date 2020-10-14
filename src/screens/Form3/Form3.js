@@ -166,6 +166,10 @@ class Form3 extends Component {
         
     }
 
+
+
+
+
     componentDidMount = () => {
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
         // this.onCategory(this.state.categoryId)
@@ -176,6 +180,11 @@ class Form3 extends Component {
         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
     }
 
+
+        
+
+
+    
     onUnitSuccess = (data) => {
         var result = data.result.map(function (el) {
             // var o = Object.assign({}, el);
@@ -424,6 +433,37 @@ class Form3 extends Component {
         this.props.navigation.navigate('Recipient', {})
     }
 
+
+
+
+    services = () => {
+        let formdata = new FormData();
+       // formdata.append("serv_user_id", this.state.servUserId)
+       // formdata.append("ordr_serv_id", this.state.servId)
+        formdata.append("serv_dept_cntry_id", this.state.countryId)
+        formdata.append("serv_dept_city_id", this.state.depCityId)
+        formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
+        formdata.append("serv_ariv_city_id", this.state.arrCityId)
+        formdata.append("serv_date", this.state.DOB);
+        formdata.append("pckg_data[0][unit]", this.state.W)
+        formdata.append("pckg_data[0][len]", this.state.L)
+        formdata.append("pckg_data[0][dept]", this.state.D)
+        formdata.append("pckg_data[0][hegt]", this.state.H)
+       // console.log(this.state.countrySelect)
+        console.log('formdatail:--- ',(this.state.L))
+        console.log('formdatail: ', JSON.stringify(formdata))
+       
+       let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
+         let dimenLDH= []
+         dimenLDH.push(Dimen);   
+         
+        this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
+     
+        this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,arr_country:this.state.desCountrySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+      }
+
+      
+    
     render() {
         let ReasonPlaceholder = {
             label: 'Reason for shipping',

@@ -7,10 +7,10 @@ import Scroller from '../../components/Scroller';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import Loader from '../../components/Loader';
-import { triggerAuthLogin, triggerLogout } from '../../actions';
+import { triggerAuthLogin, triggerLogout,triggerCustom } from '../../actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment/moment';
-import { triggerCustom } from '../../actions';
+//import { triggerCustom } from '../../actions';
 
 
 
@@ -53,6 +53,9 @@ class Services extends Component {
             sender_country:'',
             rec_country:'',
             service_id:'',
+            total_price1:'',
+            total_price2:'',
+            total_price3:'',
             Weight:this.props.route.params.weight,
             Diments:this.props.route.params.Dimen
 
@@ -60,20 +63,75 @@ class Services extends Component {
     }
 
 
+    
+    componentDidMount = () => {
+        this.userInfo();
+        
+            // setTimeout(() => {
+                
+            //     }, 1000)
+
+        //    var bd : ({
+        //         tranport_type: "[2]";
+        //          service_type: "1";
+        //            weight: "[15]";
+        //        dimension: ["3||4||1"];
+        //             quantity: "[1]";
+        //             scat_id: "[0]";
+        //             serv_id: "209"
+
+        //     };
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({   tranport_type: "[2]",
+            //     service_type: "1",
+            //       weight: "[15]",
+            //   dimension: ["3||4||1"],
+            //        quantity: "[1]",
+            //        scat_id: "[0]",
+            //        serv_id: "209"})
+            // };
+            // console.log("req option", requestOptions )
+            // fetch('http://rbn.sairoses.com/Front/index.php/API/fields/calculation', requestOptions)
+            //     .then(async response => {
+            //         const data = await response.json();
+            //                console.log("data yee"+JSON.stringify(data))
+            //         // check for error response
+            //         if (!response.ok) {
+            //             // get error message from body or default to response status
+            //             const error = (data && data.message) || response.status;
+            //             return Promise.reject(error);
+            //         }
+        
+            //         this.setState({ postId: data.id })
+            //     })
+            //     .catch(error => {
+            //         this.setState({ errorMessage: error.toString() });
+            //         console.error('There was an error!', error);
+            //     });
+        
+           
+    }  
+
+
     userInfo = async () => {
         let chech = await AsyncStorage.getItem('persist:sampleRedux');
         let js = JSON.parse(chech);
        let authreducer = JSON.parse(js['authReducer'])
        let loginobj = authreducer['searchObj'];
-     console.log("async_objdata-- "+JSON.stringify(loginobj));
+    // console.log("async_objdata-- "+JSON.stringify(loginobj));
+  
        let logindata = (loginobj['data'])
-       //console.log(logindata) serv_id
+ 
            
    let service_type = (logindata['result'][0]['serv_id']);
-   let serv = service_type
-   this.service_id = serv;
-
-console.log("service id>>"+ this.service_id)
+   const serv = service_type;
+  //   this.service_id = serv;
+     this.setState({
+        service_id:serv
+      });
+console.log("service id>>"+ this.state.service_id)
 
    let serv_type = (logindata['result'][0]['serv_type']);
    let serv_type1 = (logindata['result'][1]['serv_type']);
@@ -130,55 +188,128 @@ this.serv_ware_ac_addr2 = serv_ware_ac_addr2;
 let serv_ofr_price = (logindata['result'][0]['serv_ofr_price']);
 let serv_ofr_price1 = (logindata['result'][1]['serv_ofr_price']);
 let serv_ofr_price2 = (logindata['result'][2]['serv_ofr_price']);
-console.log("+++++ "+ serv_ofr_price1)
+//console.log("+++++ "+ serv_ofr_price1)
 this.serv_ofr_price = serv_ofr_price;
  this.serv_ofr_price1 =serv_ofr_price1;
 this.serv_ofr_price2 = serv_ofr_price2;
-  
 
+
+this.getCal();
+    // setTimeout(() => {
+    //     this.getCal();
+    //     }, 5000)
     }
    
 
 
-    componentDidMount = (searchObj) => {
-        console.log('search', this.props.searchObj);
-         this.userInfo();
-         this.getCal();
-         
-         
-    }  
+   getCal=()=>{
 
-    componentWillFocus =() =>{
-        this.getCal();
-    }
+         let tranp_type =this.ser_type;
+         let wt = this.state.Weight;
 
 
-    getCal = () => {
-        let formdata = new FormData();
-        formdata.append("tranport_type", "["+ this.state.ser_type +"]")
-        formdata.append("service_type", 1)
-        formdata.append("insurance_type", "")
-        formdata.append("weight", "["+this.state.Weight+"]")
-        formdata.append("dimension", this.state.Diments);
-        formdata.append("belongings", '')
-        formdata.append("quantity", "["+1+"]")
-        formdata.append("unit_of_measure", "")
-        formdata.append("unit_value", "")
-        formdata.append("currency", "")
-        formdata.append("scat_id", "["+1+"]")
-        formdata.append("exchange_rate",  "")
-        formdata.append("serv_id",   this.service_id )
-       // console.log(this.state.countrySelect)
-console.log("service id"+ this.state.service_id )
-        console.log('formdatail: ', JSON.stringify(formdata))
-        this.props.triggerCustom(formdata, this.onSuccess, this.onError)
+          const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({   
+                    tranport_type:"["+tranp_type+"]",
+                service_type: "1",
+                  weight: "["+wt+"]",
+              dimension: this.state.Diments,
+                   quantity: "[1]",
+                   unit_of_measure:"1",
+                   scat_id: "[0]",
+                   serv_id: (this.state.service_id),
+                })
+            };
+            console.log("Test___"+this.state.Weight)
+            console.log("req option", requestOptions )
+            fetch('http://rbn.sairoses.com/Front/index.php/API/fields/calculation', requestOptions)
+                .then(async response => {
+                    const data = await response.json();
+                           console.log("data yee"+JSON.stringify(data))
+                           let price = JSON.stringify(data['result'][0]['total']);
+                           //let price =(prc['total'])
+                           if(tranp_type =1){
+                           this.total_price1 = price;
+                           }if(tranp_type=2){
+                            this.total_price2 = price;
+                           }if(tranp_type=3){
+                            this.total_price2 = price;
+                           } 
+                           
+                    // check for error response
+                    if (!response.ok) {
+                        // get error message from body or default to response status
+                        const error = (data && data.message) || response.status;
+                        return Promise.reject(error);
+                    }
+        
+                    this.setState({ postId: data.id })
+                })
+                .catch(error => {
+                    this.setState({ errorMessage: error.toString() });
+                    console.error('There was an error!', error);
+                });
+   }
+
+
+
+    // getCal = () => {
+    //     let formdata = new FormData();
+    //     formdata.append("tranport_type",  this.ser_type )
+    //     formdata.append("service_type", "1")
+    //     formdata.append("insurance_type", "1")
+    //     formdata.append("weight", this.state.Weight)
+    //     formdata.append("dimension", this.state.Diments);
+    //     formdata.append("belongings", "[0]")
+    //     formdata.append("quantity", "1")
+    //     formdata.append("unit_of_measure", "1")
+    //     formdata.append("unit_value", "1")
+    //     formdata.append("currency", "1")
+    //     formdata.append("scat_id", "1")
+    //     formdata.append("serv_id",   this.state.service_id )
+    //    // console.log(this.state.countrySelect)
+  
+    //    const requestOptions = {
+    //     method: 'POST',
+    //     body: JSON.stringify(formdata)
+    //    }
+    // console.log("req option", formdata )
+    // fetch('http://rbn.sairoses.com/Front/index.php/API/fields/calculation', requestOptions)
+    //     .then(async response => {
+    //         const data = await response.json();
+    //                console.log("data yee"+JSON.stringify(data))
+                   
+    //         // check for error response
+    //         if (!response.ok) {
+    //             // get error message from body or default to response status
+    //             const error = (data && data.message) || response.status;
+    //             return Promise.reject(error);
+    //         }
+
+    //         this.setState({ postId: data.id })
+    //     })
+    //     .catch(error => {
+    //         this.setState({ errorMessage: error.toString() });
+    //         console.error('There was an error!', error);
+    //     });
+
+
+    // // console.log("service id"+ this.state.service_id )
+    // //     console.log('formdatail: ', JSON.stringify(formdata))
+    // //     this.props.triggerCustom(formdata, this.onSuccess, this.onError);
      
-       
-      }
+    //   } 
 
 
       onSuccess = (data) => {
         console.log('success', data)
+    
+      }
+    
+      onError = (data) => {
+        console.log('onError', data)
     
       }
 
@@ -224,6 +355,7 @@ console.log("service id"+ this.state.service_id )
     }
 
     isAirPressed = () => {
+        this.userInfo()
         if (!this.state.isAir) {
             this.setState({ isAir: true })
         } else {
@@ -233,6 +365,7 @@ console.log("service id"+ this.state.service_id )
     }
 
     isMaritimePressed = () => {
+        this.userInfo()
         if (!this.state.isMaritime) {
             this.setState({ isMaritime: true })
         } else {
@@ -242,6 +375,7 @@ console.log("service id"+ this.state.service_id )
     }
 
     isRoadPressed = () => {
+        this.userInfo()
         if (!this.state.isRoad) {
             this.setState({ isRoad: true })
         } else {
@@ -514,7 +648,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.serv_ofr_price}</Text>
+                                    <Text >{this.total_price1}$</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Air</Text>
@@ -556,7 +690,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.serv_ofr_price1}</Text>
+                                    <Text >{this.total_price2}$</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type-Maritime</Text>
@@ -598,7 +732,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.serv_ofr_price2}</Text>
+                                    <Text >{this.total_price3}$</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Road</Text>

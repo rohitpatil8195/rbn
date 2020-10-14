@@ -51,15 +51,18 @@ export const makeAPICall = apiData => {
     // axios.interceptors.response.use(response => {
     //     return response.headers['content-type'] === 'application/json' ? response : Promise.reject(response);
     //   }, error => Promise.reject(error));
-   console.log(apiObj)
+   //console.log("before>>"+JSON.stringify(apiObj))
     return axios(apiObj)
+   
         .then(response => {
+           // console.log(">>"+JSON.stringify(apiObj))
+
             try {
                 //console.log("resp>> "+JSON.stringify(response))
                 response = response.data;
-       
+                  //console.log("resp>> "+JSON.stringify(response))
                 // if (response.status == 200) {status":1,"msg":"success"
-                if (response.status == 1 || response.msg == "success") {
+                if (response.status == 1 && response.msg == "success") {
                 
                     if (successAction) {
                         dispatch({

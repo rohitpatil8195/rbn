@@ -40,7 +40,7 @@ class Recipient extends Component {
             el.code = el.cntry_code;
             return el;
         })
-        // console.log("countryList", result)
+        console.log("countryList", result)
         this.setState({
             countryList: result,
         })
