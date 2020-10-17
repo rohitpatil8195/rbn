@@ -43,6 +43,8 @@ class Form3 extends Component {
             productId: '',
             productCode: '',
             favColor: undefined,
+            belonging:'',
+            Quantity:'',
             reason: [
                 {
                     label: 'Commercial',
@@ -179,9 +181,38 @@ class Form3 extends Component {
         // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
     }
+   
+    submit_form=()=>{
 
+    var formdata = new FormData();
+formdata.append("tranport_type", "1");
+formdata.append("service_type", "1");
+formdata.append("insurance_type", "1");
+formdata.append("weight", "[10,20]");
+formdata.append("dimension", "[\"10||10||10\",\"20||20||20\"]");
+formdata.append("belongings", "["+ this.state.belonging +"]");
+formdata.append("quantity", "["+ this.state.Quantity+"]");
+formdata.append("unit_of_measure", "[1,2,3]");
+formdata.append("unit_value", "[1,2,3]");
+formdata.append("currency", "Euro");
+formdata.append("home_colectn", "0");
+formdata.append("home_delv", "0");
+formdata.append("scat_id", "[1,2,3]");
+formdata.append("serv_id", "209");
+formdata.append("exchange_rate", "["+this.state.favdolor+"]");
+//unit of measure this.state.unitEx1
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  redirect: 'follow'
+};
 
-        
+fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+}
 
 
     
@@ -409,20 +440,22 @@ class Form3 extends Component {
 
     isYesPressed = () => {
         if (!this.state.isYes) {
-            this.setState({ isYes: true })
+            this.setState({ isYes: true , belonging:1})
         } else {
             this.setState({ isYes: false })
         }
         this.setState({ isYes: true, isNo: false })
+        console.log("belonging is"+this.state.belonging)
     }
 
     isNoPressed = () => {
         if (!this.state.isNo) {
-            this.setState({ isNo: true })
+            this.setState({ isNo: true ,belonging:0 })
         } else {
             this.setState({ isNo: false })
         }
         this.setState({ isNo: true, isYes: false })
+        console.log("belonging is"+this.state.belonging)
     }
 
     completeform = () => {
@@ -435,32 +468,6 @@ class Form3 extends Component {
 
 
 
-
-    services = () => {
-        let formdata = new FormData();
-       // formdata.append("serv_user_id", this.state.servUserId)
-       // formdata.append("ordr_serv_id", this.state.servId)
-        formdata.append("serv_dept_cntry_id", this.state.countryId)
-        formdata.append("serv_dept_city_id", this.state.depCityId)
-        formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
-        formdata.append("serv_ariv_city_id", this.state.arrCityId)
-        formdata.append("serv_date", this.state.DOB);
-        formdata.append("pckg_data[0][unit]", this.state.W)
-        formdata.append("pckg_data[0][len]", this.state.L)
-        formdata.append("pckg_data[0][dept]", this.state.D)
-        formdata.append("pckg_data[0][hegt]", this.state.H)
-       // console.log(this.state.countrySelect)
-        console.log('formdatail:--- ',(this.state.L))
-        console.log('formdatail: ', JSON.stringify(formdata))
-       
-       let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
-         let dimenLDH= []
-         dimenLDH.push(Dimen);   
-         
-        this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
-     
-        this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,arr_country:this.state.desCountrySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
-      }
 
       
     
@@ -692,7 +699,7 @@ class Form3 extends Component {
                                     style={{ width: '85%', marginTop: '-5%' }}
                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                 <TextInputComponent
-                                    onChangeText={text => this.setState({ FirstName: text })}
+                                    onChangeText={text => this.setState({ Quantity: text })}
                                     placeholder='Quantity'
                                     underlineColorAndroid='lightgrey'
                                     designStyle={{ height: 40, marginLeft: '-10%', marginTop: '-3%' }} />

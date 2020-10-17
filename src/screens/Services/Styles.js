@@ -221,6 +221,35 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginVertical:55
     },
+    //this is styled by avaiaible Service screen
+    cardM: {
+        marginTop:7,
+        height: '46%',
+        width: '90%',
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderRadius: 10,
+        elevation: 10,
+        justifyContent: 'center',
+        marginVertical:-2,
+        borderColor:'black',
+        borderWidth:1
+    },
+    // morehalfM: {
+    //     height: '50%',
+    //     width: '70%',
+    //     marginHorizontal: 1,
+    //     flexDirection: 'row',
+    //     alignItems: 'center'
+    // },
+    remain2: {
+        height: '170%',
+        width: '39%',
+        bottom: 6,
+        marginHorizontal: 16,
+        alignItems: 'flex-end',
+        justifyContent: 'center'
+    },
     slot: {
         height: '80%',
         width: '29%',
@@ -467,5 +496,73 @@ export default StyleSheet.create({
     fg: {
         height: 40,
         width: 40
-    }
+    },
+    
+//scroller styling
+scroll1: {
+    height: 350,
+    width: '100%',
+    alignItems: 'center'
+  },
+  
+  shipping00: {
+      height: '7%',
+      width: '100%',
+      backgroundColor: 'lightgrey',
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  shipping1: {
+    height: '100%',
+    width: '90%',
+},
+shipping2: {
+  height: '12%',
+  width: '90%',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+},
+shipc: {
+    height: '40%',
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+},
+shipc1: {
+    height: '35%',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems:'center'
+},
+iconzzz: {
+    height:15,
+    width: 15
+},
+bottomzzz: {
+    height: '10%',
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4
+},
+clearzzz: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5
+
+},
+applyzzz: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'dodgerblue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5
+}
+    
 })

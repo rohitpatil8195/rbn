@@ -25,11 +25,34 @@ class Sender extends Component {
             cityResponse: null,
             cityZip: '',
             countryCode: '',
-            cityDis: ''
+            cityDis: '',
+            sender_city:this.props.route.params.sender_city,
+            sender_country:this.props.route.params.sender_country,
+            reciver_country:this.props.route.params.reciver_country,
+            reciver_city:this.props.route.params.reciver_city
+
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
 
+    componentDidMount() {
+        const mystring = this.state.sender_city
+     const splits = mystring.split(",");
+     var city = splits[1];
+    console.log("should be pincode",splits[1]); // output: this    
+        this.setState({
+              countrySelect: this.state.sender_country,
+             cityZip: splits[0],
+             citySelect:splits[1],
+            cityDis: splits[2],
+
+           
+        })
+       // console.log(this.state.sender_city)
+     
+    }
+
+     
     onCountrySuccess = (data) => {
         var result = data.result.map(function (el) {
             // var o = Object.assign({}, el);
@@ -47,6 +70,7 @@ class Sender extends Component {
     }
 
     onCountrySelect = (val) => {
+        
         this.state.countrySelect = val
         this.state.countryList.map(item => {
             if (item.value == val) {
@@ -87,7 +111,7 @@ class Sender extends Component {
         // console.log("cityResponse", cityResponse)
 
     }
-
+   
     onCitySelect = (val) => {
         this.state.citySelect = val
         this.state.cityList.map(item => {
@@ -105,7 +129,7 @@ class Sender extends Component {
 
     recipient = () => {
         this.props.triggerForm1()
-        this.props.navigation.navigate('Recipient', {})
+        this.props.navigation.navigate('Recipient', {reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
 
     }
 
@@ -197,7 +221,7 @@ class Sender extends Component {
                                     onValueChange={this.onCitySelect}
                                     source={require('../../Images/arrow-point-to-right.png')}
                                     textInputProps={{ underlineColorAndroid: 'black' }}
-                                    value={this.state.citySelect}
+                                    value={this.citySelect}
                                     style={{ width: '52%', marginLeft: '-50%', height: 50, marginTop: '-4.5%' }}
                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                             </View>

@@ -365,8 +365,8 @@ export default StyleSheet.create({
         width: 15,
     },
     icon1: {
-        height: 15,
-        width: 15,
+        height: 17,
+        width: 17,
     },
     compo: {
         height: '100%',
@@ -382,6 +382,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between', 
+        // borderColor:'black',
+        // borderWidth:1
     },
     cstm: {
         height: 200,

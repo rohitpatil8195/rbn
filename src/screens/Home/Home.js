@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerAuthCity, triggerSearch } from '../../actions';
 import { TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const data = [
@@ -316,8 +317,13 @@ class Home extends Component {
       }
     })
   }
+  // componentDidUpdate = () => {
+  //   AsyncStorage.clear();
+  
+  // }
      
   componentDidMount = () => {
+    //AsyncStorage.clear();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
   }
    
@@ -544,7 +550,7 @@ class Home extends Component {
     this.props.navigation.toggleDrawer()
   }
 
-  services = () => {
+  services = async() => {
     let formdata = new FormData();
    // formdata.append("serv_user_id", this.state.servUserId)
    // formdata.append("ordr_serv_id", this.state.servId)
@@ -552,11 +558,11 @@ class Home extends Component {
     formdata.append("serv_dept_city_id", this.state.depCityId)
     formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
     formdata.append("serv_ariv_city_id", this.state.arrCityId)
-    formdata.append("serv_date", this.state.DOB);
-    formdata.append("pckg_data[0][unit]", this.state.W)
-    formdata.append("pckg_data[0][len]", this.state.L)
-    formdata.append("pckg_data[0][dept]", this.state.D)
-    formdata.append("pckg_data[0][hegt]", this.state.H)
+    //formdata.append("serv_date", this.state.DOB);
+    // formdata.append("pckg_data[0][unit]", this.state.W)
+    // formdata.append("pckg_data[0][len]", this.state.L)
+    // formdata.append("pckg_data[0][dept]", this.state.D)
+    // formdata.append("pckg_data[0][hegt]", this.state.H)
    // console.log(this.state.countrySelect)
     console.log('formdatail:--- ',(this.state.L))
     console.log('formdatail: ', JSON.stringify(formdata))
@@ -565,9 +571,9 @@ class Home extends Component {
      let dimenLDH= []
      dimenLDH.push(Dimen);   
      
-    this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
+   await this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
  
-    this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,arr_country:this.state.desCountrySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+    this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
   }
 
   onSearchSuccess = (data) => {

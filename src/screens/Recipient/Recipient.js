@@ -25,9 +25,27 @@ class Recipient extends Component {
             cityResponse: null,
             cityZip: '',
             countryCode: '',
-            cityDis: ''
+            cityDis: '',
+            reciver_country:this.props.route.params.reciver_country,
+            reciver_city:this.props.route.params.reciver_city
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
+    }
+
+
+        componentDidMount() {
+        const mystring = this.state.reciver_city
+        const splits = mystring.split(",");
+        this.setState({
+                              
+            countrySelect: this.state.reciver_country,
+            cityZip: splits[0],
+            citySelect: splits[1],
+             cityDis: splits[2],
+           
+        })
+        // console.log(this.state.sender_city)
+     
     }
 
     onCountrySuccess = (data) => {
