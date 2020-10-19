@@ -38,7 +38,7 @@ class Sender extends Component {
     componentDidMount() {
         const mystring = this.state.sender_city
      const splits = mystring.split(",");
-     var city = splits[1];
+     //var city = splits[1];
     console.log("should be pincode",splits[1]); // output: this    
         this.setState({
               countrySelect: this.state.sender_country,
@@ -145,7 +145,7 @@ class Sender extends Component {
             color: '#9EA0A4',
         };
         let fCityPlaceholder = {
-            label: 'City',
+            label: this.state.citySelect,
             value: null,
             color: '#9EA0A4',
         };
@@ -217,11 +217,12 @@ class Sender extends Component {
                                 <DropDown
                                     source={require('../../Images/location.png')}
                                     placeholder={fCityPlaceholder}
+                                    //defaultValue={this.state.citySelect}
                                     data={this.state.cityList}
                                     onValueChange={this.onCitySelect}
                                     source={require('../../Images/arrow-point-to-right.png')}
                                     textInputProps={{ underlineColorAndroid: 'black' }}
-                                    value={this.citySelect}
+                                    value={this.state.citySelect}
                                     style={{ width: '52%', marginLeft: '-50%', height: 50, marginTop: '-4.5%' }}
                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                             </View>
