@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { triggerAuthLogin, triggerLogout,triggerCustom } from '../../actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment/moment';
+import { FlatList } from 'react-native-gesture-handler';
 //import { triggerCustom } from '../../actions';
 
 
@@ -148,116 +149,119 @@ class Services extends Component {
 
 
     userInfo = async () => {
-        console.log("this data",this.props.route.params.data)
+       // console.log("params data"+this.props.route.params.data)
         // const chech = await AsyncStorage.getItem('persist:sampleRedux')
-        const chech = await  (this.props.route.params.data);
+              const chech = await  (this.props.route.params.data);
         const js =  (chech);
       // let authreducer = JSON.parse(js['authReducer'])
       // let loginobj = authreducer['searchObj'];
 //console.log("async_objdata-- "+JSON.stringify(loginobj));
   
-       let logindata =  chech
-   //  console.log("this is login data"+ logindata['result'][0]['serv_id'])
+       let logindata =  (chech);
+
            
-      //serv_home_collection
+    //   //serv_home_collection
+    //   let HomeServ_collection = (logindata['result'][0]['serv_home_collection']);
+    //   let HomeServ_collection1 = (logindata['result'][1]['serv_home_collection']);
    
-      let HomeServ_collection = (logindata['result'][0]['serv_home_collection']);
-      let HomeServ_collection1 = (logindata['result'][1]['serv_home_collection']);
-   
-                      console.log("....."+ HomeServ_collection)
-      this.HomeServ_collection = HomeServ_collection;
-        this.HomeServ_collection1 = HomeServ_collection1;
+    //                //   console.log("....."+ HomeServ_collection)
+    //   this.HomeServ_collection = HomeServ_collection;
+    //     this.HomeServ_collection1 = HomeServ_collection1;
 
 
-        let HomeServ_delivery = (logindata['result'][0]['serv_home_delivery']);
-      let HomeServ_delivery1 = (logindata['result'][1]['serv_home_delivery']);
+    //     let HomeServ_delivery = (logindata['result'][0]['serv_home_delivery']);
+    //   let HomeServ_delivery1 = (logindata['result'][1]['serv_home_delivery']);
    
-                    //  console.log("....."+ HomeServ_delivery1)
-      this.HomeServ_delivery = HomeServ_delivery;
-        this.HomeServ_delivery1 = HomeServ_delivery1;
+    //                 //  console.log("....."+ HomeServ_delivery1)
+    //   this.HomeServ_delivery = HomeServ_delivery;
+    //     this.HomeServ_delivery1 = HomeServ_delivery1;
 
+        let logData = logindata['result'];
+    if(logData.length == 0 || logData.length == undefined || logData.length == null){
+       return 0;
+    }
+    else if(logindata['result'].length == 1 ){
+        this.setState({
+            service_type1 : logData[0]['serv_id'],
+            ser_type : logData[0]['serv_type'],
+            serv_date_of_departure : logData[0]['serv_date_of_departure'],
+            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
+            serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
+            serv_ware_ac_addr : logData[0]['serv_ware_ac_addr']
 
-        let service_type1 = (logindata['result'][0]['serv_id']);
-   
-        let service_type2 = (logindata['result'][1]['serv_id']);
+        })
+    }else if(logindata['result'].length == 2){
+        this.setState({
+            service_type1 : logData[0]['serv_id'],
+            service_type2 : logData[1]['serv_id'],
+            ser_type : logData[0]['serv_type'],
+            ser_type1 : logData[1]['serv_type'],
+            serv_date_of_departure : logData[0]['serv_date_of_departure'],
+            serv_date_of_departure1 : logData[1]['serv_date_of_departure'],
+            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
+            serv_date_of_arrival1 :logData[1]['serv_date_of_arrival'],
+            serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
+        serv_ware_dc_addr1 :logData[1]['serv_ware_dc_addr'],
+        serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
+         serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr']
+        })
         
-        let service_type3 = (logindata['result'][2]['serv_id']);
-        const serv1 = service_type1;
-        const serv2 = service_type2;
-        const serv3 = service_type3;
-       //   this.service_id = serv;
+    }else if(logindata['result'].length == 3){
+        this.setState({
+            service_type1 : logData[0]['serv_id'],
+            service_type2 : logData[1]['serv_id'],
+            service_type3 : logData[2]['serv_id'],
+            ser_type : logData[0]['serv_type'],
+            ser_type1 : logData[1]['serv_type'],
+            ser_type2 : logData[2]['serv_type'],
+            serv_date_of_departure : logData[0]['serv_date_of_departure'],
+            serv_date_of_departure1 : logData[1]['serv_date_of_departure'],
+            serv_date_of_departure2 : logData[2]['serv_date_of_departure'],
+            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
+            serv_date_of_arrival1 :logData[1]['serv_date_of_arrival'],
+          serv_date_of_arrival2 : logData[2]['serv_date_of_arrival'],
+          serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
+        serv_ware_dc_addr1 :logData[1]['serv_ware_dc_addr'],
+         serv_ware_dc_addr2 : logData[2]['serv_ware_dc_addr'],
+         serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
+         serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr'],
+       serv_ware_ac_addr2 : logData[2]['serv_ware_ac_addr']
+         
+   
+        })
+ 
+    }
+console.log("dddddd",this.state.ser_type)
+        let service_idsss = []
+        service_idsss.push(this.state.service_type1);
+        service_idsss.push(this.state.service_type2);
+        service_idsss.push(this.state.service_type3);
        this.setState({
-        service_type1:serv1,
-        service_type:serv2,
-        service_type3:serv3,
-         services_Ids: [service_type1,service_type2,service_type3]
+         services_Ids: service_idsss.filter(n => n)
        });
      
        //console.log("service arrays are"+this.state.services_Ids)
 
-console.log("service id>>"+ this.state.service_id)
 
-   let serv_type = (logindata['result'][0]['serv_type']);
-   let serv_type1 = (logindata['result'][1]['serv_type']);
-   let serv_type2 = (logindata['result'][2]['serv_type']);
- console.log("service serv_type1>>"+ serv_type)
- console.log("service serv_type2>>"+ serv_type1)
-   this.ser_type = serv_type;
-     this.ser_type1 = serv_type1;
-   this.ser_type2 = serv_type2;
-   
-   let serv_date_of_departure = (logindata['result'][0]['serv_date_of_departure']);
-   let serv_date_of_departure1 = (logindata['result'][1]['serv_date_of_departure']);
-  let serv_date_of_departure2 = (logindata['result'][2]['serv_date_of_departure']);
-                 // let serv_date_of_departure2 =  moment().format('YY/MMM/DD');
-                   //console.log("....."+ serv_date_of_departure2)
-   this.serv_date_of_departure = serv_date_of_departure;
-     this.serv_date_of_departure1 = serv_date_of_departure1;
-   this.serv_date_of_departure2 = serv_date_of_departure2;
-   
 
-   let serv_date_of_arrival = (logindata['result'][0]['serv_date_of_arrival']);
-   let serv_date_of_arrival1 = (logindata['result'][1]['serv_date_of_arrival']);
-   let serv_date_of_arrival2 = (logindata['result'][2]['serv_date_of_arrival']);
-   this.serv_date_of_arrival = serv_date_of_arrival;
-     this.serv_date_of_arrival1 = serv_date_of_arrival1;
-   this.serv_date_of_arrival2 = serv_date_of_arrival2;
+  
    
 
 
-   this.serv_date_of_departure = serv_date_of_departure;
-   this.serv_date_of_departure1 = serv_date_of_departure1;
- this.serv_date_of_departure2 = serv_date_of_departure2;
+   
+
+
  
 
- let serv_ware_dc_addr = (logindata['result'][0]['serv_ware_dc_addr']);
- let serv_ware_dc_addr1 = (logindata['result'][1]['serv_ware_dc_addr']);
- let serv_ware_dc_addr2 = (logindata['result'][2]['serv_ware_dc_addr']);
- this.serv_ware_dc_addr = serv_ware_dc_addr;
-   this.serv_ware_dc_addr1 =serv_ware_dc_addr1;
- this.serv_ware_dc_addr2 = serv_ware_dc_addr2;
-   
-
- this.serv_date_of_departure = serv_date_of_departure;
- this.serv_date_of_departure1 = serv_date_of_departure1;
-this.serv_date_of_departure2 = serv_date_of_departure2;
 
 
-let serv_ware_ac_addr = (logindata['result'][0]['serv_ware_ac_addr']);
-let serv_ware_ac_addr1 = (logindata['result'][1]['serv_ware_ac_addr']);
-let serv_ware_ac_addr2 = (logindata['result'][2]['serv_ware_ac_addr']);
-this.serv_ware_ac_addr = serv_ware_ac_addr;
- this.serv_ware_ac_addr1 =serv_ware_ac_addr1;
-this.serv_ware_ac_addr2 = serv_ware_ac_addr2;
-
-
-let serv_ofr_price = (logindata['result'][0]['serv_ofr_price']);
-let serv_ofr_price1 = (logindata['result'][1]['serv_ofr_price']);
-let serv_ofr_price2 = (logindata['result'][2]['serv_ofr_price']);
-//console.log("+++++ "+ serv_ofr_price1)
-this.serv_ofr_price = serv_ofr_price;
- this.serv_ofr_price1 =serv_ofr_price1;
-this.serv_ofr_price2 = serv_ofr_price2;
+// let serv_ofr_price = (logData[0]['serv_ofr_price']);
+// let serv_ofr_price1 = (logData[1]['serv_ofr_price']);
+// let serv_ofr_price2 = (logData[2]['serv_ofr_price']);
+// //console.log("+++++ "+ serv_ofr_price1)
+// this.serv_ofr_price = serv_ofr_price;
+//  this.serv_ofr_price1 =serv_ofr_price1;
+// this.serv_ofr_price2 = serv_ofr_price2;
 
 this.getCal();
 
@@ -295,30 +299,51 @@ this.getCal();
                     const data = await response.json();
             
                            console.log("data yee"+JSON.stringify(data))
-                           let price1 = JSON.stringify(data['result'][0][0]);
-                           let price2 = JSON.stringify(data['result'][1][0]);
-                           let price3 = JSON.stringify(data['result'][2][0]);
-                           let insurance = JSON.stringify(data['result'][0]['insurance']);
-                          let homeCollection1 = JSON.stringify(data['result'][0][2]);
-                          let homeCollection2 = JSON.stringify(data['result'][1][2]);
-                          let homeCollection3 = JSON.stringify(data['result'][2][2]);
-                          let home_delv1 = JSON.stringify(data['result'][0][3]);
-                          let home_delv2 = JSON.stringify(data['result'][0][3]);
-                          let home_delv3 = JSON.stringify(data['result'][0][3]);
-                     
+                           let logData = data['result'];
+                           console.log("logData''' ",logData)
+                           if(logData.length == 0 || logData.length == undefined || logData.length == null ){
+                                 return 0;
+                        }else if(data['result'].length == 1){
+                               this.setState({
+                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                homeCollection1 : (data['result'][0][2]),
+                                home_delv1 : JSON.stringify(data['result'][0][3])
+
+                               })
+                        }else if(data['result'].length == 2){
+                            this.setState({
+                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                total_price2 :JSON.stringify(data['result'][1][0]),
+                                homeCollection1 : JSON.stringify(data['result'][0][2]),
+                                homeCollection2 : JSON.stringify(data['result'][1][2]),
+                                home_delv1 : JSON.stringify(data['result'][0][3]),
+                                home_delv2 : JSON.stringify(data['result'][1][3])
+
+                               })
+                        }else if(data['result'].length ==3) {
+                            this.setState({
+                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                total_price2 :JSON.stringify(data['result'][1][0]),
+                                total_price3 :JSON.stringify(data['result'][2][0]),
+                                homeCollection1 : JSON.stringify(data['result'][0][2]),
+                                homeCollection2 : JSON.stringify(data['result'][1][2]),
+                                homeCollection3 : JSON.stringify(data['result'][2][2]),
+                                home_delv1 : JSON.stringify(data['result'][0][3]),
+                                home_delv2 : JSON.stringify(data['result'][1][3]),
+                                //home_delv3 : JSON.stringify(data['result'][3][3])
+                               })
+                        } 
+
+                          console.log("$$$$ "+this.state.total_price2)
+                  
                         //   transport_fee,
                         //   fee_on_transport,
                         //   home_colectn,
                         //   home_delv,
                         //   servc_from,
                         //   rbn_transport_fee
-                          this.insurance = insurance;
-                          this.homeCollection1 = homeCollection1;
-                          this.homeCollection2 = homeCollection2;
-                          this.homeCollection3 = homeCollection3;
-                          this.home_delv1 = home_delv1;
-                          this.home_delv2 = home_delv2;
-                          this.home_delv3 = home_delv3;
+                          //this.insurance = insurance;
+                    
                           //console.log("insurance"+ this.insurance)
                           
                           // let price = JSON.stringify(data['result'][0]['total']);
@@ -326,13 +351,13 @@ this.getCal();
                           // let price =(prc['total'])
                            
                           // this.total_price1 = price;
-                           if(tranp_type =1 && price1 != 0 ){
-                            this.total_price1 = price1;
-                            }if(transp_type1=2 && price2 != 0 ){
-                             this.total_price2 = price2;
-                             }if(tranp_type=3 &&  price3 != 0 ){
-                             this.total_price3 = price3;
-                            } 
+                        //    if(tranp_type =1 && price1 != 0 ){
+                        //     this.total_price1 = price1;
+                        //     }if(transp_type1=2 && price2 != 0 ){
+                        //      this.total_price2 = price2;
+                        //      }if(tranp_type=3 &&  price3 != 0 ){
+                        //      this.total_price3 = price3;
+                        //     } 
                            
                            
                     // check for error response
@@ -491,10 +516,11 @@ this.getCal();
 
     sender = () => {
         this.props.isLoggedIn == false ?
+        
             this.props.navigation.replace('Login', {})
             :
-            //console.log("countyyyyyy  "+this.state.sender_country)
-            this.props.navigation.navigate('Sender', { sender_country:this.state.des_country , sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})
+            console.log("countyyyyyy  "+this.state.des_country)
+            this.props.navigation.navigate('Sender', { sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})
     }
 
     forgot = () => {
@@ -1086,7 +1112,9 @@ var gsDayNames = [
                     </TouchableOpacity> */}
                    { this.state.setAvailList == true  ? <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-            {  this.total_price1 > 0 && (this.ser_type == 1 ||  this.ser_type1 == 1 || this.ser_type2 == 1) ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+            {  this.state.total_price1 > 0 && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
+                
+                <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1105,7 +1133,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price1}€</Text>
+                                    <Text >{this.state.total_price1}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Air</Text>
@@ -1131,7 +1159,7 @@ var gsDayNames = [
                     </TouchableOpacity>: null }
              
 
-                         { (this.ser_type == 3 ||  this.ser_type1 == 3 || this.ser_type2 == 3)  && this.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1150,7 +1178,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price2}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Road</Text>
@@ -1179,7 +1207,7 @@ var gsDayNames = [
 
 
 
-                    { this.total_price2 > 0 && (this.ser_type == 2 ||  this.ser_type1 == 2 || this.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+                    { this.state.total_price2 > 0 && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1198,7 +1226,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price2}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text style={{fontSize:12}}>Type-Maritime</Text>
@@ -1227,8 +1255,8 @@ var gsDayNames = [
 
                     </ScrollView> :       this.state.setFilter == true  ?  <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-{  this.state.shipping_filter == this.HomeServ_collection1 &&  this.state.Delivery_required == this.HomeServ_delivery1 && this.state.insurance_filter == this.insurance?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
-            <View style={styles.morehalf}>
+{  this.state.shipping_filter == this.state.homeCollection1 &&  this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+           <View style={styles.morehalf}>
                 <View style={styles.half}>
                     <View style={styles.slotc}>
                         <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
@@ -1271,8 +1299,8 @@ var gsDayNames = [
             </View>
         </TouchableOpacity>: null }
 
-        { this.state.shipping_filter == this.HomeServ_collection2 &&  this.state.Delivery_required == this.HomeServ_delivery2 && this.state.insurance_filter == this.insurance ?   <TouchableOpacity onPress={this.sender} style={styles.cardM}>
-            <View style={styles.morehalf}>
+        { this.state.shipping_filter == this.homeCollection2 &&  this.state.Delivery_required == this.home_delv2 && this.state.insurance_filter == 1 ?   <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+        <View style={styles.morehalf}>
                 <View style={styles.half}>
                     <View style={styles.slotc}>
                         <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
@@ -1326,7 +1354,7 @@ var gsDayNames = [
                 
                 <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
             
-                    { (this.ser_type == 1 ||  this.ser_type1 == 1 || this.ser_type2 == 1) && this.state.isAir == true && this.total_price1 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && this.state.isAir == true && this.state.total_price1 >=0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1345,7 +1373,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price1}€</Text>
+                                    <Text >{this.state.total_price1}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Air</Text>
@@ -1370,7 +1398,7 @@ var gsDayNames = [
                         </View>
                     </TouchableOpacity>: null }
 
-                     {(this.ser_type == 2 ||  this.ser_type1 == 2 || this.ser_type2 == 2) && this.state.isMaritime == true && this.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && this.state.isMaritime == true && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1389,7 +1417,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price2}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type-Maritime</Text>
@@ -1413,7 +1441,7 @@ var gsDayNames = [
                             </View>
                         </View>
                     </TouchableOpacity>:null } 
-                    { (this.ser_type == 3 ||  this.ser_type1 == 3 || this.ser_type2 == 3) && this.state.isRoad == true && this.total_price3 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && this.state.isRoad == true && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1432,7 +1460,7 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price3}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Road</Text>

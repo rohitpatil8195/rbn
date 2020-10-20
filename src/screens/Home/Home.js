@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, ActivityIndicator, Image,FlatList, TouchableOpacity, ScrollView, Animated, Dimensions, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image,FlatList, TouchableOpacity, ScrollView, Animated, Dimensions, BackHandler } from 'react-native';
 import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
 import Scroller from '../../components/Scroller';
@@ -18,7 +18,6 @@ import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerAuthCity, triggerSearch } from '../../actions';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import { isNullableTypeAnnotation } from '@babel/types';
 
 
 const data = [
@@ -118,7 +117,6 @@ class Home extends Component {
       valueArray: [],
       disabled: false,
       addPackage:[],
-      loader:false,
       Array: [
         [
           {
@@ -552,58 +550,86 @@ class Home extends Component {
     this.props.navigation.toggleDrawer()
   }
 
-  services = async() => {
-    this.setState.loader = true;
-    let formdata = new FormData();
-   // formdata.append("serv_user_id", this.state.servUserId)
-   // formdata.append("ordr_serv_id", this.state.servId)
-    formdata.append("serv_dept_cntry_id", this.state.countryId)
-   // formdata.append("serv_dept_city_id", this.state.depCityId)
-    formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
-  //  formdata.append("serv_ariv_city_id", this.state.arrCityId)
-   formdata.append("serv_date", moment(this.state.DOB).format('DD-MM-YYYY'));
-    // formdata.append("pckg_data[0][unit]", this.state.W)
-    // formdata.append("pckg_data[0][len]", this.state.L)
-    // formdata.append("pckg_data[0][dept]", this.state.D)
-    // formdata.append("pckg_data[0][hegt]", this.state.H)
-   // console.log(this.state.countrySelect)
-    console.log('formdatail:--- ',(this.state.DOB))
-    console.log('formdatail: ', JSON.stringify(formdata))
+  // services = async() => {
+  //   let formdata = new FormData();
+  //  // formdata.append("serv_user_id", this.state.servUserId)
+  //  // formdata.append("ordr_serv_id", this.state.servId)
+  //   formdata.append("serv_dept_cntry_id", this.state.countryId)
+  //   formdata.append("serv_dept_city_id", this.state.depCityId)
+  //   formdata.append("serv_ariv_cntry_id", this.state.desCountryId)
+  //   formdata.append("serv_ariv_city_id", this.state.arrCityId)
+  //  formdata.append("serv_date", moment(this.state.DOB).format('DD-MM-YYYY'));
+  //   // formdata.append("pckg_data[0][unit]", this.state.W)
+  //   // formdata.append("pckg_data[0][len]", this.state.L)
+  //   // formdata.append("pckg_data[0][dept]", this.state.D)
+  //   // formdata.append("pckg_data[0][hegt]", this.state.H)
+  //  // console.log(this.state.countrySelect)
+  //   console.log('formdatail:--- ',(this.state.DOB))
+  //   console.log('formdatail: ', JSON.stringify(formdata))
    
-   let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
-     let dimenLDH= []
-     dimenLDH.push(Dimen);   
+  //  let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
+  //    let dimenLDH= []
+  //    dimenLDH.push(Dimen);   
      
-     
-      this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError);
-    
-        this.setState.loader= false;
-
-
-  this.onSearchSuccess = (data) => {
-   this.setState({
-    data:data
-   }) 
- console.log('success Home', data)
-    if(data != []){
-      this.props.navigation.navigate('Services', {data:this.state.data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
-  
-     }  
-
-  }
-
+  //  await this.props.triggerSearch(formdata, this.onSearchSuccess, this.onSearchError)
  
-           
-     
-   }
+  //  await this.props.navigation.navigate('Services', {dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+  // }
 
-  onSearchSuccess = (data) => {
+  // onSearchSuccess = (data) => {
+  //   console.log('success Home', data)
 
-    console.log('success Home', data)
-  
+  // }
 
-  }
- 
+  services=()=>{
+
+      
+    let reqData = {   
+      serv_dept_cntry_id:this.state.countryId,
+    //  serv_dept_city_id:this.state.depCityId,
+      serv_ariv_cntry_id:this.state.desCountryId,
+     // serv_ariv_city_id:this.state.arrCityId,
+      serv_date:moment(this.state.DOB).format('DD-MM-YYYY')
+       }
+
+
+     const requestOptions = {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify(reqData) 
+       };
+   
+       fetch('http://rbn.sairoses.com/Front/index.php/API/fields/search-order', requestOptions)
+      
+           .then(async response => {
+               const data = await response.json();
+         
+                      console.log("data Home"+JSON.stringify(data))
+                      
+                         let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
+                        let dimenLDH= []
+                       dimenLDH.push(Dimen);   
+         this.props.navigation.navigate('Services', {data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+        
+
+               // check for error response
+               if (!response.ok) {
+                   // get error message from body or default to response status
+                   const error = (data && data.message) || response.status;
+                   return Promise.reject(error);
+               }
+   
+             
+           })
+           .catch(error => {
+               this.setState({ errorMessage: error.toString() });
+               console.error('There was an error!', error);
+           });
+
+      
+}
+
+
   render() {
     
     const screenHeight = Dimensions.get("window").height;
@@ -1107,7 +1133,7 @@ class Home extends Component {
                       value={this.state.DOB}
                     />
                     <TouchableOpacity onPress={this.services} style={styles.search}>
-                    {this.state.loader=false ? <ActivityIndicator size="small" color="#0000ff" />:<Text style={{ color: 'white' }}>{i18n.t('Search')}</Text>}
+                      <Text style={{ color: 'white' }}>{i18n.t('Search')}</Text>
                     </TouchableOpacity>
                 </View>
               </View>
