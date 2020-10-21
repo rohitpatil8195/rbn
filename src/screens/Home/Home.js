@@ -603,7 +603,7 @@ class Home extends Component {
       
            .then(async response => {
                const data = await response.json();
-         
+                         console.log("data pass ",requestOptions)
                       console.log("data Home"+JSON.stringify(data))
                       
                          let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
