@@ -321,15 +321,15 @@ this.getCal();
                                  return 0;
                         }else if(data['result'].length == 1){
                                this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
                                 homeCollection1 : (data['result'][0][2]),
                                 home_delv1 : JSON.stringify(data['result'][0][3])
 
                                })
                         }else if(data['result'].length == 2){
                             this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
-                                total_price2 :JSON.stringify(data['result'][1][0]),
+                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
+                                total_price2 :JSON.stringify(data['result'][1][0] + data['result'][1][1] ),
                                 homeCollection1 : JSON.stringify(data['result'][0][2]),
                                 homeCollection2 : JSON.stringify(data['result'][1][2]),
                                 home_delv1 : JSON.stringify(data['result'][0][3]),
@@ -338,9 +338,9 @@ this.getCal();
                                })
                         }else if(data['result'].length ==3) {
                             this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
-                                total_price2 :JSON.stringify(data['result'][1][0]),
-                                total_price3 :JSON.stringify(data['result'][2][0]),
+                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
+                                total_price2 :JSON.stringify(data['result'][1][0] + data['result'][1][1] ),
+                                total_price3 :JSON.stringify(data['result'][2][0] + data['result'][2][1] ),
                                 homeCollection1 : JSON.stringify(data['result'][0][2]),
                                 homeCollection2 : JSON.stringify(data['result'][1][2]),
                                 homeCollection3 : JSON.stringify(data['result'][2][2]),
@@ -839,7 +839,6 @@ var gsDayNames = [
                 </View>
 {/*                
                 <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
-
                       <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
@@ -849,7 +848,6 @@ var gsDayNames = [
                                 </View>
                             </View>
                             <Image source={require('../../Images/send.png')} style={styles.send} />
-
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
                                     <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
@@ -893,7 +891,6 @@ var gsDayNames = [
                                 </View>
                             </View>
                             <Image source={require('../../Images/send.png')} style={styles.send} />
-
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
                                     <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
@@ -936,7 +933,6 @@ var gsDayNames = [
                                 </View>
                             </View>
                             <Image source={require('../../Images/send.png')} style={styles.send} />
-
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
                                     <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
@@ -972,7 +968,6 @@ var gsDayNames = [
                     </TouchableOpacity>
                          
                               
-
                     {/* <TouchableOpacity style={styles.card4}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
@@ -1128,7 +1123,7 @@ var gsDayNames = [
                     </TouchableOpacity> */}
                    { this.state.setAvailList == true  ? <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-            {  this.state.total_price1 > 0 && (this.state.Weight < this.state.available_capacity2) && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
+            {  this.state.total_price1 > 0 && (this.state.Weight <= 10) && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
                 
                 <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
@@ -1175,7 +1170,7 @@ var gsDayNames = [
                     </TouchableOpacity>: null }
              
 
-                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && (this.state.Weight < this.state.available_capacity2) && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && (this.state.Weight <= (this.state.available_capacity3 =='' ? this.state.available_capacity2 : this.state.available_capacity3)) && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1223,7 +1218,7 @@ var gsDayNames = [
 
 
 
-                    { this.state.total_price2 > 0 && (this.state.Weight < this.state.available_capacity1) && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+                    { this.state.total_price2 > 0 && (this.state.Weight <= this.state.available_capacity1) && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1271,7 +1266,7 @@ var gsDayNames = [
 
                     </ScrollView> :       this.state.setFilter == true  ?  <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-{  this.state.shipping_filter == this.state.homeCollection1 &&  (this.state.Weight < this.state.available_capacity1) && this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+{  this.state.shipping_filter == this.state.homeCollection1 &&  (this.state.Weight <= 10) && this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
            <View style={styles.morehalf}>
                 <View style={styles.half}>
                     <View style={styles.slotc}>
@@ -1370,7 +1365,7 @@ var gsDayNames = [
                 
                 <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
             
-                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && (this.state.Weight < this.state.available_capacity2) && this.state.isAir == true  ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && (this.state.Weight <= 10) && this.state.isAir == true  ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1414,7 +1409,7 @@ var gsDayNames = [
                         </View>
                     </TouchableOpacity>: null }
 
-                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && (this.state.Weight < this.state.available_capacity1) && this.state.isMaritime == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && (this.state.Weight <= this.state.available_capacity1) && this.state.isMaritime == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1457,7 +1452,7 @@ var gsDayNames = [
                             </View>
                         </View>
                     </TouchableOpacity>:null } 
-                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && (this.state.Weight < this.state.available_capacity3) && this.state.isRoad == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && (this.state.Weight <= (this.state.available_capacity3 =='' ? this.state.available_capacity2 : this.state.available_capacity3)) && this.state.isRoad == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
