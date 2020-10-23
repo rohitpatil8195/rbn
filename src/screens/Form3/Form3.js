@@ -45,6 +45,10 @@ class Form3 extends Component {
             favColor: undefined,
             belonging:'',
             Quantity:'',
+            Diments:this.props.route.params.Diments,
+            serv_id:this.props.route.params.serv_id,
+            fWight:this.props.route.params.rWight,
+            transp_type:this.props.route.params.transp_type,
             reason: [
                 {
                     label: 'Commercial',
@@ -170,8 +174,6 @@ class Form3 extends Component {
 
 
 
-
-
     componentDidMount = () => {
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
         // this.onCategory(this.state.categoryId)
@@ -180,33 +182,37 @@ class Form3 extends Component {
         formdata.append('cat_belonging', '')
         // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
+        console.log("fWight",this.state.fWight)
     }
    
     submit_form=()=>{
 
-    var formdata = new FormData();
-formdata.append("tranport_type", "1");
-formdata.append("service_type", "1");
-formdata.append("insurance_type", "1");
-formdata.append("weight", "[10,20]");
-formdata.append("dimension", "[\"10||10||10\",\"20||20||20\"]");
-formdata.append("belongings", "["+ this.state.belonging +"]");
-formdata.append("quantity", "["+ this.state.Quantity+"]");
-formdata.append("unit_of_measure", "[1,2,3]");
-formdata.append("unit_value", "[1,2,3]");
-formdata.append("currency", "Euro");
-formdata.append("home_colectn", "0");
-formdata.append("home_delv", "0");
-formdata.append("scat_id", "[1,2,3]");
-formdata.append("serv_id", "209");
-formdata.append("exchange_rate", "["+this.state.favdolor+"]");
-//unit of measure this.state.unitEx1
-var requestOptions = {
-  method: 'POST',
-  body: formdata,
-  redirect: 'follow'
-};
+   let Api_data ={
+tranport_type: this.state.transp_type,
+service_type :"1",
+insurance_type: "1",
+weight: "["+this.state.fWight+"]",
+dimension: this.state.Diments,
+belongings: "["+ this.state.belonging +"]",
+quantity: "["+ this.state.Quantity+"]",
+unit_of_measure: "["+this.state.unitEx1+"]",
+unit_value: "[1,2,3]",
+currency: "Euro",
+home_colectn: "0",
+home_delv: "0",
+scat_id: "[1,2,3]",
+serv_id: this.state.serv_id,
+exchange_rate: "["+this.state.favdolor+"]",
+}
 
+//unit of measure this.state.unitEx1
+console.log("unit",this.state.unitEx1)
+const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Api_data) 
+};
+console.log("requestOptions",JSON.stringify(requestOptions))
 fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
@@ -741,9 +747,13 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     placeholder='Custom Duty $'
                                     underlineColorAndroid='lightgrey'
                                     designStyle={{ height: 40, marginLeft: '-10%', marginTop: '-8%' }} />
-                                <View style={styles.plus}>
+                                <View  style={styles.plus} >
+                               
                                     <Image source={require('../../Images/add-button-inside-black-circle.png')} style={styles.plus1} resizeMode='center' />
+                                    
+                           
                                 </View>
+                                <TouchableOpacity onPress={this.submit_form}><Text>press</Text></TouchableOpacity>
                                 <View style={styles.ship}>
                                     <View style={styles.v1}>
                                         <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Total Value Shipped :</Text>

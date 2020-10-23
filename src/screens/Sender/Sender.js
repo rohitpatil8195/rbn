@@ -28,17 +28,21 @@ class Sender extends Component {
             sender_city:this.props.route.params.sender_city,
             sender_country:this.props.route.params.sender_country,
             reciver_country:this.props.route.params.reciver_country,
-            reciver_city:this.props.route.params.reciver_city
+            reciver_city:this.props.route.params.reciver_city,
+            Diments:this.props.route.params.Diments,
+            serv_id:this.props.route.params.serv_id,
+            Weight:this.props.route.params.isWight,
+            transp_type:this.props.route.params.transp_type
 
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
-
+   
     componentDidMount() {
         const mystring = this.state.sender_city
      const splits = mystring.split(",");
      var city = splits[1];
-    console.log("should be pincode",this.sender_country); // output: this    
+     // output: this    
         this.setState({
               countrySelect: this.state.sender_country,
              cityZip: splits[0],
@@ -123,12 +127,14 @@ class Sender extends Component {
                 })
             }
         })
-        console.log('cityZip', this.state.cityZip)
+        console.log('cityZip', this.cityZip)
     }
 
     recipient = () => {
         this.props.triggerForm1()
-        this.props.navigation.navigate('Recipient', {reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
+        console.log("should be weight",this.state.Weight);
+        console.log("data is",this.state.Diments)
+        this.props.navigation.navigate('Recipient', {transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
 
     }
 

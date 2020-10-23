@@ -27,7 +27,11 @@ class Recipient extends Component {
             countryCode: '',
             cityDis: '',
             reciver_country:this.props.route.params.reciver_country,
-            reciver_city:this.props.route.params.reciver_city
+            reciver_city:this.props.route.params.reciver_city,
+            Diments:this.props.route.params.Diments,
+            serv_id:this.props.route.params.serv_id,
+            iWight:this.props.route.params.sWight,
+            transp_type:this.props.route.params.transp_type
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
@@ -122,7 +126,8 @@ class Recipient extends Component {
     }
 
     form3 = () => {
-        this.props.navigation.navigate('Form3', {})
+        console.log("weight",this.state.iWight)
+        this.props.navigation.navigate('Form3', {transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
 
     }
 

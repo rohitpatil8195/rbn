@@ -83,12 +83,12 @@ class Services extends Component {
              service_type1:'',
 
              service_type2:'',
-             available_capacity1:'',
-             available_capacity2:'',
-             available_capacity3:'',
+
              service_type3:'',
          services_Ids:[],
-         isSpace:null
+         serv_id1:'',
+         serv_id2:'',  
+         serv_id3:''
 
             
 
@@ -191,9 +191,7 @@ class Services extends Component {
             serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
             serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
             serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
-            available_capacity1 : logData[0]['available_capacity']
-   
-
+            serv_id1: logData[0]['serv_id']
         })
     }else if(logindata['result'].length == 2){
         this.setState({
@@ -209,8 +207,8 @@ class Services extends Component {
         serv_ware_dc_addr1 :logData[1]['serv_ware_dc_addr'],
         serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
          serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr'],
-         available_capacity1 : logData[0]['available_capacity'],
-         available_capacity2 : logData[1]['available_capacity']
+         serv_id1: logData[0]['serv_id'],
+         serv_id2: logData[1]['serv_id']
         })
         
     }else if(logindata['result'].length == 3){
@@ -232,16 +230,17 @@ class Services extends Component {
          serv_ware_dc_addr2 : logData[2]['serv_ware_dc_addr'],
          serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
          serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr'],
-       serv_ware_ac_addr2 : logData[2]['serv_ware_ac_addr'],
-       available_capacity1 : logData[0]['available_capacity'],
-       available_capacity2 : logData[1]['available_capacity'],
-       available_capacity3 : logData[2]['available_capacity']
+       serv_ware_ac_addr2 : logData[2]['serv_ware_ac_addr'], 
+       serv_id1: logData[0]['serv_id'],
+       serv_id2: logData[1]['serv_id'],
+       serv_id2: logData[2]['serv_id']
          
    
         })
  
     }
-console.log("dddddd",this.state.ser_type)
+console.log("dddddd",this.state.ser_type);
+console.log("serv_id1",this.state.serv_id2)
         let service_idsss = []
         service_idsss.push(this.state.service_type1);
         service_idsss.push(this.state.service_type2);
@@ -311,25 +310,19 @@ this.getCal();
                            console.log("data yee"+JSON.stringify(data))
                            let logData = data['result'];
                            console.log("logData''' ",logData)
-                          
-                        //    if((this.state.Weight < this.state.available_capacity1) && this.state.Weight <  this.state.available_capacity2 &&  this.state.Weight <  this.state.available_capacity3) 
-                        //    {
-                        //                   this.setState.isSpace == true;
-                        //    }
-//(this.state.Weight < this.state.available_capacity1) &&
                            if(logData.length == 0 || logData.length == undefined || logData.length == null ){
                                  return 0;
                         }else if(data['result'].length == 1){
                                this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
+                                total_price1 :JSON.stringify(data['result'][0][0]),
                                 homeCollection1 : (data['result'][0][2]),
                                 home_delv1 : JSON.stringify(data['result'][0][3])
 
                                })
                         }else if(data['result'].length == 2){
                             this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
-                                total_price2 :JSON.stringify(data['result'][1][0] + data['result'][1][1] ),
+                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                total_price2 :JSON.stringify(data['result'][1][0]),
                                 homeCollection1 : JSON.stringify(data['result'][0][2]),
                                 homeCollection2 : JSON.stringify(data['result'][1][2]),
                                 home_delv1 : JSON.stringify(data['result'][0][3]),
@@ -338,9 +331,9 @@ this.getCal();
                                })
                         }else if(data['result'].length ==3) {
                             this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0] + data['result'][0][1] ),
-                                total_price2 :JSON.stringify(data['result'][1][0] + data['result'][1][1] ),
-                                total_price3 :JSON.stringify(data['result'][2][0] + data['result'][2][1] ),
+                                total_price1 :JSON.stringify(data['result'][0][0]),
+                                total_price2 :JSON.stringify(data['result'][1][0]),
+                                total_price3 :JSON.stringify(data['result'][2][0]),
                                 homeCollection1 : JSON.stringify(data['result'][0][2]),
                                 homeCollection2 : JSON.stringify(data['result'][1][2]),
                                 homeCollection3 : JSON.stringify(data['result'][2][2]),
@@ -1123,13 +1116,13 @@ var gsDayNames = [
                     </TouchableOpacity> */}
                    { this.state.setAvailList == true  ? <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-            {  this.state.total_price1 > 0 && (this.state.Weight <= 10) && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
+            {  this.state.total_price1 > 0 && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
                 
                 <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
                                 </View>
                             </View>
@@ -1137,19 +1130,19 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
+                                    <Text >{this.state.total_price1}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Air</Text>
                                 </View>
-                            </View>  
+                            </View>
                         </View>
                         <View style={styles.morehalf1}>
                             <View style={styles.small}>
@@ -1170,11 +1163,11 @@ var gsDayNames = [
                     </TouchableOpacity>: null }
              
 
-                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && (this.state.Weight <= (this.state.available_capacity3 =='' ? this.state.available_capacity2 : this.state.available_capacity3)) && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{this.state.serv_date_of_departure2 !='' ? moment(this.state.serv_date_of_departure2).format('DD MMM YYYY') :moment(this.state.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
@@ -1182,7 +1175,7 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{this.state.serv_date_of_arrival2 != '' ? moment(this.state.serv_date_of_arrival2).format('DD MMM YYYY') : moment(this.state.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
@@ -1218,11 +1211,11 @@ var gsDayNames = [
 
 
 
-                    { this.state.total_price2 > 0 && (this.state.Weight <= this.state.available_capacity1) && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+                    { this.state.total_price2 > 0 && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
                                 </View>
                             </View>
@@ -1230,14 +1223,14 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price1}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text style={{fontSize:12}}>Type-Maritime</Text>
@@ -1266,11 +1259,11 @@ var gsDayNames = [
 
                     </ScrollView> :       this.state.setFilter == true  ?  <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
 
-{  this.state.shipping_filter == this.state.homeCollection1 &&  (this.state.Weight <= 10) && this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+{  this.state.shipping_filter == this.state.homeCollection1 &&  this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
            <View style={styles.morehalf}>
                 <View style={styles.half}>
                     <View style={styles.slotc}>
-                        <Text>{moment(this.state.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                        <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                         <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
                     </View>
                 </View>
@@ -1278,14 +1271,14 @@ var gsDayNames = [
 
                 <View style={styles.half}>
                     <View style={styles.slotc}>
-                        <Text>{moment(this.state.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                        <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                         <View style={styles.line4}></View>
                         <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
                     </View>
                 </View>
                 <View style={styles.remain}>
                     <View style={styles.charges}>
-                        <Text >{this.total_price2}€</Text>
+                        <Text >{this.total_price1}€</Text>
                         <Text style={{ fontSize: 8 }}>Include insurance</Text>
                         <View style={styles.line3}></View>
                         <Text>Type - Air</Text>
@@ -1314,7 +1307,7 @@ var gsDayNames = [
         <View style={styles.morehalf}>
                 <View style={styles.half}>
                     <View style={styles.slotc}>
-                        <Text>{moment(this.state.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                        <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
                         <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
                     </View>
                 </View>
@@ -1322,14 +1315,14 @@ var gsDayNames = [
 
                 <View style={styles.half}>
                     <View style={styles.slotc}>
-                        <Text>{moment(this.state.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
+                        <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
                         <View style={styles.line4}></View>
                         <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
                     </View>
                 </View>
                 <View style={styles.remain}>
                     <View style={styles.charges}>
-                        <Text >{this.total_price1}€</Text>
+                        <Text >{this.total_price2}€</Text>
                         <Text style={{ fontSize: 8 }}>Include insurance</Text>
                         <View style={styles.line3}></View>
                         <Text style={{fontSize:12}}>Type-Maritime</Text>
@@ -1365,11 +1358,11 @@ var gsDayNames = [
                 
                 <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
             
-                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && (this.state.Weight <= 10) && this.state.isAir == true  ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && this.state.isAir == true && this.state.total_price1 >=0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id1,transp_type: 1,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
                                 </View>
                             </View>
@@ -1377,14 +1370,14 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
+                                    <Text >{this.state.total_price1}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Air</Text>
@@ -1409,11 +1402,11 @@ var gsDayNames = [
                         </View>
                     </TouchableOpacity>: null }
 
-                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && (this.state.Weight <= this.state.available_capacity1) && this.state.isMaritime == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && this.state.isMaritime == true && this.state.total_price2 > 0 ?  <TouchableOpacity  onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id2,transp_type: 2,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
                                 </View>
                             </View>
@@ -1421,14 +1414,14 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.state.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price1 !='' ? this.state.total_price1 : this.state.total_price}€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type-Maritime</Text>
@@ -1452,11 +1445,11 @@ var gsDayNames = [
                             </View>
                         </View>
                     </TouchableOpacity>:null } 
-                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && (this.state.Weight <= (this.state.available_capacity3 =='' ? this.state.available_capacity2 : this.state.available_capacity3)) && this.state.isRoad == true ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && this.state.isRoad == true && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', {Diments:this.state.Diments,serv_id:this.state.serv_id3,transp_type: '3',isWight:this.state.Weight, sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{this.state.serv_date_of_departure2 !='' ? moment(this.state.serv_date_of_departure2).format('DD MMM YYYY') : moment(this.state.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
@@ -1464,14 +1457,14 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text> {this.state.serv_date_of_arrival2 != '' ? moment(this.state.serv_date_of_arrival2).format('DD MMM YYYY') : moment(this.state.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price2 !='' ? this.state.total_price2 :  this.state.total_price1 || this.state.total_price }€</Text>
+                                    <Text >{this.state.total_price2}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
                                     <Text>Type - Road</Text>
@@ -1673,3 +1666,9 @@ export default connect(
                                 <View style={styles.sl1}></View>
                             </View>
                         </View> */}
+
+
+
+
+
+

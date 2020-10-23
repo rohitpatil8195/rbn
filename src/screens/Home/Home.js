@@ -135,7 +135,8 @@ class Home extends Component {
       W:'',
       L:'',
       D:'',
-      H:''
+      H:'',
+      Service_ids:[]
 
      
 
@@ -354,12 +355,13 @@ class Home extends Component {
     addPackage.push(
         
       <View style={styles.card22}>
-  
+        
         {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
         {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
           underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+          <TouchableOpacity><Text style={styles.textb}>- delete</Text></TouchableOpacity>
         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-          underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+          underlineColorAndroid='grey' designStyle={{ width: '120%', marginLeft: '-15%', height: 50 }} />
         {/* </View> */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
           <Text style={styles.dim}>Dimensions (cm) :</Text>
@@ -370,7 +372,7 @@ class Home extends Component {
           <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
             underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
         </View>
-      
+        
     </View>
 
     );
@@ -605,11 +607,18 @@ class Home extends Component {
                const data = await response.json();
                          console.log("data pass ",requestOptions)
                       console.log("data Home"+JSON.stringify(data))
-                      
+
+                      let tmpArray = []
+                      for (var i = 0; i < data.result.length; i++) {
+                          tmpArray.push(data.result[i].serv_id)
+                      }
+                      this.setState({
+                        Service_ids: tmpArray
+                    })
                          let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
                         let dimenLDH= []
                        dimenLDH.push(Dimen);   
-         this.props.navigation.navigate('Services', {data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+         this.props.navigation.navigate('Services', {Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
         
 
                // check for error response

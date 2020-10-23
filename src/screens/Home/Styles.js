@@ -198,7 +198,7 @@ export default StyleSheet.create({
         
     },
      card22: {
-        height: '80%',
+        height: '90%',
         width: '90%'
     },
     viewHolder: {
