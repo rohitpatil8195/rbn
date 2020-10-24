@@ -1118,7 +1118,7 @@ var gsDayNames = [
 
             {  this.state.total_price1 > 0 && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
                 
-                <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+                <TouchableOpacity  onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id1,transp_type: 1,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1163,7 +1163,7 @@ var gsDayNames = [
                     </TouchableOpacity>: null }
              
 
-                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={this.sender} style={styles.cardN}>
+                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', {Diments:this.state.Diments,serv_id:this.state.serv_id3,transp_type: '3',isWight:this.state.Weight, sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
@@ -1211,7 +1211,7 @@ var gsDayNames = [
 
 
 
-                    { this.state.total_price2 > 0 && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
+                    { this.state.total_price2 > 0 && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id2,transp_type: 2,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardM}>
                         <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>

@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,Button, ImageBackground, Image } from 'react-native';
 import styles from "./Styles";
 import { ScrollView, } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -45,6 +45,8 @@ class Form3 extends Component {
             favColor: undefined,
             belonging:'',
             Quantity:'',
+            cust_Duty:'',
+            unit_values:'',
             Diments:this.props.route.params.Diments,
             serv_id:this.props.route.params.serv_id,
             fWight:this.props.route.params.rWight,
@@ -196,17 +198,17 @@ dimension: this.state.Diments,
 belongings: "["+ this.state.belonging +"]",
 quantity: "["+ this.state.Quantity+"]",
 unit_of_measure: "["+this.state.unitEx1+"]",
-unit_value: "[1,2,3]",
-currency: "Euro",
+unit_value: "["+this.state.unit_values+"]",
+currency: "["+this.state.favdolor+"]",
 home_colectn: "0",
 home_delv: "0",
-scat_id: "[1,2,3]",
+scat_id: "["+this.state.productId+"]",
 serv_id: this.state.serv_id,
 exchange_rate: "["+this.state.favdolor+"]",
 }
 
 //unit of measure this.state.unitEx1
-console.log("unit",this.state.unitEx1)
+console.log("unit",this.state.unit_values)
 const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -214,9 +216,31 @@ const requestOptions = {
 };
 console.log("requestOptions",JSON.stringify(requestOptions))
 fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+.then(async response => {
+    const data = await response.json();
+
+           console.log("data yee"+JSON.stringify(data))
+        //    let formData = data['result'];
+        //    console.log("form3Data''' ",formData)
+  if(data['result'] != null || '' || undefined){
+        this.setState({
+            cust_Duty:JSON.stringify(data['result'][0]['custom_duty'])
+        })
+    }else{
+            return 0;
+        }
+    if (!response.ok) {
+        // get error message from body or default to response status
+        const error = (data && data.message) || response.status;
+        return Promise.reject(error);
+    }
+
+    this.setState({ postId: data.id })
+})
+.catch(error => {
+    this.setState({ errorMessage: error.toString() });
+    console.error('There was an error!', error);
+});
 
 }
 
@@ -334,7 +358,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
             el.id = el.scat_id;
             return el;
         })
-        // console.log("productList", result)
+   //  console.log("productList", result)
         this.setState({
             productList: result,
         })
@@ -352,7 +376,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                 })
             }
         })
-        // console.log('cityZip', this.state.cityZip)
+        console.log('cityZip', this.state.productId)
     }
 
     // onCategory = (categoryId) => {
@@ -724,9 +748,10 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                     <TextInputComponent
-                                        onChangeText={text => this.setState({ FirstName: text })}
+                                        onChangeText={unit_values =>this.setState({unit_values})}
                                         placeholder='Unit Value'
                                         underlineColorAndroid='grey'
+                                        keyboardType = 'numeric'
                                         designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
                                     <DropDown
                                         placeholder={ExchangePlaceholder}
@@ -753,18 +778,26 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     
                            
                                 </View>
-                                <TouchableOpacity onPress={this.submit_form}><Text>press</Text></TouchableOpacity>
+                                {/* <Button  onPress={this.submit_form} title='Get Custom Duty"  /> */}
+                                <View style={{marginBottom:14}}>
+                                <Button 
+                                onPress={this.submit_form}
+                                title="Get Custom Duty"
+                                color="#841584"
+                                accessibilityLabel="Learn more about this purple button"
+                              />
+                              </View>
                                 <View style={styles.ship}>
                                     <View style={styles.v1}>
                                         <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Total Value Shipped :</Text>
                                     </View>
                                     <View style={styles.v2}>
                                         <View style={styles.v21}>
-                                            <Text style={{ fontSize: 17 }}>01</Text>
+                                            <Text style={{ fontSize: 17 }}>{this.state.Quantity}</Text>
                                             <Text style={{ fontSize: 10 }}>Quantity</Text>
                                         </View>
                                         <View style={styles.v22}>
-                                            <Text style={{ fontSize: 17 }}>$ 500</Text>
+                                            <Text style={{ fontSize: 17 }}>${this.state.cust_Duty}</Text>
                                             <Text style={{ fontSize: 10 }}>Custom Duty</Text>
                                         </View>
 
