@@ -25,14 +25,23 @@ class Sender extends Component {
             cityZip: '',
             countryCode: '',
             cityDis: '',
+            Company_name: '',
+            FirstName: '',
+            Surname: '',
+            Telephone: '',
+            Email: '',
+            Address: '',
+            VAT_Number: '',
+            Additional_Info: '',
             sender_city:this.props.route.params.sender_city,
             sender_country:this.props.route.params.sender_country,
             reciver_country:this.props.route.params.reciver_country,
             reciver_city:this.props.route.params.reciver_city,
             Diments:this.props.route.params.Diments,
-            serv_id:this.props.route.params.serv_id,
+            serv_id:this.props.route.params.servicess_id,
             Weight:this.props.route.params.isWight,
-            transp_type:this.props.route.params.transp_type
+            transp_type:this.props.route.params.transp_type,
+            servi_typ:this.props.route.params.services_type
 
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
@@ -51,7 +60,7 @@ class Sender extends Component {
 
            
         })
-       // console.log(this.state.sender_city)
+      console.log("transp_type",this.state.transp_type)
      
     }
 
@@ -131,10 +140,21 @@ class Sender extends Component {
     }
 
     recipient = () => {
-        this.props.triggerForm1()
+       let formdata = new FormData();
+    formdata.append("Company_name", this.state.Company_name)
+    formdata.append("FirstName", this.state.FirstName)
+    formdata.append("Surname", this.state.Surname)
+    formdata.append("Telephone", this.state.Telephone)
+        formdata.append("Email", this.state.Email)
+    formdata.append("Address", this.state.Address)
+        formdata.append("VAT_Number", this.state.VAT_Number)
+    formdata.append("Additional_Info", this.state.Additional_Info)
+    this.props.triggerForm1(formdata);
+    console.log("all data",formdata)
+  // this.props.triggerForm1()
         console.log("should be weight",this.state.Weight);
         console.log("data is",this.state.Diments)
-        this.props.navigation.navigate('Recipient', {transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
+        this.props.navigation.navigate('Recipient', {servic_typ:this.state.servi_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
 
     }
 
@@ -173,11 +193,11 @@ class Sender extends Component {
                     <View style={styles.card}>
                         <View style={styles.card21}>
                             <View style={{ height: '2%' }}></View>
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Company Name'
+                            <TextInputComponent onChangeText={text => this.setState({ Company_name:text })} placeholder='Company Name'
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50,borderColor:'black',borderWidth:1 }} />
+                            <TextInputComponent onChangeText={text => this.setState({ FirstName:text})} placeholder='First Name'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='First Name'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Surname'
+                            <TextInputComponent onChangeText={text => this.setState({ Surname:text })} placeholder='Surname'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                 {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='+00'
@@ -192,12 +212,12 @@ class Sender extends Component {
                                     Ref={input => { this.userName = input }}
                                     underlineColorAndroid='grey'
                                     editable={false} />
-                                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Telephone'
+                                <TextInputComponent onChangeText={text => this.setState({ Telephone:text})} placeholder='Telephone'
                                     underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }} />
                             </View>
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Email'
+                            <TextInputComponent onChangeText={text => this.setState({ Email:text })} placeholder='Email'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Address'
+                            <TextInputComponent onChangeText={text => this.setState({ Address:text })} placeholder='Address'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <DropDown
                                 placeholder={CategoryPlaceholder}
@@ -241,11 +261,11 @@ class Sender extends Component {
                                     underlineColorAndroid='grey'
                                     designStyle={{ width: '52%', marginLeft: '15%', height: 50, color: 'black' }}
                                 />
-                                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='VAT Number'
+                                <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} />
                             </View>
 
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Additional Info'
+                            <TextInputComponent onChangeText={text => this.setState({ Additional_Info:text })} placeholder='Additional Info'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }} />
                         </View>
                     </View>

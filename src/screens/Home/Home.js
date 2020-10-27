@@ -136,7 +136,9 @@ class Home extends Component {
       L:'',
       D:'',
       H:'',
-      Service_ids:[]
+      Service_ids:[],
+      isTime:null,
+      service_type:''
 
      
 
@@ -495,7 +497,7 @@ class Home extends Component {
 
   isParcelPressed = () => {
     if (!this.state.isParcel) {
-      this.setState({ isParcel: true })
+      this.setState({ isParcel: true, service_type:1 })
     } else {
       this.setState({ isParcel: false })
     }
@@ -504,7 +506,7 @@ class Home extends Component {
 
   isPackagePressed = () => {
     if (!this.state.isPackage) {
-      this.setState({ isPackage: true })
+      this.setState({ isPackage: true , service_type:2})
     } else {
       this.setState({ isPackage: false })
     }
@@ -513,7 +515,7 @@ class Home extends Component {
 
   isPallatPressed = () => {
     if (!this.state.isPallat) {
-      this.setState({ isPallat: true })
+      this.setState({ isPallat: true ,service_type:3 })
     } else {
       this.setState({ isPallat: false })
     }
@@ -585,13 +587,17 @@ class Home extends Component {
 
   services=()=>{
 
+   let dt = moment(this.state.DOB).format('DD-MM-YYYY')
+   this.setState({
+     isTime:dt
+   })
       
     let reqData = {   
       serv_dept_cntry_id:this.state.countryId,
     //  serv_dept_city_id:this.state.depCityId,
       serv_ariv_cntry_id:this.state.desCountryId,
      // serv_ariv_city_id:this.state.arrCityId,
-      serv_date:moment(this.state.DOB).format('DD-MM-YYYY')
+      serv_date:this.state.isTime
        }
 
 
@@ -618,7 +624,7 @@ class Home extends Component {
                          let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
                         let dimenLDH= []
                        dimenLDH.push(Dimen);   
-         this.props.navigation.navigate('Services', {Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
+         this.props.navigation.navigate('Services', {serve_type:this.state.service_type,Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
         
 
                // check for error response

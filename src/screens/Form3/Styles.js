@@ -78,7 +78,7 @@ export default StyleSheet.create({
     down: {
         height: 30,
         width: 20,
-        marginHorizontal: 10
+        marginHorizontal: 20
     },
     downup: {
         height: 30,
@@ -168,15 +168,31 @@ export default StyleSheet.create({
         marginVertical: 5,
     },
     upload: {
-        height: '25%',
-        width: '90%',
+        height: '80%',
+        width: '60%',
         backgroundColor: 'lightgrey',
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        bottom: 20
+        bottom: 20,
+        borderColor:'black',
+        borderWidth:1,
+        marginLeft:25,
+        marginRight:7
     },  
+    uploadss:{
+        height: '70%',
+        width: '20%',
+        backgroundColor: 'lightgrey',
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center',
+        bottom: 20,
+        borderColor:'black',
+        borderWidth:1
+    },
     plus: {
         height: '3%',
         width: '90%',

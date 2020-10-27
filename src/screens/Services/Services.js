@@ -1,5 +1,6 @@
+
 import React, { Component ,useEffect} from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, ScrollView, Animated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet,Modal, ImageBackground, Image,FlatList, TouchableOpacity, ScrollView, Animated, Dimensions } from 'react-native';
 import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
 import Scroller from '../../components/Scroller';
@@ -9,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { triggerAuthLogin, triggerLogout,triggerCustom } from '../../actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment/moment';
-import { FlatList } from 'react-native-gesture-handler';
+//import { FlatList } from 'react-native-gesture-handler';
 //import { triggerCustom } from '../../actions';
 
 
@@ -81,14 +82,24 @@ class Services extends Component {
              setAvailList:true,
              setFilter:false,
              service_type1:'',
-
              service_type2:'',
-
+             available_capacity1:'',
+             available_capacity2:'',
+             available_capacity3:'',
              service_type3:'',
-         services_Ids:[],
-         serv_id1:'',
-         serv_id2:'',  
-         serv_id3:''
+         services_Ids:this.props.route.params.Service_ids,
+         service_type:this.props.route.params.serve_type,
+         isSpace:null,
+         Home_data:[],
+         finalData:[],
+         logData:[],
+         prices:[],
+         Air_data:[],
+         Marine_data:[],
+         Road_data:[],
+         available_capacity:'',
+         filterd_list:[],
+         Final_filterd:[],
 
             
 
@@ -180,97 +191,9 @@ class Services extends Component {
     //     this.HomeServ_delivery1 = HomeServ_delivery1;
 
         let logData = logindata['result'];
-    if(logData.length == 0 || logData.length == undefined || logData.length == null){
-       return 0;
-    }
-    else if(logindata['result'].length == 1 ){
         this.setState({
-            service_type1 : logData[0]['serv_id'],
-            ser_type : logData[0]['serv_type'],
-            serv_date_of_departure : logData[0]['serv_date_of_departure'],
-            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
-            serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
-            serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
-            serv_id1: logData[0]['serv_id']
+        Home_data:logData
         })
-    }else if(logindata['result'].length == 2){
-        this.setState({
-            service_type1 : logData[0]['serv_id'],
-            service_type2 : logData[1]['serv_id'],
-            ser_type : logData[0]['serv_type'],
-            ser_type1 : logData[1]['serv_type'],
-            serv_date_of_departure : logData[0]['serv_date_of_departure'],
-            serv_date_of_departure1 : logData[1]['serv_date_of_departure'],
-            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
-            serv_date_of_arrival1 :logData[1]['serv_date_of_arrival'],
-            serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
-        serv_ware_dc_addr1 :logData[1]['serv_ware_dc_addr'],
-        serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
-         serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr'],
-         serv_id1: logData[0]['serv_id'],
-         serv_id2: logData[1]['serv_id']
-        })
-        
-    }else if(logindata['result'].length == 3){
-        this.setState({
-            service_type1 : logData[0]['serv_id'],
-            service_type2 : logData[1]['serv_id'],
-            service_type3 : logData[2]['serv_id'],
-            ser_type : logData[0]['serv_type'],
-            ser_type1 : logData[1]['serv_type'],
-            ser_type2 : logData[2]['serv_type'],
-            serv_date_of_departure : logData[0]['serv_date_of_departure'],
-            serv_date_of_departure1 : logData[1]['serv_date_of_departure'],
-            serv_date_of_departure2 : logData[2]['serv_date_of_departure'],
-            serv_date_of_arrival :logData[0]['serv_date_of_arrival'],
-            serv_date_of_arrival1 :logData[1]['serv_date_of_arrival'],
-          serv_date_of_arrival2 : logData[2]['serv_date_of_arrival'],
-          serv_ware_dc_addr : logData[0]['serv_ware_dc_addr'],
-        serv_ware_dc_addr1 :logData[1]['serv_ware_dc_addr'],
-         serv_ware_dc_addr2 : logData[2]['serv_ware_dc_addr'],
-         serv_ware_ac_addr : logData[0]['serv_ware_ac_addr'],
-         serv_ware_ac_addr1 :logData[1]['serv_ware_ac_addr'],
-       serv_ware_ac_addr2 : logData[2]['serv_ware_ac_addr'], 
-       serv_id1: logData[0]['serv_id'],
-       serv_id2: logData[1]['serv_id'],
-       serv_id2: logData[2]['serv_id']
-         
-   
-        })
- 
-    }
-console.log("dddddd",this.state.ser_type);
-console.log("serv_id1",this.state.serv_id2)
-        let service_idsss = []
-        service_idsss.push(this.state.service_type1);
-        service_idsss.push(this.state.service_type2);
-        service_idsss.push(this.state.service_type3);
-       this.setState({
-         services_Ids: service_idsss.filter(n => n)
-       });
-     
-       //console.log("service arrays are"+this.state.services_Ids)
-
-
-
-  
-   
-
-
-   
-
-
- 
-
-
-
-// let serv_ofr_price = (logData[0]['serv_ofr_price']);
-// let serv_ofr_price1 = (logData[1]['serv_ofr_price']);
-// let serv_ofr_price2 = (logData[2]['serv_ofr_price']);
-// //console.log("+++++ "+ serv_ofr_price1)
-// this.serv_ofr_price = serv_ofr_price;
-//  this.serv_ofr_price1 =serv_ofr_price1;
-// this.serv_ofr_price2 = serv_ofr_price2;
 
 this.getCal();
 
@@ -290,7 +213,7 @@ this.getCal();
             service_type: "1",
             weight: "["+wt+"]",
             dimension: this.state.Diments,
-               serv_id:"209",
+               serv_id:"210",
             serv_ids: "["+this.state.services_Ids+"]"
             }
         console.log('red ==> ',reqData)
@@ -306,44 +229,118 @@ this.getCal();
             fetch('http://rbn.sairoses.com/Front/index.php/API/fields/transportcalculation', requestOptions)
                 .then(async response => {
                     const data = await response.json();
-            
+                              let prices = data['result'];
+                              console.log("data yee"+JSON.stringify(prices))
                            console.log("data yee"+JSON.stringify(data))
                            let logData = data['result'];
+                         
                            console.log("logData''' ",logData)
-                           if(logData.length == 0 || logData.length == undefined || logData.length == null ){
-                                 return 0;
-                        }else if(data['result'].length == 1){
-                               this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
-                                homeCollection1 : (data['result'][0][2]),
-                                home_delv1 : JSON.stringify(data['result'][0][3])
+                           this.setState({
+                            logData:logData,
+                            prices:prices,
+                            available_capacity,
+                           })
 
-                               })
-                        }else if(data['result'].length == 2){
-                            this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
-                                total_price2 :JSON.stringify(data['result'][1][0]),
-                                homeCollection1 : JSON.stringify(data['result'][0][2]),
-                                homeCollection2 : JSON.stringify(data['result'][1][2]),
-                                home_delv1 : JSON.stringify(data['result'][0][3]),
-                                home_delv2 : JSON.stringify(data['result'][1][3])
+                           for(let i=0; i<this.state.Home_data.length; i++){
+                               this.state.Home_data[i]['transport_fee'] = this.state.logData[i][0]
+                               this.state.Home_data[i]['fee_on_transport'] = this.state.logData[i][1]
+                               this.state.Home_data[i]['home_colectn'] = this.state.logData[i][2]
+                               this.state.Home_data[i]['home_delv'] = this.state.logData[i][3]
+                               this.state.Home_data[i]['servc_from'] = this.state.logData[i][4]
+                               this.state.Home_data[i]['rbn_transport_fee'] = this.state.logData[i][5]
+                           }
+                        //    let store = this.state.Home_data
+                           const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
+                             this.setState({
+                                 finalData:check_fin
+                             })
+                           console.log("Home data", this.state.finalData)
 
-                               })
-                        }else if(data['result'].length ==3) {
-                            this.setState({
-                                total_price1 :JSON.stringify(data['result'][0][0]),
-                                total_price2 :JSON.stringify(data['result'][1][0]),
-                                total_price3 :JSON.stringify(data['result'][2][0]),
-                                homeCollection1 : JSON.stringify(data['result'][0][2]),
-                                homeCollection2 : JSON.stringify(data['result'][1][2]),
-                                homeCollection3 : JSON.stringify(data['result'][2][2]),
-                                home_delv1 : JSON.stringify(data['result'][0][3]),
-                                home_delv2 : JSON.stringify(data['result'][1][3]),
-                                //home_delv3 : JSON.stringify(data['result'][3][3])
-                               })
-                        } 
 
-                          console.log("$$$$ "+this.state.total_price2)
+                           let available_capacity = this.state.finalData['available_capacity'];
+                           this.setState({
+                            available_capacity:available_capacity,
+                           })
+
+                           const check_a = this.state.Home_data.filter(x => x.serv_type == 1 && this.state.Weight <= 10 );
+                          // const check_W_a = check_a.filter(x=>x.available_capacity >= this.state.Weight);
+                           this.setState({
+                            Air_data:check_a,
+                        
+                        })
+
+                        const check_m = this.state.Home_data.filter(x => x.serv_type == 2 );
+                        const check_W_m = check_m.filter(x=>x.available_capacity >= this.state.Weight);
+                        this.setState({
+                            Marine_data:check_W_m
+                     })
+
+                    
+         
+                     const check_r = this.state.Home_data.filter(x => x.serv_type == 3);
+                    const check_W = check_r.filter(x=>x.available_capacity >= this.state.Weight);
+                      this.setState({
+                          Road_data:check_W
+                   })
+           
+             
+                
+                  
+                           //tmpArray:[]
+                    //        let tmpArray = [this.state.final_Data]
+                    //        for (var i = 0; i < data.result.length; i++) {
+                    //         tmpArray.push(data.result[i].result)
+                    //     }
+                    //     this.setState({
+                    //         final_Data: tmpArray
+                    //   })
+                      
+                    //        var hege = this.state.prices;
+                    //      var stale = this.state.Home_data;
+                    //    var children = hege.concat(stale);
+                    //    this.setState({
+                    //    final_Data:children
+                    //    })
+                      // console.log("finalllll",this.state.final_Data)
+                        //    if((this.state.Weight < this.state.available_capacity1) && this.state.Weight <  this.state.available_capacity2 &&  this.state.Weight <  this.state.available_capacity3) 
+                        //    {
+                        //                   this.setState.isSpace == true;
+                        //    }
+//(this.state.Weight < this.state.available_capacity1) &&
+                        //    if(logData.length == 0 || logData.length == undefined || logData.length == null ){
+                        //          return 0;
+                        // }else if(data['result'].length == 1){
+                        //        this.setState({
+                        //         total_price1 :JSON.stringify(data['result'][0][0]),
+                        //         homeCollection1 : (data['result'][0][2]),
+                        //         home_delv1 : JSON.stringify(data['result'][0][3])
+
+                        //        })
+                        // }else if(data['result'].length == 2){
+                        //     this.setState({
+                        //         total_price1 :JSON.stringify(data['result'][0][0]),
+                        //         total_price2 :JSON.stringify(data['result'][1][0]),
+                        //         homeCollection1 : JSON.stringify(data['result'][0][2]),
+                        //         homeCollection2 : JSON.stringify(data['result'][1][2]),
+                        //         home_delv1 : JSON.stringify(data['result'][0][3]),
+                        //         home_delv2 : JSON.stringify(data['result'][1][3])
+
+                        //        })
+                        // }else if(data['result'].length ==3) {
+                        //     this.setState({
+                        //         total_price1 :JSON.stringify(data['result'][0][0]),
+                        //         total_price2 :JSON.stringify(data['result'][1][0]),
+                        //         total_price3 :JSON.stringify(data['result'][2][0]),
+                        //         homeCollection1 : JSON.stringify(data['result'][0][2]),
+                        //         homeCollection2 : JSON.stringify(data['result'][1][2]),
+                        //         homeCollection3 : JSON.stringify(data['result'][2][2]),
+                        //         home_delv1 : JSON.stringify(data['result'][0][3]),
+                        //         home_delv2 : JSON.stringify(data['result'][1][3]),
+                        //         //home_delv3 : JSON.stringify(data['result'][3][3])
+                        //        })
+                        // } 
+
+                        //   console.log("$$$$ "+this.state.total_price2)
                   
                         //   transport_fee,
                         //   fee_on_transport,
@@ -388,52 +385,7 @@ this.getCal();
 
 
 
-    // getCal = () => {
-    //     let formdata = new FormData();
-    //     formdata.append("tranport_type",  this.ser_type )
-    //     formdata.append("service_type", "1")
-    //     formdata.append("insurance_type", "1")
-    //     formdata.append("weight", this.state.Weight)
-    //     formdata.append("dimension", this.state.Diments);
-    //     formdata.append("belongings", "[0]")
-    //     formdata.append("quantity", "1")
-    //     formdata.append("unit_of_measure", "1")
-    //     formdata.append("unit_value", "1")
-    //     formdata.append("currency", "1")
-    //     formdata.append("scat_id", "1")
-    //     formdata.append("serv_id",   this.state.service_id )
-    //    // console.log(this.state.countrySelect)
-  
-    //    const requestOptions = {
-    //     method: 'POST',
-    //     body: JSON.stringify(formdata)
-    //    }
-    // console.log("req option", formdata )
-    // fetch('http://rbn.sairoses.com/Front/index.php/API/fields/calculation', requestOptions)
-    //     .then(async response => {
-    //         const data = await response.json();
-    //                console.log("data yee"+JSON.stringify(data))
-                   
-    //         // check for error response
-    //         if (!response.ok) {
-    //             // get error message from body or default to response status
-    //             const error = (data && data.message) || response.status;
-    //             return Promise.reject(error);
-    //         }
 
-    //         this.setState({ postId: data.id })
-    //     })
-    //     .catch(error => {
-    //         this.setState({ errorMessage: error.toString() });
-    //         console.error('There was an error!', error);
-    //     });
-
-
-    // // console.log("service id"+ this.state.service_id )
-    // //     console.log('formdatail: ', JSON.stringify(formdata))
-    // //     this.props.triggerCustom(formdata, this.onSuccess, this.onError);
-     
-    //   } 
 
 
       onSuccess = (data) => {
@@ -500,6 +452,15 @@ this.getCal();
     }
 
     isMaritimePressed = () => {
+        const newData = this.state.Home_data.filter((item)=>{
+            return item.serv_type == 1;
+          })
+          this.setState({
+            Home_data: newData
+          });
+        
+
+        
         this.userInfo()
         this.setState({setAvailList: false})
         this.setState({setFilter: false});
@@ -550,27 +511,31 @@ this.getCal();
 
     isCheckPressed1=()=> {
         if (!this.state.isCheck1) {
-            this.setState({isCheck1: true, shipping_filter:1})
+            this.setState({isCheck1: true, shipping_filter:"1"})
+            this.setState({isCheck2: false})
          
           } else{
             this.setState({isCheck1: false})
           }
+          console.log('ship',this.state.shipping_filter)
          
     }
 
 
     isCheckPressed2=()=> {
         if (!this.state.isCheck2) {
-            this.setState({isCheck2: true,shipping_filter:0})
-          } else{
+            this.setState({isCheck2: true,shipping_filter:"0"})
+            this.setState({isCheck1: false})
+          }else{
             this.setState({isCheck2: false})
           }
-         
+          console.log('ship',this.state.shipping_filter)
     }
 
     isCheckPressed3=()=> {
         if (!this.state.isCheck3) {
-            this.setState({isCheck3: true,Delivery_required:1})
+            this.setState({isCheck3: true,Delivery_required:"1"})
+            this.setState({isCheck4: false})
           }else{
             this.setState({isCheck3: false})
           }
@@ -578,7 +543,8 @@ this.getCal();
 
     isCheckPressed4=()=> {
         if (!this.state.isCheck4) {
-            this.setState({isCheck4: true,Delivery_required:0})
+            this.setState({isCheck4: true,Delivery_required:"0"})
+            this.setState({isCheck3: false})
           }else{
             this.setState({isCheck4: false})
           }
@@ -586,7 +552,8 @@ this.getCal();
     
     isCheckPressed5=()=> {
         if (!this.state.isCheck5) {
-            this.setState({isCheck5: true,insurance_filter:1})
+            this.setState({isCheck5: true,insurance_filter:"1"})
+            this.setState({isCheck6: false})
           }else{
             this.setState({isCheck5: false})
           }
@@ -594,7 +561,10 @@ this.getCal();
 
     isCheckPressed6=()=> {
         if (!this.state.isCheck6) {
-            this.setState({isCheck6: true,insurance_filter:0})
+            this.setState({isCheck6: true,insurance_filter:"0",
+          
+         })
+            this.setState({isCheck5: false})
           } else{
             this.setState({isCheck6: false})
           }
@@ -603,20 +573,46 @@ this.getCal();
 
      Filteropt=()=>{
            this.setState({setFilter: true});
-           this.setState({ isAir: false, isMaritime: false, isRoad: false })
-             //console.log("aaaa",this.state.shipping_filter)
+           this.setState({ isAir: false, isMaritime: false, isRoad: false });
+           const check_filter = this.state.finalData.filter(x =>x.serv_home_collection == this.state.shipping_filter );
+             this.setState({
+                 filterd_list:check_filter
+          });
+          const check_del = this.state.filterd_list.filter(y =>y.home_delv == this.state.Delivery_required)
+          this.setState({
+            Final_filterd:check_del
+     });
+           
+
+   
+        //    if(this.state.insurance_filter == "0"){
+          
+            
+        //    let filt = this.state.Final_filterd['serv_user_id'] = "0"
+            
+
+        //    }else{
+        //            return this.state.Final_list0;
+      
+        //    }
+        //      console.log("filterd_list",this.state.Final_list0)
+    
+
+
            Animated.timing(this.state.animation, {
             toValue: 0,
             duration: 200,
             useNativeDriver: true,
-        }).start( this.setState({setFilter: true}) );
+        }).start( this.setState({setFilter: true}),
+     );
     }
-
+    
 
     
 
 
     render() {
+        
         const screenHeight = Dimensions.get("window").height;
 
         const { dep_country,arr_country,time,weight,Dimen } = this.props.route.params;
@@ -679,7 +675,7 @@ var gsDayNames = [
         return (
             
           
-            <View>
+            <View style={{flex:1}}>
                 <ImageBackground source={require('../../Images/header-bg-white.jpg')} style={styles.imagebg} resizeMode='cover'>
                     <View style={styles.one}>
                         <View style={styles.view1}>
@@ -800,7 +796,7 @@ var gsDayNames = [
                                     <Image source={require('../../Images/plane(1).png')} style={styles.icon} />
                                 </TouchableOpacity>
                         }
-                        {this.state.isMaritime ?
+                        {this.state.isMaritime  ?
                             <TouchableOpacity onPress={this.isMaritimePressed} style={styles.compo1}>
                                 <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon} />
                                 <Text style={{ color: 'dodgerblue' }}>Maritime</Text>
@@ -828,117 +824,52 @@ var gsDayNames = [
                             </TouchableOpacity>
 
                         }
+                        
                     </View>
-                </View>
-{/*                
-                <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
-                      <TouchableOpacity onPress={this.sender} style={styles.cardN}>
-                        <View style={styles.morehalf}>
+                  
+                    </View>
+                    <View style={{borderColor:'black',borderWidth:1,flex:1,height:'25%'}}>
+                  { this.state.isAir === false && this.state.isRoad === false && this.state.isMaritime === false && this.state.setFilter === false ? <FlatList       
+          data={ this.state.finalData } 
+        //  ItemSeparatorComponent={this._renderSeparator}
+          keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+                    <View> 
+                      
+                        <TouchableOpacity style={styles.cardO}  
+                             onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,
+                                servicess_id:item.serv_id,
+                                transp_type:  item.serv_type,
+                                isWight:this.state.Weight,
+                                sender_country:this.state.des_country,
+                                sender_city:this.state.des_city,
+                                reciver_country:this.state.arr_country,
+                                reciver_city:this.state.arr_city,
+                                services_type:this.state.service_type
+                                  })}
+                        >
+                       <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.total_price1}$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    
-                      <TouchableOpacity onPress={this.sender} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.total_price2}$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type-Maritime</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                      <TouchableOpacity onPress={this.sender} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
                             <Image source={require('../../Images/send.png')} style={styles.send} />
+
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.total_price3}$</Text>
+                                    <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    <Text>Type - Road</Text>
+                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -953,36 +884,59 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                    <Text style={{ fontSize: 10 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 10 }}>{item.available_capacity}kg</Text>
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity>
-                         
-                              
-                    {/* <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
+                       </TouchableOpacity> 
+                  
+                    </View>
+} 
+        />: null }
+      
+
+        { this.state.setFilter  ? <FlatList       
+          data={ this.state.Final_filterd } 
+        //  ItemSeparatorComponent={this._renderSeparator}
+          keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+                    <View> 
+                      
+                        <TouchableOpacity style={styles.cardO} 
+                            onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,
+                                servicess_id:item.serv_id,
+                                transp_type:  item.serv_type,
+                                isWight:this.state.Weight,
+                                sender_country:this.state.des_country,
+                                sender_city:this.state.des_city,
+                                reciver_country:this.state.arr_country,
+                                reciver_city:this.state.arr_city,
+                                services_type:this.state.service_type
+                                  })}
+                        >
+                       <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
+                                    <Text>{moment(item.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
                             <Image source={require('../../Images/send.png')} style={styles.send} />
+
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
+                                    <Text>{moment(item.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >400$</Text>
+                                    <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
+                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -997,177 +951,42 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                    <Text style={{ fontSize: 10 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 10 }}>{item.available_capacity}kg</Text>
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >400$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >400$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity> */}
-                    {/* <TouchableOpacity style={styles.card4}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{ fontSize: 10 }}>Camapania, Itlay</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>Dakar, Senegal</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >400$</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
+                       </TouchableOpacity> 
+                  
+                    </View>
+} 
+        />: null }
+
+
+
+
+        {(this.state.isAir === true ) ? <FlatList       
+          data={ this.state.Air_data } 
+        //  ItemSeparatorComponent={this._renderSeparator}
+          keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+                    <View> 
                        
-                    </TouchableOpacity> */}
-                   { this.state.setAvailList == true  ? <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
-
-            {  this.state.total_price1 > 0 && (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) ?
-                
-                <TouchableOpacity  onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id1,transp_type: 1,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardM}>
-                        <View style={styles.morehalf}>
+                        <TouchableOpacity style={styles.cardO}   
+           onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,
+            servicess_id:item.serv_id,
+            transp_type:  item.serv_type,
+            isWight:this.state.Weight,
+            sender_country:this.state.des_country,
+            sender_city:this.state.des_city,
+            reciver_country:this.state.arr_country,
+            reciver_city:this.state.arr_city,
+            services_type:this.state.service_type
+              })}>
+                       <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.state.total_price1}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain2}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>: null }
-             
-
-                         { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3)  && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', {Diments:this.state.Diments,serv_id:this.state.serv_id3,transp_type: '3',isWight:this.state.Weight, sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
@@ -1175,17 +994,17 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
+                                    <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    <Text>Type - Road</Text>
+                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -1200,256 +1019,40 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                    <Text style={{ fontSize: 10 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 10 }}>{item.available_capacity}kg</Text>
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity>: null  }
-               
-            
+                       </TouchableOpacity> 
+                    
+                    </View>
+} 
+        />: null}
 
-
-
-                    { this.state.total_price2 > 0 && (this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2)   ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id2,transp_type: 2,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardM}>
-                        <View style={styles.morehalf}>
+        {(this.state.isMaritime === true ) ? <FlatList       
+          data={ this.state.Marine_data } 
+        //  ItemSeparatorComponent={this._renderSeparator}
+          keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+                    <View> 
+                       
+                        <TouchableOpacity style={styles.cardO}
+                          onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,
+                            servicess_id:item.serv_id,
+                            transp_type:  item.serv_type,
+                            isWight:this.state.Weight,
+                            sender_country:this.state.des_country,
+                            sender_city:this.state.des_city,
+                            reciver_country:this.state.arr_country,
+                            reciver_city:this.state.arr_city,
+                            services_type:this.state.service_type
+                              })}
+                        >
+                       <View style={styles.morehalf}>
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text style={{fontSize:12}}>Type-Maritime</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain2}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>: null  }
-
-
-
-                    </ScrollView> :       this.state.setFilter == true  ?  <ScrollView  style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
-
-{  this.state.shipping_filter == this.state.homeCollection1 &&  this.state.Delivery_required == this.state.home_delv1 && this.state.insurance_filter ==1?  <TouchableOpacity onPress={this.sender} style={styles.cardM}>
-           <View style={styles.morehalf}>
-                <View style={styles.half}>
-                    <View style={styles.slotc}>
-                        <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
-                        <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
-                    </View>
-                </View>
-                <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                <View style={styles.half}>
-                    <View style={styles.slotc}>
-                        <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
-                        <View style={styles.line4}></View>
-                        <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
-                    </View>
-                </View>
-                <View style={styles.remain}>
-                    <View style={styles.charges}>
-                        <Text >{this.total_price1}€</Text>
-                        <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                        <View style={styles.line3}></View>
-                        <Text>Type - Air</Text>
-                    </View>
-                </View>
-            </View>
-            <View style={styles.morehalf1}>
-                <View style={styles.small}>
-                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                    <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                </View>
-                <View style={styles.small}>
-                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                    <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                </View>
-                <View style={styles.remain2}>
-                    <View style={styles.space}>
-                        <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                        <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                    </View>
-                </View>
-            </View>
-        </TouchableOpacity>: null }
-
-        { this.state.shipping_filter == this.homeCollection2 &&  this.state.Delivery_required == this.home_delv2 && this.state.insurance_filter == 1 ?   <TouchableOpacity onPress={this.sender} style={styles.cardM}>
-        <View style={styles.morehalf}>
-                <View style={styles.half}>
-                    <View style={styles.slotc}>
-                        <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
-                        <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
-                    </View>
-                </View>
-                <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                <View style={styles.half}>
-                    <View style={styles.slotc}>
-                        <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
-                        <View style={styles.line4}></View>
-                        <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
-                    </View>
-                </View>
-                <View style={styles.remain}>
-                    <View style={styles.charges}>
-                        <Text >{this.total_price2}€</Text>
-                        <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                        <View style={styles.line3}></View>
-                        <Text style={{fontSize:12}}>Type-Maritime</Text>
-                    </View>
-                </View>
-            </View>
-            <View style={styles.morehalf1}>
-                <View style={styles.small}>
-                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                    <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                </View>
-                <View style={styles.small}>
-                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                    <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                </View>
-                <View style={styles.remain2}>
-                    <View style={styles.space}>
-                        <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                        <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                    </View>
-                </View>
-            </View>
-        </TouchableOpacity>: null  }
-
-
-
-                   </ScrollView>  :
-
-
-
-                         
-                   
-                
-                <ScrollView style={{marginTop:"2%",height:'60%',marginBottom:'8%',borderColor:'black',borderWidth:1}}>
-            
-                    { (this.state.ser_type == 1 ||  this.state.ser_type1 == 1 || this.state.ser_type2 == 1) && this.state.isAir == true && this.state.total_price1 >=0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id1,transp_type: 1,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.state.total_price1}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type - Air</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>: null }
-
-                     {(this.state.ser_type == 2 ||  this.state.ser_type1 == 2 || this.state.ser_type2 == 2) && this.state.isMaritime == true && this.state.total_price2 > 0 ?  <TouchableOpacity  onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,serv_id:this.state.serv_id2,transp_type: 2,isWight:this.state.Weight,sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure2).format('DD MMM YYYY')}</Text>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr1}</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival1).format('DD MMM YYYY')}</Text>
-                                    <View style={styles.line4}></View>
-                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr1}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.remain}>
-                                <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
-                                    <View style={styles.line3}></View>
-                                    <Text>Type-Maritime</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.morehalf1}>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
-                            <View style={styles.small}>
-                                <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
-                            <View style={styles.remain1}>
-                                <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>:null } 
-                    { (this.state.ser_type == 3 ||  this.state.ser_type1 == 3 || this.state.ser_type2 == 3) && this.state.isRoad == true && this.state.total_price2 > 0 ?  <TouchableOpacity onPress={ ()=> this.props.navigation.navigate('Sender', {Diments:this.state.Diments,serv_id:this.state.serv_id3,transp_type: '3',isWight:this.state.Weight, sender_country:this.state.des_country,sender_city:this.state.des_city,reciver_country:this.state.arr_country,reciver_city:this.state.arr_city})} style={styles.cardN}>
-                        <View style={styles.morehalf}>
-                            <View style={styles.half}>
-                                <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_departure1).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_departure).format('DD MMM YYYY')}</Text>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
                                 </View>
                             </View>
@@ -1457,17 +1060,17 @@ var gsDayNames = [
 
                             <View style={styles.half}>
                                 <View style={styles.slotc}>
-                                    <Text>{moment(this.serv_date_of_arrival2).format('DD MMM YYYY')}</Text>
+                                    <Text>{moment(item.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
                                     <View style={styles.line4}></View>
                                     <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
                                 </View>
                             </View>
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
-                                    <Text >{this.state.total_price2}€</Text>
+                                    <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    <Text>Type - Road</Text>
+                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -1482,14 +1085,85 @@ var gsDayNames = [
                             </View>
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
-                                    <Text style={{ fontSize: 8 }}>Available Space:</Text>
-                                    <Text style={{ fontSize: 8 }}>5000kg / 10000kg</Text>
+                                    <Text style={{ fontSize: 10 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 10 }}>{item.available_capacity}kg</Text>
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity>: null  }
-                </ScrollView>
-                   }
+                       </TouchableOpacity> 
+                    
+                    </View>
+} 
+        />: null}
+
+               {(this.state.isRoad === true ) ? <FlatList       
+          data={ this.state.Road_data } 
+         
+        //  ItemSeparatorComponent={this._renderSeparator}
+          keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+                    <View> 
+                       
+                        <TouchableOpacity style={styles.cardO}  
+            onPress={ ()=> this.props.navigation.navigate('Sender', { Diments:this.state.Diments,
+            servicess_id:item.serv_id,
+            transp_type:  item.serv_type,
+            isWight:this.state.Weight,
+            sender_country:this.state.des_country,
+            sender_city:this.state.des_city,
+            reciver_country:this.state.arr_country,
+            reciver_city:this.state.arr_city,
+            services_type:this.state.service_type
+              })}>
+                       <View style={styles.morehalf}>
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(item.serv_date_of_departure).format('DD MMM YYYY')}</Text>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_dc_addr2}</Text>
+                                </View>
+                            </View>
+                            <Image source={require('../../Images/send.png')} style={styles.send} />
+
+                            <View style={styles.half}>
+                                <View style={styles.slotc}>
+                                    <Text>{moment(item.serv_date_of_arrival).format('DD MMM YYYY')}</Text>
+                                    <View style={styles.line4}></View>
+                                    <Text style={{ fontSize: 10 }}>{this.serv_ware_ac_addr2}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.remain}>
+                                <View style={styles.charges}>
+                                    <Text >{item.transport_fee + item.fee_on_transport}€</Text>
+                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <View style={styles.line3}></View>
+                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.morehalf1}>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>Home Collection</Text>
+                            </View>
+                            <View style={styles.small}>
+                                <Image source={require('../../Images/product.png')} style={styles.icon} />
+                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
+                            </View>
+                            <View style={styles.remain1}>
+                                <View style={styles.space}>
+                                    <Text style={{ fontSize: 10 }}>Available Space:</Text>
+                                    <Text style={{ fontSize: 10 }}>{item.available_capacity}kg</Text>
+                                </View>
+                            </View>
+                        </View>
+                       </TouchableOpacity> 
+                    
+                    </View>
+} 
+        />: null}
+
+                </View>
+                
                 <Animated.View style={[StyleSheet.absoluteFill, styles.cover, backdrop]}>
                     <View style={[styles.sheet]}>
                         <Animated.View style={[styles.popup, slideUp]}>
@@ -1614,7 +1288,11 @@ var gsDayNames = [
                         </Animated.View>
                     </View>
                 </Animated.View>
+
+                   
+                
             </View>
+           
         );
     }
 }
@@ -1639,36 +1317,3 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(Services);
-
-{/* <View style={styles.card4}>
-                            <View style={styles.slot}>
-                                <View style={styles.slotc}>
-                                    <Text>17 Oct 19</Text>
-                                    <Text style={{fontSize: 10}}>Camapania, Itlay</Text>
-                                </View>
-                                <View style={styles.slotc1}>
-                                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                    <Text style={{fontSize: 10}}>Home Collection</Text>
-                                </View>
-                            </View>
-                            <Image source={require('../../Images/send.png')} style={styles.send} />
-                            <View style={styles.slot1}>
-                                <View style={styles.sl1}>
-                                <View style={styles.slotc}>
-                                    <Text>20 Oct 19</Text>
-                                    <Text style={{fontSize: 10}}>Dakar, Senegal</Text>
-                                </View>
-                                <View style={styles.slotc1}>
-                                    <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                    <Text style={{fontSize: 10}}>At Shippers Warehouse</Text>
-                                </View>
-                                </View>
-                                <View style={styles.sl1}></View>
-                            </View>
-                        </View> */}
-
-
-
-
-
-

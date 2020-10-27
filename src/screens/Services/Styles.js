@@ -71,7 +71,7 @@ export default StyleSheet.create({
         top: Dimensions.get("window").height,
         left: 0,
         right: 0,
-        height: "100%",
+        height: "115%",
         justifyContent: "flex-end",
       },
       popup: {
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 10,
         elevation: 10,
-        flexDirection: 'row',
+        flexDirection: 'row', 
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -114,7 +114,8 @@ export default StyleSheet.create({
         height: '10%',
         width: '90%',
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop:'2%'
     },
     searchCard1: {
         height: '85%',
@@ -141,7 +142,7 @@ export default StyleSheet.create({
         width: 25,
     },
     hide: {
-        height: '31%',
+        height: '35%'
     },
     filter: {
         height: '100%',
@@ -161,7 +162,9 @@ export default StyleSheet.create({
         elevation: 10,
         flexDirection: 'row',
         alignItems:'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor:'black',
+        borderWidth:1
     },
     card1: {
         height: 50,
@@ -175,21 +178,24 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     card2: {
+        //marginTop:'20%',
         height: '5%',
         width: '100%',
         backgroundColor: 'white',
         alignSelf: 'center',
         flexDirection: 'row',
         alignItems:'center',
-        justifyContent: 'center',borderColor:'black',borderWidth:1
+        justifyContent: 'center'
     },
     card2c: {
         height: '100%',
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         flexDirection: 'row',
         alignItems:'center',
         justifyContent: 'space-between',
+        borderColor:'black',
+        borderWidth:1
     },
     card3: {
         height: '4%',
@@ -200,7 +206,7 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     card4: {
-        height: '100%',
+        height: '70%',
         width: '90%',
         backgroundColor: 'white',
         alignSelf: 'center',
@@ -211,19 +217,43 @@ export default StyleSheet.create({
     },
     //this is replaced  cardN by card 4
     cardN: {
-        marginTop:4,
-        height: '80%',
+      
+        height: '40%',
         width: '90%',
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: 10,
         elevation: 10,
         justifyContent: 'center',
-        marginVertical:55
+        marginVertical:55,
+        borderColor:'black',
+        borderWidth:1
+    },
+    cardO: {
+        borderColor:'black',
+        borderWidth:1,
+        marginTop:10,
+        backgroundColor: 'white',
+        height:90,
+        width:'92%',
+        marginLeft:15,
+        borderRadius: 10,
+        elevation: 10,
+       justifyContent: 'center'
+        // height: '40%',
+        // width: '90%',
+        // backgroundColor: 'white',
+        // alignSelf: 'start',
+        // borderRadius: 10,
+        // elevation: 10,
+        // justifyContent: 'center',
+        // marginVertical:55,
+        // borderColor:'black',
+        // borderWidth:1
     },
     //this is styled by avaiaible Service screen
     cardM: {
-        marginTop:7,
+        marginTop:1,
         height: '46%',
         width: '90%',
         backgroundColor: 'white',
@@ -303,12 +333,13 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     space: {
-        height: '80%',
+        height: '90%',
         width: '80%',
         borderWidth: 1,
         borderRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop:'1%'
     },
     charges: {
         height: '100%',
@@ -380,7 +411,7 @@ export default StyleSheet.create({
     },
     vertical1: {
         height: '90%',
-        width: '83%',
+        width: '83%'
     },  
     twoicons: {
         height: '75%',

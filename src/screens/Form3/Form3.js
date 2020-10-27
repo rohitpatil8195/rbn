@@ -9,6 +9,7 @@ import DropDown from '../../components/DropDown';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerCategory, triggerProduct, triggerUnits, triggerCustom } from '../../actions';
+import DocumentPicker from 'react-native-document-picker';
 
 // create a component
 class Form3 extends Component {
@@ -38,19 +39,26 @@ class Form3 extends Component {
             unitSelect: '',
             unitId: '',
             unitCode: '',
+            scat_measure:'',
             productList: [],
             productSelect: '',
             productId: '',
             productCode: '',
+            scat_unit_val:'',
             favColor: undefined,
             belonging:'',
             Quantity:'',
             cust_Duty:'',
+            fee_on_custom:'',
+            final_cust_duty:'',
             unit_values:'',
             Diments:this.props.route.params.Diments,
             serv_id:this.props.route.params.serv_id,
             fWight:this.props.route.params.rWight,
             transp_type:this.props.route.params.transp_type,
+            serv_typ:this.props.route.params.ser_typ,
+            singleFile:null,
+            file_name:'',
             reason: [
                 {
                     label: 'Commercial',
@@ -184,6 +192,7 @@ class Form3 extends Component {
         formdata.append('cat_belonging', '')
         // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
+        this.setState({ isYes: true , belonging:1})
         console.log("fWight",this.state.fWight)
     }
    
@@ -191,14 +200,14 @@ class Form3 extends Component {
 
    let Api_data ={
 tranport_type: this.state.transp_type,
-service_type :"1",
+service_type :this.state.serv_typ,
 insurance_type: "1",
 weight: "["+this.state.fWight+"]",
 dimension: this.state.Diments,
 belongings: "["+ this.state.belonging +"]",
 quantity: "["+ this.state.Quantity+"]",
-unit_of_measure: "["+this.state.unitEx1+"]",
-unit_value: "["+this.state.unit_values+"]",
+unit_of_measure: "["+this.state.scat_measure+"]",
+unit_value: "["+this.state.scat_unit_val+"]",
 currency: "["+this.state.favdolor+"]",
 home_colectn: "0",
 home_delv: "0",
@@ -218,13 +227,19 @@ console.log("requestOptions",JSON.stringify(requestOptions))
 fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestOptions)
 .then(async response => {
     const data = await response.json();
-
+  
            console.log("data yee"+JSON.stringify(data))
         //    let formData = data['result'];
         //    console.log("form3Data''' ",formData)
   if(data['result'] != null || '' || undefined){
         this.setState({
-            cust_Duty:JSON.stringify(data['result'][0]['custom_duty'])
+            cust_Duty:JSON.stringify(data['result'][0]['custom_duty']),
+            fee_on_custom:JSON.stringify(data['result'][0]['fee_on_custom'])
+        })
+       
+        let float = parseFloat(this.state.cust_Duty) + parseFloat(this.state.fee_on_custom)
+       this.setState({
+            final_cust_duty :float
         })
     }else{
             return 0;
@@ -337,8 +352,8 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                 })
             }
         })
-        // console.log('categorySelect', this.state.categorySelect)
-        this.onProduct(this.state.countryId)
+         console.log('categorySelect', this.state.categoryId)
+        this.onProduct(this.state.categoryId)
     }
 
     onProduct = (productId) => {
@@ -349,16 +364,17 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
     }
 
     onProductSuccess = (data) => {
-        // console.log('data', data)
+     //  console.log('data_prod', data)
+  
         var result = data.result.map(function (el) {
-            // var o = Object.assign({}, el);
-            // var a = Object.assign({}, el);
             el.label = el.scat_name_en;
             el.value = el.scat_name_en;
             el.id = el.scat_id;
             return el;
         })
-   //  console.log("productList", result)
+
+        console.log("result",result)
+  
         this.setState({
             productList: result,
         })
@@ -368,15 +384,21 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
         this.state.productSelect = val
         this.state.productList.map(item => {
             if (item.value == val) {
+
                 this.state.productId = item.id
                 this.state.productCode = item.code
+                this.state.scat_unit_val = item.scat_unit_val
+                this.state.scat_measure = item.scat_measure
                 this.setState({
                     productId: this.state.productId,
-                    productCode: this.state.productCode
+                    productCode: this.state.productCode,
+                    scat_unit_val: this.state.scat_unit_val,
+                    scat_measure:this.state.scat_measure
                 })
             }
         })
         console.log('cityZip', this.state.productId)
+        console.log('Unit value is', this.state.scat_unit_val)
     }
 
     // onCategory = (categoryId) => {
@@ -495,6 +517,80 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
     recipient = () => {
         this.props.navigation.navigate('Recipient', {})
     }
+
+
+   
+
+ 
+    uploadImage = async () => {
+        //Check if any file is selected or not
+        if (this.state.singleFile != null) {
+          //If file selected then create FormData
+        //   const fileToUpload = this.state.singleFile;
+          const data = new FormData();
+         // data.append('name', 'Image Upload');
+          data.append('file_pur_invc',this.state.singleFile);
+          let res = await fetch(
+            'http://rbn.sairoses.com/Front/index.php/API/upload_file/purchase_invoice',
+            {
+              method: 'post',
+              body: data,
+              headers: {
+                'Content-Type': 'multipart/form-data; ',
+              },
+            }
+          );
+          let responseJson = await res.json();
+          if (responseJson.status == 1) {
+            alert('Upload Successful');
+          }
+        } else {
+          //if no file selected the show alert
+          alert('Please Select File first');
+        }
+    };
+    
+
+    
+       selectFile = async () => {
+        //Opening Document Picker to select one file
+        try {
+          const res = await DocumentPicker.pick({
+            //Provide which type of file you want user to pick
+            type: [DocumentPicker.types.allFiles],
+            //There can me more options as well
+            // DocumentPicker.types.allFiles
+            // DocumentPicker.types.images
+            // DocumentPicker.types.plainText
+            // DocumentPicker.types.audio
+            // DocumentPicker.types.pdf
+          });
+          //Printing the log realted to the file
+          console.log('res : ' + JSON.stringify(res));
+          //Setting the state to show single file attributes
+          let name = JSON.stringify(res.name)
+          this.setState({
+            singleFile : res,
+            file_name:name
+          })
+          
+        } catch (err) {
+            this.setState({
+                singleFile : null,
+                file_name:''
+              })
+          //Handling any exception (If any)
+          if (DocumentPicker.isCancel(err)) {
+            //If user canceled the document selection
+            alert('Canceled from single doc picker');
+          } else {
+            //For Unknown Error
+            alert('Unknown Error: ' + JSON.stringify(err));
+            throw err;
+          }
+        }
+      };
+
 
 
 
@@ -707,10 +803,22 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                                     this.state.isYes == true ?
                                                         null
                                                         :
-                                                        <View style={styles.upload}>
-                                                            <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
-                                                            <Text style={{ marginHorizontal: 10 }}>Upload documents</Text>
+                                                        <View style={{flexDirection:'row'}}>
+                                                        <TouchableOpacity style={styles.upload} onPress={this.selectFile}>
+                                                        <View  >
+                                                           
+                                                { this.state.file_name == '' ? <Text style={{ marginHorizontal: 36}}>Select document</Text>: <Text style={{ marginHorizontal: 50}}>{this.state.file_name}</Text> }
+                                            
                                                         </View>
+                                                        </TouchableOpacity>
+                                                             
+                                                           <TouchableOpacity  style={styles.uploadss} onPress={this.uploadImage}>  
+                                                         <View>
+                                                       
+                                                         <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
+                                                     </View>
+                                                     </TouchableOpacity>
+                                                     </View>
                                                 }
 
                                             </View>
@@ -743,13 +851,13 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     }}
                                     source={require('../../Images/arrow-point-to-right.png')}
                                     textInputProps={{ underlineColorAndroid: 'black' }}
-                                    value={this.state.unitEx1}
+                                    value={this.state.scat_measure}
                                     style={{ width: '85%', marginTop: '-15%' }}
                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                     <TextInputComponent
-                                        onChangeText={unit_values =>this.setState({unit_values})}
-                                        placeholder='Unit Value'
+                                        onChangeText={this.state.scat_unit_val}
+                                        placeholder={this.state.scat_unit_val}
                                         underlineColorAndroid='grey'
                                         keyboardType = 'numeric'
                                         designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
@@ -768,8 +876,9 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                         errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                 </View>
                                 <TextInputComponent
-                                    onChangeText={text => this.setState({ FirstName: text })}
-                                    placeholder='Custom Duty $'
+                                    onChangeText={this.state.cust_Duty}
+                                    placeholder= {this.state.cust_Duty}
+                                    defaultValue={this.state.cust_Duty}
                                     underlineColorAndroid='lightgrey'
                                     designStyle={{ height: 40, marginLeft: '-10%', marginTop: '-8%' }} />
                                 <View  style={styles.plus} >
@@ -797,7 +906,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                             <Text style={{ fontSize: 10 }}>Quantity</Text>
                                         </View>
                                         <View style={styles.v22}>
-                                            <Text style={{ fontSize: 17 }}>${this.state.cust_Duty}</Text>
+                                            <Text style={{ fontSize: 17 }}>${this.state.final_cust_duty}</Text>
                                             <Text style={{ fontSize: 10 }}>Custom Duty</Text>
                                         </View>
 

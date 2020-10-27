@@ -10,6 +10,8 @@ target 'rbn' do
 
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+
   target 'rbnTests' do
     inherit! :complete
     # Pods for testing

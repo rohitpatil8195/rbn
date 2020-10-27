@@ -9,6 +9,7 @@ import DropDown from '../../components/DropDown';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerAuthCity } from '../../actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // create a component
 class Recipient extends Component {
@@ -31,7 +32,8 @@ class Recipient extends Component {
             Diments:this.props.route.params.Diments,
             serv_id:this.props.route.params.serv_id,
             iWight:this.props.route.params.sWight,
-            transp_type:this.props.route.params.transp_type
+            transp_type:this.props.route.params.transp_type,
+            ser_typ:this.props.route.params.servic_typ
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
@@ -40,6 +42,7 @@ class Recipient extends Component {
         componentDidMount() {
         const mystring = this.state.reciver_city
         const splits = mystring.split(",");
+        this.userInfo();
         this.setState({
                               
             countrySelect: this.state.reciver_country,
@@ -51,6 +54,24 @@ class Recipient extends Component {
         // console.log(this.state.sender_city)
      
     }
+
+    userInfo = async () => {
+   
+        let chech = await AsyncStorage.getItem('persist:sampleRedux');
+
+        let js = JSON.parse(chech);
+        //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
+       let authreducer = JSON.parse(js['authReducer'])
+       let loginobj = authreducer['form1Obj'];
+    //    let logindata = loginobj['data']
+        console.log("async data", loginobj)
+     
+       //console.log("data is : " + Email)
+        const keys = await AsyncStorage.getAllKeys();
+       // console.log("keyss;;"+keys)
+        //console.log("name is"+ Email); 
+      }
+
 
     onCountrySuccess = (data) => {
         var result = data.result.map(function (el) {
@@ -127,7 +148,7 @@ class Recipient extends Component {
 
     form3 = () => {
         console.log("weight",this.state.iWight)
-        this.props.navigation.navigate('Form3', {transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
+        this.props.navigation.navigate('Form3', {ser_typ:this.state.ser_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
 
     }
 
