@@ -12,6 +12,8 @@ target 'rbn' do
 
   pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
+  pod 'RNPaypal', :path => '../node_modules/react-native-paypal'
+
   target 'rbnTests' do
     inherit! :complete
     # Pods for testing

@@ -140,21 +140,26 @@ class Sender extends Component {
     }
 
     recipient = () => {
-       let formdata = new FormData();
-    formdata.append("Company_name", this.state.Company_name)
-    formdata.append("FirstName", this.state.FirstName)
-    formdata.append("Surname", this.state.Surname)
-    formdata.append("Telephone", this.state.Telephone)
-        formdata.append("Email", this.state.Email)
-    formdata.append("Address", this.state.Address)
-        formdata.append("VAT_Number", this.state.VAT_Number)
-    formdata.append("Additional_Info", this.state.Additional_Info)
-    this.props.triggerForm1(formdata);
+    //    let formdata = new FormData();
+    let formdata = {}
+    formdata["Company_name"]= this.state.Company_name,
+    formdata["FirstName"]= this.state.FirstName,
+    formdata["Surname"]= this.state.Surname,
+    formdata["Telephone"]= this.state.Telephone,
+    formdata["Email"]= this.state.Email,
+    formdata["Address"]= this.state.Address,
+    formdata["Country"]= this.state.onCountrySelect,
+    formdata["City"]= this.state.onCitySelect,
+    formdata["cityZip"]= this.state.cityZip,
+    formdata["District"]= this.state.cityDis,
+    formdata["VAT_Number"]= this.state.VAT_Number,
+    formdata["Additional_Info"]= this.state.Additional_Info
+   // this.props.triggerForm1(formdata);
     console.log("all data",formdata)
-  // this.props.triggerForm1()
+this.props.triggerForm1()
         console.log("should be weight",this.state.Weight);
         console.log("data is",this.state.Diments)
-        this.props.navigation.navigate('Recipient', {servic_typ:this.state.servi_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
+        this.props.navigation.navigate('Recipient', {senders_Data:formdata,servic_typ:this.state.servi_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
 
     }
 

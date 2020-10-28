@@ -119,7 +119,8 @@ export default StyleSheet.create({
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+       
     },
     card32: {
         height: 800,
@@ -137,7 +138,8 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: 'lightgrey',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor:'black',borderWidth:1
     },
     cardv51:{
         height: '90%',
@@ -165,7 +167,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginVertical: 5,
+        marginVertical: 5, borderColor:'black',
+        borderWidth:1
     },
     upload: {
         height: '80%',

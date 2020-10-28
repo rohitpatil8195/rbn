@@ -27,22 +27,37 @@ class Recipient extends Component {
             cityZip: '',
             countryCode: '',
             cityDis: '',
+            Company_name: '',
+            FirstName: '',
+            Surname: '',
+            Telephone: '',
+            Email: '',
+            Address: '',
+            VAT_Number: '',
+            Additional_Info: '',
             reciver_country:this.props.route.params.reciver_country,
             reciver_city:this.props.route.params.reciver_city,
             Diments:this.props.route.params.Diments,
             serv_id:this.props.route.params.serv_id,
             iWight:this.props.route.params.sWight,
             transp_type:this.props.route.params.transp_type,
-            ser_typ:this.props.route.params.servic_typ
+            ser_typ:this.props.route.params.servic_typ,
+            sender_details:this.props.route.params.senders_Data
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
 
 
         componentDidMount() {
+            //formData.get('username')
+            
+          let info = (this.state.sender_details)
+          //let authreducer = JSON.parse(info)
+
+           console.log("senddr",this.state.sender_details['Company_name'])
         const mystring = this.state.reciver_city
         const splits = mystring.split(",");
-        this.userInfo();
+       // this.userInfo();
         this.setState({
                               
             countrySelect: this.state.reciver_country,
@@ -55,22 +70,22 @@ class Recipient extends Component {
      
     }
 
-    userInfo = async () => {
+    // userInfo = async () => {
    
-        let chech = await AsyncStorage.getItem('persist:sampleRedux');
+    //     let chech = await AsyncStorage.getItem('persist:sampleRedux');
 
-        let js = JSON.parse(chech);
-        //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
-       let authreducer = JSON.parse(js['authReducer'])
-       let loginobj = authreducer['form1Obj'];
-    //    let logindata = loginobj['data']
-        console.log("async data", loginobj)
+    //     let js = JSON.parse(chech);
+    //     //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
+    //    let authreducer = JSON.parse(js['authReducer'])
+    //    let loginobj = authreducer['form1Obj'];
+    // //    let logindata = loginobj['data']
+    //     console.log("async data", loginobj)
      
-       //console.log("data is : " + Email)
-        const keys = await AsyncStorage.getAllKeys();
-       // console.log("keyss;;"+keys)
-        //console.log("name is"+ Email); 
-      }
+    //    //console.log("data is : " + Email)
+    //     const keys = await AsyncStorage.getAllKeys();
+    //    // console.log("keyss;;"+keys)
+    //     //console.log("name is"+ Email); 
+    //   }
 
 
     onCountrySuccess = (data) => {
@@ -147,8 +162,22 @@ class Recipient extends Component {
     }
 
     form3 = () => {
+        let formdata = {}
+        formdata["Company_name"]= this.state.Company_name,
+        formdata["FirstName"]= this.state.FirstName,
+        formdata["Surname"]= this.state.Surname,
+        formdata["Telephone"]= this.state.Telephone,
+        formdata["Email"]= this.state.Email,
+        formdata["Address"]= this.state.Address,
+        formdata["Country"]= this.state.onCountrySelect,
+        formdata["City"]= this.state.onCitySelect,
+        formdata["cityZip"]= this.state.cityZip,
+        formdata["District"]= this.state.cityDis,
+        formdata["VAT_Number"]= this.state.VAT_Number,
+        formdata["Additional_Info"]= this.state.Additional_Info
+        console.log("Recipents data",formdata)
         console.log("weight",this.state.iWight)
-        this.props.navigation.navigate('Form3', {ser_typ:this.state.ser_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
+        this.props.navigation.navigate('Form3', {sender_form:this.state.sender_details,recipents_data:formdata,ser_typ:this.state.ser_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
 
     }
 
@@ -186,11 +215,11 @@ class Recipient extends Component {
                     <View style={styles.card}>
                         <View style={styles.card21}>
                             <View style={{ height: '2%' }}></View>
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Company Name'
+                            <TextInputComponent onChangeText={text => this.setState({ Company_name: text })} placeholder='Company Name'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='First Name'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Surname'
+                            <TextInputComponent onChangeText={text => this.setState({ Surname: text })} placeholder='Surname'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                 {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='+00'
@@ -205,12 +234,12 @@ class Recipient extends Component {
                                     Ref={input => { this.userName = input }}
                                     underlineColorAndroid='grey'
                                     editable={false} />
-                                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Telephone'
+                                <TextInputComponent onChangeText={text => this.setState({ Telephone: text })} placeholder='Telephone'
                                     underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }} />
                             </View>
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Email'
+                            <TextInputComponent onChangeText={text => this.setState({ Email: text })} placeholder='Email'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Address'
+                            <TextInputComponent onChangeText={text => this.setState({ Address: text })} placeholder='Address'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <DropDown
                                 placeholder={CategoryPlaceholder}
@@ -254,11 +283,11 @@ class Recipient extends Component {
                                     underlineColorAndroid='grey'
                                     designStyle={{ width: '52%', marginLeft: '15%', height: 50, color: 'black' }}
                                 />
-                                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='VAT Number'
+                                <TextInputComponent onChangeText={text => this.setState({ VAT_Number: text })} placeholder='VAT Number'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} />
                             </View>
 
-                            <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Additional Info'
+                            <TextInputComponent onChangeText={text => this.setState({ Additional_Info: text })} placeholder='Additional Info'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }} />
                         </View>
                     </View>

@@ -23,10 +23,19 @@ export default class Completeform extends Component {
             isArrowr: false,
             isArrowc: false,
             isArrowi: false,
-            isArrowcstm: false
+            isArrowcstm: false,
+            sender_info:this.props.route.params.sender_info,
+            Recipent_info:this.props.route.params.recipent_info,
+            form3Data:this.props.route.params.Form3
         }
     }
 
+
+
+
+    componentDidMount = async()=>{
+        console.log("hhhhhh",this.state.form3Data['Country_Org'])
+    } 
     isArrowsPressed = () => {
         if (!this.state.isArrows) {
             this.setState({ isArrows: true })
@@ -145,7 +154,7 @@ export default class Completeform extends Component {
 
     render() {
         const { ismodalVisible } = this.state;
-
+        console.log("hhhhhh",this.state.sender_info)
         return (
             <SafeAreaView style={styles.safe}>
                 <ImageBackground source={require('../../Images/header-bg-white.jpg')} style={styles.imagebg} resizeMode='cover'>
@@ -174,22 +183,23 @@ export default class Completeform extends Component {
 
                     </View>
                     {
+
                         this.state.isArrows == true ?
                             <View style={styles.card}>
                                 <View style={styles.cardv1}>
-                                    <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>+xx-xxxxxxxx</Text></Text>
-                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>xyz@gmail.com</Text></Text>
-                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>123456</Text></Text>
-                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>123456</Text></Text>
+                                    <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.sender_info['Company_name']}</Text></Text>
+                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.sender_info['FirstName']}</Text></Text>
+                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.sender_info['Surname']}</Text></Text>
+                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.sender_info['Telephone']}</Text></Text>
+                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.sender_info['Email']}</Text></Text>
+                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.sender_info['Address']}</Text></Text>
+                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.sender_info['Country']}</Text></Text>
+                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.sender_info['cityZip']}</Text></Text>
+                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.sender_info['City']}</Text></Text>
+                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.sender_info['District']}</Text></Text>
+                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.sender_info['VAT_Number']}</Text></Text>
                                     <Text style={styles.Textc1}>Additional Info :</Text>
-                                    <Text style={styles.Textc2}>Lorem Ipsum is simply dummy text of printing and typesetting industry.</Text>
+                                    <Text style={styles.Textc2}>{this.state.sender_info['Additional_Info']}</Text>
                                 </View>
                             </View>
                             :
@@ -213,19 +223,19 @@ export default class Completeform extends Component {
                         this.state.isArrowr == true ?
                             <View style={styles.card}>
                                 <View style={styles.cardv1}>
-                                    <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>+xx-xxxxxxxx</Text></Text>
-                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>xyz@gmail.com</Text></Text>
-                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>123456</Text></Text>
-                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>Lorem</Text></Text>
-                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>123456</Text></Text>
+                                <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.Recipent_info['Company_name']}</Text></Text>
+                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.Recipent_info['FirstName']}</Text></Text>
+                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.Recipent_info['Surname']}</Text></Text>
+                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.Recipent_info['Telephone']}</Text></Text>
+                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.Recipent_info['Email']}</Text></Text>
+                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.Recipent_info['Address']}</Text></Text>
+                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.Recipent_info['Country']}</Text></Text>
+                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.Recipent_info['cityZip']}</Text></Text>
+                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.Recipent_info['City']}</Text></Text>
+                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.Recipent_info['District']}</Text></Text>
+                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.Recipent_info['VAT_Number']}</Text></Text>
                                     <Text style={styles.Textc1}>Additional Info :</Text>
-                                    <Text style={styles.Textc2}>Lorem Ipsum is simply dummy text of printing and typesetting industry.</Text>
+                                    <Text style={styles.Textc2}>{this.state.Recipent_info['Additional_Info']}</Text>
                                 </View>
                             </View>
                             :
@@ -250,9 +260,9 @@ export default class Completeform extends Component {
                             <View style={styles.card2}>
                                 <View style={styles.card21}>
                                     <Text style={styles.Textc1}>Reason for shipping :</Text>
-                                    <Text style={styles.Textc2}>Lorem Ipsum is simply dummy text of printing and typesetting industry.</Text>
+                                    <Text style={styles.Textc2}> {this.state.form3Data['Reason']}</Text>
                                     <Text style={styles.Textc1}>Contents :</Text>
-                                    <Text style={styles.Textc2}>Lorem Ipsum is simply dummy text of printing and typesetting industry.</Text>
+                                    <Text style={styles.Textc2}> {this.state.form3Data['Content']}</Text>
                                 </View>
                             </View>
                             :
@@ -317,7 +327,7 @@ export default class Completeform extends Component {
                                 <View style={styles.card41}>
                                     <View style={styles.card42}>
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
-                                            this.state.isCheck ?
+                                           this.state.form3Data['isCheck'] ?
                                                 <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
                                                 :
                                                 <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
@@ -325,13 +335,13 @@ export default class Completeform extends Component {
                                         }</TouchableOpacity>
                                         <Text style={styles.align}>I Am Not Interested In Purchasing The Custom Service</Text>
                                     </View>
-                                    <View style={styles.card43}>
+                                 { this.state.form3Data['isCheck']  ==false ?  <View style={styles.card43}>
                                         <View style={styles.card431}>
                                             <Text style={styles.Textc1}>Product Details :</Text>
                                             <View style={styles.card432}>
                                                 <Text style={styles.Textc1}>Belonging :</Text>
                                                 {
-                                                    this.state.isYes == true ?
+                                                    this.state.form3Data['Belonging'] == true ?
                                                         <TouchableOpacity onPress={this.isYesPressed} style={styles.compo1}>
                                                             <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
                                                             <Text style={{ color: 'dodgerblue', marginHorizontal: 5 }}>Yes</Text>
@@ -343,28 +353,29 @@ export default class Completeform extends Component {
                                                         </TouchableOpacity>
                                                 }
                                             </View>
-                                            <Text style={styles.Textc1}>Product Category :<Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
+                                            <Text style={styles.Textc1}>Product Category :<Text style={styles.Textc2}>{ this.state.form3Data['Product_cat']}</Text></Text>
                                             <View style={styles.line}></View>
-                                            <Text style={styles.Textc1}>Country Origin :<Text style={styles.Textc2}>Lorem Ipsum</Text></Text>
-                                            <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc2}>1</Text></Text>
-                                            <Text style={styles.Textc1}>Unit of Measure :<Text style={styles.Textc2}>xxx xxx</Text></Text>
-                                            <Text style={styles.Textc1}>Unit Value :<Text style={styles.Textc2}>xxx + Exchange Rate</Text></Text>
-                                            <Text style={styles.Textc1}>Custom Duty $ :<Text style={styles.Textc2}>500</Text></Text>
+                                            <Text style={styles.Textc1}>Country Origin :<Text style={styles.Textc2}>{ this.state.form3Data['Country_Org']}</Text></Text>
+                                            <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc2}>{ this.state.form3Data['Quantity']}</Text></Text>
+                                            <Text style={styles.Textc1}>Unit of Measure :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_of_measure']}</Text></Text>
+                                            <Text style={styles.Textc1}>Unit Value :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_value']}</Text></Text>
+                                            <Text style={styles.Textc1}>Custom Duty $ :<Text style={styles.Textc2}>{ this.state.form3Data['Custom_duty']}</Text></Text>
 
                                         </View>
-                                    </View>
-                                    <View style={styles.upload}>
+                                    </View> : null }
+
+                                   { this.state.form3Data['isCheck'] ==false && this.state.form3Data['Belonging'] == false  ? <View style={styles.upload}>
                                         <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
                                         <Text style={{ marginHorizontal: 10 }}>Lorem-Ipsum.png</Text>
-                                    </View>
-                                    <View style={styles.qua}>
+                                    </View>  : null}
+                                    { this.state.form3Data['isCheck']  ==false   ? <View style={styles.qua}> 
                                         <View style={styles.q1}>
-                                            <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc1}>1</Text></Text>
+                                            <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc1}>{this.state.form3Data['Quantity']}</Text></Text>
                                         </View>
                                         <View style={styles.q2}>
-                                            <Text style={styles.Textc1}>Total Custom Duty $ :<Text style={styles.Textc1}>500</Text></Text>
+                                            <Text style={styles.Textc1}>Total Custom Duty $ :<Text style={styles.Textc1}>{ this.state.form3Data['Custom_duty']}</Text></Text>
                                         </View>
-                                    </View>
+                                    </View>  : null}
                                     <View style={styles.card42}>
                                         <TouchableOpacity onPress={this.isCheck1Pressed}>{
                                             this.state.isCheck1 ?
@@ -390,7 +401,7 @@ export default class Completeform extends Component {
                             :
                             null
                     }
-                    <View style={styles.card1}>
+                    {/* <View style={styles.card1}>
                         <Text style={styles.sender}>Home Collection</Text>
                     </View>
                     <View style={styles.card5}>
@@ -411,7 +422,7 @@ export default class Completeform extends Component {
                             <Text style={styles.Textc1}>Total Price :<Text style={styles.Textc2}>00 $</Text></Text>
 
                         </View>
-                    </View>
+                    </View> */}
                     <View style={styles.card7}>
                         <View style={styles.card71}>
                             <TouchableOpacity onPress={this.isCheck3Pressed}>{
