@@ -102,6 +102,15 @@ export default StyleSheet.create({
         marginVertical: 5,
         justifyContent: 'center',
     },
+    cardx: {
+        height: 220,
+        width: '90%',
+        backgroundColor: 'white',
+        elevation: 10,
+        borderRadius: 5,
+        marginVertical: 5,
+        justifyContent: 'center',
+    },
     card2: {
         height: 80,
         width: '90%',
@@ -123,7 +132,7 @@ export default StyleSheet.create({
        
     },
     card32: {
-        height: 800,
+        height: 600,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -133,6 +142,31 @@ export default StyleSheet.create({
     },
     cardv5: {
         height: 170,
+        width: '90%',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor:'black',borderWidth:1
+    },
+    cardv5i: {
+        marginLeft:'2.5%',
+        marginTop:'-2%',
+        height: 170,
+        width: '96%',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor:'black',borderWidth:1
+    },
+    cardv55: {
+        backgroundColor: 'white',
+        marginTop:7,
+        marginBottom:6,
+        height: 570,
         width: '90%',
         borderRadius: 5,
         borderWidth: 1,
@@ -208,7 +242,9 @@ export default StyleSheet.create({
         top: 60
     } ,
     ship: {
-        height: '5%',
+        marginBottom:'7%',
+        marginLeft:'5%',
+        height: '30%',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -247,7 +283,24 @@ export default StyleSheet.create({
         flexDirection: 'row',
         margin: 10,
     },
+    checkx: {
+        marginBottom:"12%",
+        height: '4%',
+        width: '90%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+        margin: 10,
+    },
     check2: {
+        height: '6%',
+        width: '90%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    checkx2: {
+        marginLeft:10,
         height: '6%',
         width: '90%',
         justifyContent: 'space-between',

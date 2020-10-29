@@ -134,6 +134,112 @@ completeform = () => {
 
 }
 
+
+
+// submit_form=()=>{
+
+//     let Api_data ={
+      
+//         ordr_user_id: 177,
+//         ordr_serv_id: 170,
+//         ordr_serv_type: 2,
+//         ordr_pckg_data: [{"unit":"2","len":"12","dept":"12","hegt":"13"}],
+//         ordr_send_cmpny: ,
+//         ordr_send_surname: Kumar,
+//         ordr_send_name: Shashi,
+//         ordr_send_tel: 9421307444,
+//         ordr_send_email: shashi.kumar@gmail.com,
+//         ordr_send_addr: Italy,
+//         ordr_send_cntry: 1,
+//         ordr_send_city: 8297,
+//         ordr_send_zip: 53021,
+//         ordr_send_add_info: TEst,
+//         ordr_recpt_cmpny: ,
+//         ordr_recpt_surname: Kumar,
+//         ordr_recpt_name: Disha,
+//         ordr_recpt_tel: 8090809080,
+//         ordr_recpt_email: disha.kumar@gmail.com,
+//         ordr_recpt_addr: Senegal,
+//         ordr_recpt_cntry: 2,
+//         ordr_recpt_city: 8043,
+//         ordr_recpt_zip: 26020,
+//         ordr_recpt_add_info: Test,
+//         ordr_reason_ship: Personal Effects,
+//         ordr_content: Personal Effect,
+//         ordr_invc_addr: 1,
+//         ordr_img: ,
+//         ordr_delvr_date: 2020-07-09,
+//         ordr_time_frm: 02:16:00,
+//         ordr_time_to: 02:16:00,
+//         ordr_add_info_pony: test,
+//         ordr_ship_type: 3,
+//         ordr_home_colectn: 0,
+//         ordr_home_delvry: 0,
+//         ordr_insurance: 1,
+//         ordr_ship_discription: ,
+//         ordr_country_origin: 0,
+//         ordr_quantity: 0,
+//         ordr_unit_value: ,
+//         ordr_total: 0,
+//         ordr_custom_duties: [{"ordr_belonging":"1","ordr_cat_id":"199","ordr_scat_id":"426","ordr_purc_invc":"","ordr_country_origin":"","ordr_quantity":"1","ordr_unit_measure":"litre","ordr_unit_value":"5000","ordr_unit_value1":"5000","ordr_exchange":"euro","ordr_custom":"149.82"},{"ordr_belonging":"1","ordr_cat_id":"152","ordr_scat_id":"305","ordr_purc_invc":"","ordr_country_origin":"","ordr_quantity":"1","ordr_unit_measure":"kg","ordr_unit_value":"2600","ordr_unit_value1":"2600","ordr_exchange":"euro","ordr_custom":"77.91"}],
+//         ordr_send_vat: 123qwe,
+//         ordr_recr_vat: 123ABC,
+//         ordr_no_custom: 0,
+//         ordr_transport_fee: 500,
+//         ordr_custom_duty: 227.56,
+//         ordr_home_clectn: 0,
+//         ordr_insurance_price: 0,
+//         ordr_total_price: 827.73,
+//         ordr_invoice_id: 146,
+//         ordr_rbn_transport_fee: 100,
+//         ordr_rbn_custom_fee: 0.17,
+//         ordr_dept_bsnes_chk: 0,
+//         ordr_ariv_bsnes_chk: 0,
+//         ordr_pay_details: {"create_time":"2020-07-09T08:56:23Z","update_time":"2020-07-09T09:07:02Z","id":"63Y601446X665003R","intent":"CAPTURE","status":"COMPLETED","payer":{"email_address":"sb-pfmef2276237@personal.example.com","payer_id":"HD68B7QDZ6CTJ","address":{"country_code":"US"},"name":{"given_name":"John","surname":"Doe"}},"purchase_units":[{"reference_id":"default","amount":{"value":"827.73","currency_code":"EUR"},"payee":{"email_address":"quality.prometteur@gmail.com","merchant_id":"5DDLJCWLUMU7J"},"shipping":{"name":{"full_name":"Rashmi Test"},"address":{"address_line_1":"basaveshwarnagar","admin_area_2":"Banglore","admin_area_1":"Karnataka","postal_code":"560040","country_code":"IN"}},"payments":{"captures":[{"status":"COMPLETED","id":"7BH52411VV445941S","final_capture":true,"create_time":"2020-07-09T09:07:02Z","update_time":"2020-07-09T09:07:02Z","amount":{"value":"827.73","currency_code":"EUR"},"seller_protection":{"status":"ELIGIBLE","dispute_categories":["ITEM_NOT_RECEIVED","UNAUTHORIZED_TRANSACTION"]},"links":[{"href":"https://api.sandbox.paypal.com/v2/payments/captures/7BH52411VV445941S","rel":"self","method":"GET","title":"GET"},{"href":"https://api.sandbox.paypal.com/v2/payments/captures/7BH52411VV445941S/refund","rel":"refund","method":"POST","title":"POST"},{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/63Y601446X665003R","rel":"up","method":"GET","title":"GET"}]}]}}],"links":[{"href":"https://api.sandbox.paypal.com/v2/checkout/orders/63Y601446X665003R","rel":"self","method":"GET","title":"GET"}]},
+//         ordr_pay_status: COMPLETED,
+//         ordr_pay_type: PayPal
+
+
+
+ 
+
+//  const requestOptions = {
+//      method: 'POST',
+//      headers: { 'Content-Type': 'application/json' },
+//      body: JSON.stringify(Api_data) 
+//  };
+//  console.log("requestOptions",JSON.stringify(requestOptions))
+ 
+//  fetch("http://rbn.sairoses.com/Front/index.php/API/madd/service-order", requestOptions)
+//  .then(async response => {
+//      const data = await response.json();
+   
+//             console.log("data yee"+JSON.stringify(data))
+//          //    let formData = data['result'];
+//          //    console.log("form3Data''' ",formData)
+  
+//      if (!response.ok) {
+//          // get error message from body or default to response status
+//          const error = (data && data.message) || response.status;
+//          return Promise.reject(error);
+//      }
+ 
+//      this.setState({ postId: data.id })
+//  })
+//  .catch(error => {
+//      this.setState({ errorMessage: error.toString() });
+//      console.error('There was an error!', error);
+//  });
+ 
+//  }
+ 
+
+
+
+
+
+
+
 ordercomplete = () => {
    
     // const {

@@ -176,7 +176,7 @@ class Recipient extends Component {
         formdata["VAT_Number"]= this.state.VAT_Number,
         formdata["Additional_Info"]= this.state.Additional_Info
         console.log("Recipents data",formdata)
-        console.log("weight",this.state.iWight)
+        console.log("weight rec",this.state.iWight)
         this.props.navigation.navigate('Form3', {sender_form:this.state.sender_details,recipents_data:formdata,ser_typ:this.state.ser_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,rWight:this.state.iWight,serv_id:this.state.serv_id})
 
     }
