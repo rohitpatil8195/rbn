@@ -356,6 +356,7 @@ completeform = () => {
                             </View>
                         </View>
                     </View>
+                    
                     <View style={styles.bottom}>
                         <TouchableOpacity onPress={this.ordercomplete} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />

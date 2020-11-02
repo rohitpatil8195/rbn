@@ -12,9 +12,27 @@ import { triggerAuthCountry, triggerCategory, triggerProduct, triggerUnits, trig
 import DocumentPicker from 'react-native-document-picker';
 
 // create a component
+var tempArr
 class Form3 extends Component {
     constructor(props) {
         super(props);
+//         tranport_type: this.state.transp_type,
+// service_type :this.state.serv_typ,
+// insurance_type: "1",
+// weight: "["+this.state.fWight+"]",
+// dimension: this.state.Diments,
+// belongings: "["+ this.state.belonging +"]",
+// quantity:this.state.Quantity+"]",
+// unit_of_measure: "["+this.state.scat_measure+"]",
+// unit_value: "["+this.state.scat_unit_val+"]",
+// currency: "["+this.state.favdolor+"]",
+// home_colectn: "0",
+// home_delv: "0",
+// scat_id: "["+this.state.productId+"]",
+// serv_id: this.state.serv_id,
+// exchange_rate: "["+this.state.favdolor+"]",
+// }
+        tempArr = [{ 'key': 0, 'belongings':'' , 'quantity':'','product_cat_name':'','product_name':'','country_nm':''}],
         this.state = {
             isSender: false,
             isRecipient: false,
@@ -61,9 +79,10 @@ class Form3 extends Component {
             Recipent_deatils:this.props.route.params.recipents_data,
             singleFile:null,
             file_name:'',
-            addPackage:[],
+            addPackage:tempArr,
             Content:'',
             key:[],
+           
             reason: [
                 {
                     label: 'Commercial',
@@ -316,7 +335,11 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
         console.log('oops something went wrong')
     }
 
-    onCountrySelect = (val) => {
+    onCountrySelect = (val,index) => {
+        tempArr[index].country_nm=val
+        this.setState({
+            addPackage:tempArr
+        })
         this.state.countrySelect = val
         this.state.countryList.map(item => {
             if (item.value == val) {
@@ -332,6 +355,15 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
         // this.onCity(this.state.countryId)
     }
 
+    onQuantitySelect =(val,index) =>{
+        tempArr[index].quantity=val
+        this.setState({
+            addPackage:tempArr
+        })
+    }
+
+
+
     onCategorySuccess = (data) => {
         // console.log('data', data)
         var result = data.result.map(function (el) {
@@ -344,12 +376,12 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
         })
          //console.log("result", JSON.parse(result))
        // const a = parseInt(this.state.belonging)
-        console.log("categoryList>>",this.state.belonging)
+        // console.log("categoryList>>",this.state.belonging)
 
-        const check_fin = result.filter(x=>x.cat_belonging == this.state.belonging);
-        console.log("check_fin :- ",check_fin)
+        //const check_fin = result.filter(x=>x.cat_belonging == this.state.belonging);
+      // console.log("check_fin :- ",check_fin)
         this.setState({
-            categoryList:result
+            categoryList: result 
         })
            
         // this.setState({
@@ -358,8 +390,12 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
 
     }
 
-    onCategorySelect = (val) => {
-                       
+    onCategorySelect = (val,index) => {
+                       //  alert(JSON.stringify(index)) 
+            tempArr[index].product_cat_name=val
+            this.setState({
+                addPackage:tempArr
+            })
         this.state.categorySelect = val
         this.state.categoryList.map(item => {
             if (item.value == val) {
@@ -371,7 +407,8 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                 })
             }
         })
-         console.log('categorySelect', this.state.categoryId)
+         
+         console.log('categorySelect>>>>', this.state.categoryId)
         this.onProduct(this.state.categoryId)
     }
 
@@ -399,7 +436,11 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
         })
     }
 
-    onProductSelect = (val) => {
+    onProductSelect = (val,index) => {
+        tempArr[index].product_name=val
+        this.setState({
+            addPackage:tempArr
+        })
         this.state.productSelect = val
         this.state.productList.map(item => {
             if (item.value == val) {
@@ -513,15 +554,22 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
 
         if (!this.state.isYes) {
           //  this.onCategorySuccess();
-        //   let cList = JSON.parse(JSON.stringify(this.state.categoryList));
+           
 
         //   console.log("belonging yes"+cList)
-            this.setState({ isYes: true,isNo: false, belonging:1})
-            // const check_fin = cList.filter(x=>x.cat_belonging == this.state.belonging);
-            // this.setState({
-            //     categoryList:check_fin
-            // })
-            //console.log("belonging Yes"+check_fin)
+            this.setState({ isYes: true,isNo: false},()=>{
+                this.onProduct()
+                 this.setState.belonging = 1
+               
+                console.log("belonging Yes"+this.state.belonging)
+                let cList = JSON.parse(JSON.stringify(this.state.categoryList));
+                const check_fin = cList.filter(x=>x.cat_belonging == 1);
+                this.setState({
+                    categoryList:check_fin
+                })
+               
+            })
+          
         } else {
             this.setState({ isYes: false })
         }
@@ -532,7 +580,17 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
     isNoPressed = () => {
         if (!this.state.isNo) {
             //console.log("belonging No"+this.state.categoryList)
-            this.setState({ isNo: true, isYes : false ,belonging:0 })
+            this.setState({ isNo: true, isYes : false  },()=>{
+                this.onProduct()
+                    this.setState.belonging = 0
+                 
+                let cList = JSON.parse(JSON.stringify(this.state.categoryList));
+                const check_fin = cList.filter(x=>x.cat_belonging == 0);
+                this.setState({
+                    categoryList:check_fin
+                })
+               
+            })
             // const check_fin = this.state.categoryList.filter(x=>x.cat_belonging == this.state.belonging);
             // this.setState({
             //     categoryList:check_fin
@@ -638,7 +696,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
       };
 
 
-      addMore = (key) => {
+      addMore = () => {
     //    this.setState=({
            
     //    })
@@ -648,173 +706,23 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
 //     var counts = count.length;
 //  console.log("indexx",(counts))
     
-        let addPackage =this.state.addPackage;
+    //     let addPackage =this.state.addPackage;
      
-        addPackage.push(
+    //     addPackage.push(
             
-            <View style={styles.cardv55}>
-            <View style={styles.cardv51}>
-            <View style={styles.cardv5i}>
-                <View style={styles.cardv511}>
-                    <Text>Belonging :</Text>
-                    <View style={styles.cardv5111}>
-                        {
-                            this.state.isYes == true ?
-                                <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
-                                    <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
-                                    <Text style={{ color: 'dodgerblue' }}>Yes</Text>
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
-                                    <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
-                                    <Text>Yes</Text>
-                                </TouchableOpacity>
-                        }
-                        {
-                            this.state.isNo == true ?
-                                <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
-                                    <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
-                                    <Text style={{ color: 'dodgerblue' }}>No</Text>
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
-                                    <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
-                                    <Text>No</Text>
-                                </TouchableOpacity>
-                        }
-                    </View>
-                </View>
-                <DropDown
-                   // placeholder={ProductCatPlaceholder}
-                    data={this.state.categoryList}
-                    onValueChange={this.onCategorySelect}
-                    source={require('../../Images/arrow-point-to-right.png')}
-                    textInputProps={{ underlineColorAndroid: 'black' }}
-                    value={this.state.categorySelect}
-                    style={{ marginTop: '-9%', width: '85%', alignSelf: 'center' }}
-                    errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
-                <DropDown
-                   // placeholder={ProductPlaceholder}
-                    data={this.state.productList}
-                    onValueChange={this.onProductSelect}
-                    source={require('../../Images/arrow-point-to-right.png')}
-                    textInputProps={{ underlineColorAndroid: 'black' }}
-                    value={this.state.productSelect}
-                    style={{ width: '85%', alignSelf: 'center', marginTop: '-15%' }}
-                    errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
-                {
-                    this.state.isYes == true ?
-                        null
-                        :
-                        <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity style={styles.upload} onPress={this.selectFile}>
-                        <View  >
-                           
-                { this.state.file_name == '' ? <Text style={{ marginHorizontal: 36}}>Select document</Text>: <Text style={{ marginHorizontal: 50}}>{this.state.file_name}</Text> }
             
-                        </View>
-                        </TouchableOpacity>
-                             
-                           <TouchableOpacity  style={styles.uploadss} onPress={this.uploadImage}>  
-                         <View>
-                       
-                         <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
-                     </View>
-                     </TouchableOpacity>
-                     </View>
-                }
-                  </View> 
-                    <DropDown
-                                  //  placeholder={CountryPlaceholder}
-                                    data={this.state.countryList}
-                                    onValueChange={this.onCountrySelect}
-                                    source={require('../../Images/arrow-point-to-right.png')}
-                                    textInputProps={{ underlineColorAndroid: 'black' }}
-                                    value={this.state.countrySelect}
-                                    style={{ width: '85%', marginTop: '-1%',marginLeft:'8%' }}
-                                    errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
-                                <TextInputComponent
-                                    onChangeText={text => this.setState({ Quantity: text })}
-                                    placeholder='Quantity'
-                                    underlineColorAndroid='lightgrey'
-                                    designStyle={{ height: 40, marginLeft: '-5%', marginTop: '-1%' }} />
-                                    <DropDown
-                                   // placeholder={UnitPlaceholder}
-                                    data={this.state.unitEx}
-                                    onValueChange={(value) => {
-                                        this.setState({
-                                            unitEx1: value,
-                                        });
-                                    }}
-                                    source={require('../../Images/arrow-point-to-right.png')}
-                                    textInputProps={{ underlineColorAndroid: 'black' }}
-                                    value={this.state.scat_measure}
-                                    style={{ width: '85%', marginTop: '-10%',marginLeft:'10%' }}
-                                    errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
-                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                                    <TextInputComponent
-                                        onChangeText={this.state.scat_unit_val}
-                                        placeholder={this.state.scat_unit_val}
-                                        underlineColorAndroid='grey'
-                                        keyboardType = 'numeric'
-                                        designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
-                                          <DropDown
-                                     //   placeholder={ExchangePlaceholder}
-                                        data={this.state.exchange}
-                                        onValueChange={(value) => {
-                                            this.setState({
-                                                favdolor: value,
-                                            });
-                                        }}
-                                        source={require('../../Images/arrow-point-to-right.png')}
-                                        textInputProps={{ underlineColorAndroid: 'black' }}
-                                        value={this.state.favdolor}
-                                        style={{ width: 130, marginLeft: '-55%', marginTop: '-10%' }}
-                                        errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
-            </View>
-            <TextInputComponent
-                                    onChangeText={this.state.cust_Duty}
-                                    placeholder= {this.state.cust_Duty}
-                                    defaultValue={this.state.cust_Duty}
-                                    underlineColorAndroid='lightgrey'
-                                    designStyle={{ height: 40, marginLeft: '-6%', marginTop: '-8%' }} />
+    
+    //     );
+    //     this.setState({addPackage})
  
-                                     {/* <TouchableOpacity activeOpacity = { .5 }  style={styles.plus} onPress={() => this.addMore(this.state.addPackage.length)}></TouchableOpacity> */}
-                                 
-                                <View style={styles.plus}> 
-                                                        
-                                    <Image source={require('../../Images/add-button-inside-black-circle.png')} style={styles.plus1} resizeMode='center' />
-                                   
-                                
-                                </View>
-           
-                                <View style={{marginBottom:14,flexDirection:'row',justifyContent:'space-between'}}>
-                                <Button 
-                                onPress={this.submit_form}
-                                title="Get Custom Duty"
-                                color="#841584"
-                                accessibilityLabel="Learn more about this purple button"
-                              /> 
-                                <Button 
-                                onPress={this.addMore}
-                                title="Add More"
-                                color="#841584"
-                                accessibilityLabel="Learn more about this purple button"
-                              />
-                              </View>
-                            
-                                
-                               
-                            
-                                </View>
-                             
-            
-        </View>
-    
-        );
-        this.setState({addPackage})
-    
-      }
+     //  var tempArr = [];
+     let count = tempArr.length;
+      tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':'','product_cat_name':'','product_name':'', 'country_nm':''})
+       this.setState({
+           addPackage:tempArr
+       })
+       console.log("tem",tempArr)
+    }
 
 
       
@@ -973,7 +881,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     }
 
                                 </View>
-                                {
+                                {/* {
                                     this.state.isArrow == true ?
                                         <View style={styles.cardv5}>
                                             <View style={styles.cardv51}>
@@ -1050,9 +958,9 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                         </View>
                                         :
                                         null
-                                }
+                                } */}
 
-                                <DropDown
+                                {/* <DropDown
                                     placeholder={CountryPlaceholder}
                                     data={this.state.countryList}
                                     onValueChange={this.onCountrySelect}
@@ -1106,10 +1014,10 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                     defaultValue={this.state.cust_Duty}
                                     underlineColorAndroid='lightgrey'
                                     designStyle={{ height: 40, marginLeft: '-10%', marginTop: '-8%' }} />
- 
+  */}
                                      {/* <TouchableOpacity activeOpacity = { .5 }  style={styles.plus} onPress={() => this.addMore(this.state.addPackage.length)}></TouchableOpacity> */}
                                  
-                                <View style={styles.plus}> 
+                                {/* <View style={styles.plus}> 
                            
                                 
                                     <Image source={require('../../Images/add-button-inside-black-circle.png')} style={styles.plus1} resizeMode='center' />
@@ -1126,16 +1034,179 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                                 accessibilityLabel="Learn more about this purple button"
                               />
                                 <Button 
-                                onPress={this.addMore}
+                                onPress={()=>this.addMore()}
                                 title="Add More"
                                 color="#841584"
                                 accessibilityLabel="Learn more about this purple button"
                               />
-                              </View>
+                              </View> */}
             
 
                               
                               
+                              {  this.state.addPackage.map((value, index) => {
+                                      
+                                      return (
+                                       <View style={styles.cardv55}>
+                                       <View style={styles.cardv51}>
+                                       <View style={styles.cardv5i}>
+                                           <View style={styles.cardv511}>
+                                               <Text>Belonging :</Text>
+                                               <View style={styles.cardv5111}>
+                                                   {
+                                                       this.state.isYes == true ?
+                                                           <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
+                                                               <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
+                                                               <Text style={{ color: 'dodgerblue' }}>Yes</Text>
+                                                           </TouchableOpacity>
+                                                           :
+                                                           <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
+                                                               <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
+                                                               <Text>Yes</Text>
+                                                           </TouchableOpacity>
+                                                   }
+                                                   {
+                                                       this.state.isNo == true ?
+                                                           <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
+                                                               <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
+                                                               <Text style={{ color: 'dodgerblue' }}>No</Text>
+                                                           </TouchableOpacity>
+                                                           :
+                                                           <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
+                                                               <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
+                                                               <Text>No</Text>
+                                                           </TouchableOpacity>
+                                                   }
+                                               </View>
+                                           </View>
+                                           <DropDown
+                                              // placeholder={ProductCatPlaceholder}
+                                               data={this.state.categoryList}
+                                               onValueChange={(val)=>this.onCategorySelect(val,index)}
+                                               source={require('../../Images/arrow-point-to-right.png')}
+                                               textInputProps={{ underlineColorAndroid: 'black' }}
+                                               value={value.product_cat_name}
+                                               style={{ marginTop: '-9%', width: '85%', alignSelf: 'center' }}
+                                               errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                           <DropDown
+                                              // placeholder={ProductPlaceholder}
+                                               data={this.state.productList}
+                                               onValueChange={(val)=>this.onProductSelect(val,index)}
+                                               source={require('../../Images/arrow-point-to-right.png')}
+                                               textInputProps={{ underlineColorAndroid: 'black' }}
+                                               value={value.product_name}
+                                               style={{ width: '85%', alignSelf: 'center', marginTop: '-15%' }}
+                                               errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                           {
+                                               this.state.isYes == true ?
+                                                   null
+                                                   :
+                                                   <View style={{flexDirection:'row'}}>
+                                                   <TouchableOpacity style={styles.upload} onPress={this.selectFile}>
+                                                   <View  >
+                                                      
+                                           { this.state.file_name == '' ? <Text style={{ marginHorizontal: 36}}>Select document</Text>: <Text style={{ marginHorizontal: 50}}>{this.state.file_name}</Text> }
+                                       
+                                                   </View>
+                                                   </TouchableOpacity>
+                                                        
+                                                      <TouchableOpacity  style={styles.uploadss} onPress={this.uploadImage}>  
+                                                    <View>
+                                                  
+                                                    <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
+                                                </View>
+                                                </TouchableOpacity>
+                                                </View>
+                                           }
+                                             </View> 
+                                               <DropDown
+                                                             //  placeholder={CountryPlaceholder}
+                                                               data={this.state.countryList}
+                                                               onValueChange={(val)=>this.onCountrySelect(val,index)}
+                                                               source={require('../../Images/arrow-point-to-right.png')}
+                                                               textInputProps={{ underlineColorAndroid: 'black' }}
+                                                               value={value.country_nm}
+                                                               style={{ width: '85%', marginTop: '-1%',marginLeft:'8%' }}
+                                                               errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                                           <TextInputComponent
+                                                               onChangeText={(val)=>this.onQuantitySelect(val,index)}
+                                                               placeholder='Quantity'
+                                                               underlineColorAndroid='lightgrey'
+                                                               designStyle={{ height: 40, marginLeft: '-5%', marginTop: '-1%' }} />
+                                                               <DropDown
+                                                              // placeholder={UnitPlaceholder}
+                                                               data={this.state.unitEx}
+                                                               onValueChange={(value) => {
+                                                                   this.setState({
+                                                                       unitEx1: value,
+                                                                   });
+                                                               }}
+                                                               source={require('../../Images/arrow-point-to-right.png')}
+                                                               textInputProps={{ underlineColorAndroid: 'black' }}
+                                                               value={this.state.scat_measure}
+                                                               style={{ width: '85%', marginTop: '-10%',marginLeft:'10%' }}
+                                                               errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                                                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+                                                               <TextInputComponent
+                                                                   onChangeText={this.state.scat_unit_val}
+                                                                   placeholder={this.state.scat_unit_val}
+                                                                   underlineColorAndroid='grey'
+                                                                   keyboardType = 'numeric'
+                                                                   designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
+                                                                     <DropDown
+                                                                  placeholder={ExchangePlaceholder}
+                                                                   data={this.state.exchange}
+                                                                   onValueChange={(value) => {
+                                                                       this.setState({
+                                                                           favdolor: value,
+                                                                       });
+                                                                   }}
+                                                                   source={require('../../Images/arrow-point-to-right.png')}
+                                                                   textInputProps={{ underlineColorAndroid: 'black' }}
+                                                                   value={this.state.favdolor}
+                                                                   style={{ width: 130, marginLeft: '-55%', marginTop: '-10%' }}
+                                                                   errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                       </View>
+                                       <TextInputComponent
+                                                               onChangeText={this.state.cust_Duty}
+                                                               placeholder= {this.state.cust_Duty}
+                                                               defaultValue={this.state.cust_Duty}
+                                                               underlineColorAndroid='lightgrey'
+                                                               designStyle={{ height: 40, marginLeft: '-6%', marginTop: '-8%' }} />
+                            
+                                                                {/* <TouchableOpacity activeOpacity = { .5 }  style={styles.plus} onPress={() => this.addMore(this.state.addPackage.length)}></TouchableOpacity> */}
+                                                            
+                                                           <View style={styles.plus}> 
+                                                                                   
+                                                               <Image source={require('../../Images/add-button-inside-black-circle.png')} style={styles.plus1} resizeMode='center' />
+                                                              
+                                                           
+                                                           </View>
+                                      
+                                                           <View style={{marginBottom:14,flexDirection:'row',justifyContent:'space-between'}}>
+                                                           <Button 
+                                                           onPress={this.submit_form}
+                                                           title="Get Custom Duty"
+                                                           color="#841584"
+                                                           accessibilityLabel="Learn more about this purple button"
+                                                         /> 
+                                                           <Button 
+                                                           onPress={()=>this.addMore()}
+                                                           title="Add More"
+                                                           color="#841584"
+                                                           accessibilityLabel="Learn more about this purple button"
+                                                         />
+                                                         </View>
+                                                       
+                                                           
+                                                          
+                                                       
+                                                           </View>
+                                                        
+                                       
+                                   </View>
+                                      );
+                                      })}
                                
                             </View>
                             :
@@ -1146,11 +1217,6 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestO
                          
                                 {/* <Button  onPress={this.submit_form} title='Get Custom Duty"  /> */}
 
-                                   {this.state.addPackage.map((value, index) => {
-                                       value=>{value=value}
-                                       console.log(index)
-                                   return value
-                                   })}
                     
                           {  <View style={styles.cardx}>
                           <View style={styles.ship}>

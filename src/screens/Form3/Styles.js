@@ -40,7 +40,8 @@ export default StyleSheet.create({
     },
     scroll: {
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        
     },
     scrl: {
         height: '100%',
@@ -132,7 +133,7 @@ export default StyleSheet.create({
        
     },
     card32: {
-        height: 600,
+        height: "auto",
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -166,7 +167,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         marginTop:7,
         marginBottom:6,
-        height: 570,
+        height: 580,
         width: '90%',
         borderRadius: 5,
         borderWidth: 1,
