@@ -365,6 +365,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         margin: 5
     },
+    //copy of card 5
     declare: {
         height: '90%',
         width: '90%',
@@ -377,6 +378,7 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
+    
     card52: {
         height: '40%',
         width: '90%',
@@ -422,6 +424,15 @@ export default StyleSheet.create({
         color: 'white',
         marginHorizontal: 10
     },
+    // bottom: {
+    //     height: 70,
+    //     width: '100%',
+    //     backgroundColor: 'white',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     marginVertical: 10,
+    // },
+    //copy of bottom 
     bottom: {
         height: 70,
         width: '100%',
@@ -429,6 +440,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
+        marginBottom:150
     },
     safe: {
         flex: 1,
