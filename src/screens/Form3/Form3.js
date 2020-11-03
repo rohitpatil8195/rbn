@@ -33,7 +33,7 @@
                     // serv_id: this.state.serv_id,
                     // exchange_rate: "["+this.state.favdolor+"]",
                     // }
-                            tempArr = [{ 'key': 0, 'belongings':'' , 'quantity':'','product_lst':[],'exchange_rt':'','upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
+                            tempArr = [{ 'key': 0, 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':'','product_lst':[],'exchange_rt':'','custom_dty_price':'','upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
                             this.state = {
                                 isSender: false,
                                 isRecipient: false,
@@ -43,8 +43,8 @@
                                 isCheck3: false,
                                 isCheck4: false,
                                 isCheck5: false,
-                                isYes: false,
-                                isNo: false,
+                                // isYes: null,
+                                // isNo: null,
                                 isArrow: true,
                                 categoryList: [],
                                 categorySelect: '',
@@ -65,7 +65,7 @@
                                 productCode: '',
                                 scat_unit_val:'',
                                 favColor: undefined,
-                                belonging:[],
+                                belonging:'',
                                 Quantity:[],
                                 cust_Duty:'',
                                 fee_on_custom:'',
@@ -82,6 +82,7 @@
                                 file_name:'',
                                 addPackage:tempArr,
                                 Content:'',
+                                total_Duty:'',                                
                                 key:[],
                             
                                 reason: [
@@ -220,31 +221,32 @@
                             formdata.append('cat_belonging', '')
                             // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
                             this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
-                            this.setState({ isYes: true , belonging:1})
+                            this.setState({ isYes: null })
                             console.log("fWight",this.state.fWight)
                         }
                     
-                        submit_form=()=>{
+                        submit_form=(index)=>{
+                            console.log("quant",tempArr[index].productId)
                     let Api_data ={
                     tranport_type: this.state.transp_type,
                     service_type :this.state.serv_typ,
                     insurance_type: "1",
                     weight: "["+this.state.fWight+"]",
                     dimension: this.state.Diments,
-                    belongings: "["+ this.state.belonging +"]",
-                    quantity:this.state.Quantity+"]",
-                    unit_of_measure: "["+this.state.scat_measure+"]",
-                    unit_value: "["+this.state.scat_unit_val+"]",
-                    currency: "["+this.state.favdolor+"]",
+                    belongings: "["+ tempArr[index].belongings+"]",
+                    quantity:"["+tempArr[index].quantity+"]",
+                    unit_of_measure: "["+tempArr[index].scat_measure+"]",
+                    unit_value: "["+tempArr[index].scat_unit_val+"]",
+                    currency: "["+tempArr[index].exchange_rt+"]",
                     home_colectn: "0",
                     home_delv: "0",
-                    scat_id: "["+this.state.productId+"]",
+                    scat_id: "["+tempArr[index].productId+"]",
                     serv_id: this.state.serv_id,
-                    exchange_rate: "["+this.state.favdolor+"]",
+                    exchange_rate: "["+tempArr[index].exchange_rt+"]",
                     }
 
                     //unit of measure this.state.unitEx1
-                    console.log("unit",this.state.unit_values)
+                   // console.log("unit",this.state.unit_values)
                     const requestOptions = {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -256,19 +258,27 @@
                     .then(async response => {
                         const data = await response.json();
                     
-                            console.log("data yee"+JSON.stringify(data))
+                            console.log("data yee"+JSON.stringify(data['result']))
                             //    let formData = data['result'];
                             //    console.log("form3Data''' ",formData)
                     if(data['result'] != null || '' || undefined){
-                            this.setState({
-                                cust_Duty:JSON.stringify(data['result'][0]['custom_duty']),
-                                fee_on_custom:JSON.stringify(data['result'][0]['fee_on_custom'])
-                            })
+
+                          let c_dty =JSON.stringify(data['result'][0]['custom_duty']);
+                          let c_fee =JSON.stringify(data['result'][0]['fee_on_custom'])
                         
-                            let float = parseFloat(this.state.cust_Duty) + parseFloat(this.state.fee_on_custom)
+                            // this.setState({
+                            //     cust_Duty:JSON.stringify(data['result'][0]['custom_duty']),
+                            //     fee_on_custom:JSON.stringify(data['result'][0]['fee_on_custom'])
+                            // })
+                        
+                            let float = parseFloat(c_dty) + parseFloat(c_fee)
+                            let fin = float
+                         
+                            tempArr[index].custom_dty_price = fin.toFixed(2)
                         this.setState({
-                                final_cust_duty :float
+                            addPackage:tempArr
                             })
+                         
                         }else{
                                 return 0;
                             }
@@ -371,7 +381,8 @@
                         }
 
                         onCategorySuccess = (data) => {
-                            //console.log('dataooooo', data)
+                           // console.log('dataooooo', data)
+
                             var result = data.result.map(function (el) {
                                 // var o = Object.assign({}, el);
                                 // var a = Object.assign({}, el);
@@ -397,8 +408,14 @@
                         }
 
                         onCategorySelect = (val,index) => {
+
                             current_index = index
-                            
+                            console.log("blog ++"+tempArr[index].belongings)
+                            //   let cList = JSON.parse(JSON.stringify(this.state.categoryList));
+                            // const check_fin = cList.filter(x=>x.tempArr[index].belongings == 0);
+                            //     this.setState({
+                            //         categoryList:check_fin
+                            //     })
                                         //  alert(JSON.stringify(index)) 
                                 tempArr[index].product_cat_name=val
                                 // this.setState({
@@ -445,9 +462,10 @@
                                 //   console.log("result",result)
                                 return el;
                             })
-                        alert(current_index)
+                        alert("please Choose Product")
+
                         tempArr[current_index].product_lst = result
-                            console.log("result",tempArr[current_index].product_lst)
+                            console.log("result.....",tempArr[current_index].product_lst)
                     
                             this.setState({
                                 addPackage:tempArr,
@@ -580,16 +598,21 @@
                             }
                         }
 
-                        isYesPressed = () => {
-
-                            if (!this.state.isYes) {
+                        isYesPressed = (index) => {
+                               console.log(index)
+                            if (!tempArr[index].isYes) {
                             //  this.onCategorySuccess();
                             
 
                             //   console.log("belonging yes"+cList)
-                                this.setState({ isYes: true,isNo: false},()=>{
-                                    this.onProduct()
-                                    this.setState.belonging = 1
+                               tempArr[index].isYes = false     
+                                this.setState({ isYes: true,isNo: false,belonging: 1},()=>{
+                                 //   this.onProduct()
+                                    tempArr[index].belongings = 1
+                                    this.setState({
+                                        addPackage:tempArr
+                                    })
+                              
                                 
                                     // console.log("belonging Yes"+this.state.belonging)
                                     // let cList = JSON.parse(JSON.stringify(this.state.categoryList));
@@ -601,17 +624,26 @@
                                 })
                             
                             } else {
-                                this.setState({ isYes: false })
+                                tempArr[index].isYes = false                        
+                                this.setState({addPackage:tempArr})
+                               
                             }
-                            this.setState({ isYes: true, isNo: false })
+                            tempArr[index].isYes = true     
+                            tempArr[index].isNo = false     
+                            this.setState({addPackage:tempArr})
                         
                         }
 
-                        isNoPressed = () => {
-                            if (!this.state.isNo) {
+                        isNoPressed = (index) => {
+                            console.log(index)
+                            if (!tempArr[index].isNo) {
                                 //console.log("belonging No"+this.state.categoryList)
                                 this.setState({ isNo: true, isYes : false  },()=>{
-                                    this.onProduct()
+                                   // this.onProduct()
+                                    tempArr[index].belongings = 0
+                                    this.setState({
+                                        addPackage:tempArr
+                                    })
                                         this.setState.belonging = 0
                                     
                                     // let cList = JSON.parse(JSON.stringify(this.state.categoryList));
@@ -627,9 +659,13 @@
                                 // })
                                 //console.log("belonging No"+check_fin)
                             } else {
-                                this.setState({ isNo: false })
+                                tempArr[index].isNo = false
+                                this.setState({ addPackage:tempArr})
+                             
                             }
-                            this.setState({ isNo: true, isYes: false })
+                            tempArr[index].isNo = true
+                            tempArr[index].isYes = false
+                            this.setState({ addPackage:tempArr})
                         
                         }
 
@@ -658,7 +694,7 @@
 
 
                     
-
+           
                     
                         uploadImage = async (index) => {
 
@@ -732,9 +768,41 @@
                             }
                             }
                         };
+ 
 
 
-                        addMore = () => {
+                    getTotal_Duty=()=>{
+                        console.log("type",typeof Math.floor(tempArr[0].custom_dty_price));
+
+                        var val = tempArr.reduce(function(previousValue, currentValue) {
+                            return {
+                                custom_dty_price: Math.ceil(previousValue.custom_dty_price) + Math.ceil(currentValue.custom_dty_price),
+                         
+                            }
+                          })
+                          console.log(val);
+
+                        
+                    //     let count = tempArr.length;
+                    //    // console.log("count",tempArr[0].custom_dty_price)
+                    //     let total =0;
+                    //     for(let i=0; i<=count; i++){
+                           
+                    //         let  total= total + tempArr[count].custom_dty_price;
+                    //        console.log(total)
+                            
+                    //     }
+
+                       // console.log("ttls",total)
+                        //    tempArr[index].total_Duty = totals;
+                        // this.setState({
+                        //     total_Duty:totals
+                        //     })
+                        //  console.log("dty",this.state.total_Duty)
+                         
+                    }
+
+                        addMore = (index) => {
                         //    this.setState=({
                             
                         //    })
@@ -754,14 +822,39 @@
                         //     this.setState({addPackage})
                     
                         //  var tempArr = [];
-                        let count = tempArr.length;
-                        tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':'','product_cat_name':'','product_lst':[],'exchange_rt':'','upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
+                        // console.log("cust_dyayayac ",tempArr.length)
+                        // let total =0;
+                        // for(let i=0; i<=tempArr.length; i++){
+                           
+                        //     let  totals=total + tempArr[i].custom_dty_price;
+                        //       return totals;
+                            
+                        // }
+                        // //    tempArr[index].total_Duty = totals;
+                        // this.setState({
+                        //     total_Duty:totals
+                        //     })
+                        //  console.log("dty",this.state.total_Duty)
+
+                        tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':'' ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':'','upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
                         this.setState({
                             addPackage:tempArr
                         })
-                        console.log("tem",tempArr)
+                       
+                        this.getTotal_Duty()
+                        console.log("tem",tempArr.length)
                         }
 
+
+ 
+                            deleteForm=(index)=>{
+                                console.log("ind",index)
+                                 tempArr.splice(tempArr,index);
+                                 this.setState({ 
+                                     addPackage:tempArr
+                                 })    
+                                 console.log("temdel",tempArr)
+                            }
 
                         
                         
@@ -1092,25 +1185,25 @@
                                                                 <Text>Belonging :</Text>
                                                                 <View style={styles.cardv5111}>
                                                                     {
-                                                                        this.state.isYes == true ?
-                                                                            <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
+                                                                        value.isYes == true ?
+                                                                            <TouchableOpacity onPress={()=>this.isYesPressed(index)} style={styles.yesno}>
                                                                                 <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
                                                                                 <Text style={{ color: 'dodgerblue' }}>Yes</Text>
                                                                             </TouchableOpacity>
                                                                             :
-                                                                            <TouchableOpacity onPress={this.isYesPressed} style={styles.yesno}>
+                                                                            <TouchableOpacity onPress={()=>this.isYesPressed(index)} style={styles.yesno}>
                                                                                 <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
                                                                                 <Text>Yes</Text>
                                                                             </TouchableOpacity>
                                                                     }
                                                                     {
-                                                                        this.state.isNo == true ?
-                                                                            <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
+                                                                       value.isNo == true ?
+                                                                            <TouchableOpacity onPress={()=>this.isNoPressed(index)} style={styles.yesno}>
                                                                                 <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
                                                                                 <Text style={{ color: 'dodgerblue' }}>No</Text>
                                                                             </TouchableOpacity>
                                                                             :
-                                                                            <TouchableOpacity onPress={this.isNoPressed} style={styles.yesno}>
+                                                                            <TouchableOpacity onPress={()=>this.isNoPressed(index)} style={styles.yesno}>
                                                                                 <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
                                                                                 <Text>No</Text>
                                                                             </TouchableOpacity>
@@ -1209,12 +1302,13 @@
                                                                                     style={{ width: 130, marginLeft: '-55%', marginTop: '-10%' }}
                                                                                     errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                                         </View>
-                                                        <TextInputComponent
-                                                                                onChangeText={this.state.cust_Duty}
-                                                                                placeholder= {this.state.cust_Duty}
-                                                                                defaultValue={this.state.cust_Duty}
+                                                                                    <Text style={{ height: 40, marginLeft: '10%', marginTop: '8%' }}>custom Duty: {value.custom_dty_price}</Text>
+                                                        {/* <TextInputComponent
+                                                                                onChangeText={value.custom_dty_price}
+                                                                             //   placeholder= { value.custom_dty_price }
+                                                                             
                                                                                 underlineColorAndroid='lightgrey'
-                                                                                designStyle={{ height: 40, marginLeft: '-6%', marginTop: '-8%' }} />
+                                                                                designStyle={{ height: 40, marginLeft: '-6%', marginTop: '-8%' }} /> */}
                                                 
                                                                                     {/* <TouchableOpacity activeOpacity = { .5 }  style={styles.plus} onPress={() => this.addMore(this.state.addPackage.length)}></TouchableOpacity> */}
                                                                                 
@@ -1227,8 +1321,8 @@
                                                         
                                                                             <View style={{marginBottom:14,flexDirection:'row',justifyContent:'space-between'}}>
                                                                             <Button 
-                                                                            onPress={this.submit_form}
-                                                                            title="Get Custom Duty"
+                                                                            onPress={()=>this.submit_form(index)}
+                                                                            title="Custom Duty"
                                                                             color="#841584"
                                                                             accessibilityLabel="Learn more about this purple button"
                                                                             /> 
@@ -1238,6 +1332,12 @@
                                                                             color="#841584"
                                                                             accessibilityLabel="Learn more about this purple button"
                                                                             />
+                                                                            {/* <Button 
+                                                                            onPress={()=>this.deleteForm(index)}
+                                                                            title="delete"
+                                                                            color="#841584"
+                                                                            accessibilityLabel="Learn more about this purple button"
+                                                                            /> */}
                                                                             </View>
                                                                         
                                                                             
@@ -1272,7 +1372,7 @@
                                                             </View>
                                                             <View style={styles.v22}>
                                                                 <Text style={{ fontSize: 17 }}>${this.state.final_cust_duty}</Text>
-                                                                <Text style={{ fontSize: 10 }}>Custom Duty</Text>
+                                                                <Text style={{ fontSize: 10 }}>{this.state.total_Duty}</Text>
                                                             </View>
 
                                                         </View>
@@ -1375,6 +1475,7 @@
                                                 <Text style={styles.save}>Save & Continue</Text>
                                             </TouchableOpacity>
                                         </View>
+                                        <View style={styles.cardv555}></View>
                                     </ScrollView>
 
                                 </SafeAreaView>

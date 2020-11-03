@@ -167,7 +167,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         marginTop:7,
         marginBottom:6,
-        height: 580,
+        height: 590,
         width: '90%',
         borderRadius: 5,
         borderWidth: 1,
@@ -175,6 +175,18 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderColor:'black',borderWidth:1
+    },
+    cardv555: {
+       
+        marginTop:7,
+        marginBottom:6,
+        height: 400,
+        width: '90%',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     cardv51:{
         height: '90%',
