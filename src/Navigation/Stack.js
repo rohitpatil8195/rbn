@@ -14,7 +14,9 @@ import Contact from '../screens/Contact/Contact';
 import Sender from '../screens/Sender/Sender';
 import Recipient from '../screens/Recipient/Recipient';
 import Form3 from '../screens/Form3/Form3';
+//Paypal 
 import Completeform from '../screens/Completeform/Completeform';
+import Paypal from '../screens/OrderComplete/Paypal';
 import OrderComplete from '../screens/OrderComplete/OrderComplete';
 import Settings from '../screens/Settings/Settings';
 import Bookings from '../screens/Bookings/Bookings';
@@ -117,6 +119,7 @@ function App() {
           <Stack.Screen name="Recipient" component={Recipient} />
           <Stack.Screen name="Form3" component={Form3} />
           <Stack.Screen name="Completeform" component={Completeform} />
+          <Stack.Screen name="Paypal" component={Paypal} />
           <Stack.Screen name="OrderComplete" component={OrderComplete} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Bookings" component={Bookings} />

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import styles from "./Styles";
@@ -201,89 +202,12 @@ completeform = () => {
 
 
 
- 
-
-//  const requestOptions = {
-//      method: 'POST',
-//      headers: { 'Content-Type': 'application/json' },
-//      body: JSON.stringify(Api_data) 
-//  };
-//  console.log("requestOptions",JSON.stringify(requestOptions))
- 
-//  fetch("http://rbn.sairoses.com/Front/index.php/API/madd/service-order", requestOptions)
-//  .then(async response => {
-//      const data = await response.json();
-   
-//             console.log("data yee"+JSON.stringify(data))
-//          //    let formData = data['result'];
-//          //    console.log("form3Data''' ",formData)
-  
-//      if (!response.ok) {
-//          // get error message from body or default to response status
-//          const error = (data && data.message) || response.status;
-//          return Promise.reject(error);
-//      }
- 
-//      this.setState({ postId: data.id })
-//  })
-//  .catch(error => {
-//      this.setState({ errorMessage: error.toString() });
-//      console.error('There was an error!', error);
-//  });
- 
-//  }
- 
-
-
-
-
-
 
 
 ordercomplete = () => {
-   
-    const {
-        nonce,
-        payerId,
-        email,
-        firstName,
-        lastName,
-        phone 
-    } =  requestOneTimePayment(
-      token,
-      {
-        amount: '5', // required
-        // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
-        currency: 'GBP',
-        // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
-        localeCode: 'en_GB', 
-        shippingAddressRequired: false,
-        userAction: 'commit', // display 'Pay Now' on the PayPal review page
-        // one of 'authorize', 'sale', 'order'. defaults to 'authorize'. see details here: https://developer.paypal.com/docs/api/payments/v1/#payment-create-request-body
-        intent: 'authorize', 
-      }
-    )
-     
-    // // For vaulting paypal account see: https://developers.braintreepayments.com/guides/paypal/vault
-    // const {
-    //     nonce,
-    //     payerId,
-    //     email,
-    //     firstName,
-    //     lastName,
-    //     phone 
-    // } = await requestBillingAgreement(
-    //   token,
-    //   {
-    //     billingAgreementDescription: 'Your agreement description', // required
-    //     // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
-    //     currency: 'GBP',
-    //     // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
-    //     localeCode: 'en_GB',
-    //   }
-    // );
 
-    this.props.navigation.navigate('OrderComplete', {})
+
+    this.props.navigation.navigate('Paypal', {})
 }
 
 completeform = () => {
@@ -386,3 +310,7 @@ completeform = () => {
     );
   }
 }
+
+
+
+

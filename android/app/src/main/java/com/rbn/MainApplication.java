@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.RNPaypalPackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.facebook.react.ReactInstanceManager;
