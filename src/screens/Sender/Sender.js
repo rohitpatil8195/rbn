@@ -199,7 +199,7 @@ this.props.triggerForm1()
                         <View style={styles.card21}>
                             <View style={{ height: '2%' }}></View>
                             <TextInputComponent onChangeText={text => this.setState({ Company_name:text })} placeholder='Company Name'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50,borderColor:'black',borderWidth:1 }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50}} />
                             <TextInputComponent onChangeText={text => this.setState({ FirstName:text})} placeholder='First Name'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
                             <TextInputComponent onChangeText={text => this.setState({ Surname:text })} placeholder='Surname'

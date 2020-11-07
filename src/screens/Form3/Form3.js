@@ -14,6 +14,7 @@
                                                 // create a component
                                                 var tempArr
                                                 var current_index = 0
+                                                var new_index=0
                                                 class Form3 extends Component {
                                                     constructor(props) {
                                                         super(props);
@@ -33,7 +34,7 @@
                                                 // serv_id: this.state.serv_id,
                                                 // exchange_rate: "["+this.state.favdolor+"]",
                                                 // }
-                                                        tempArr = [{ 'key': 0, 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
+                                                        tempArr = [{ 'key': 0, 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
                                                         this.state = {
                                                             isSender: false,
                                                             isRecipient: false,
@@ -83,7 +84,8 @@
                                                             addPackage:tempArr,
                                                             Content:'',
                                                             total_Duty:'',  
-                                                            total_quantity:'',                              
+                                                            total_quantity:'',   
+                                                            new_index_g:new_index,                           
                                                             key:[],
                                                         
                                                             reason: [
@@ -373,6 +375,7 @@
                                                         this.setState({
                                                             addPackage:tempArr
                                                         })
+                                                        this.getTotal_Duty()
                                                     }
 
                                                     exchange_rts=(val,index)=>{
@@ -384,7 +387,7 @@
 
                                                     onCategorySuccess = (data) => {
                                                     // console.log('dataooooo', data)
-
+                                                                                                                                                                   
                                                         var result = data.result.map(function (el) {
                                                             // var o = Object.assign({}, el);
                                                             // var a = Object.assign({}, el);
@@ -602,14 +605,16 @@
 
                                                     isYesPressed = (index) => {
                                                         console.log(index)
+                                                       
                                                         if (!tempArr[index].isYes) {
                                                         //  this.onCategorySuccess();
                                                         
 
                                                         //   console.log("belonging yes"+cList)
                                                         tempArr[index].isYes = false     
-                                                            this.setState({ isYes: true,isNo: false,belonging: 1},()=>{
+                                                            this.setState({ isYes: true,isNo: false,belonging: 1,},()=>{
                                                             //   this.onProduct()
+                                                               new_index = index;
                                                                 tempArr[index].belongings = 1
                                                                 this.setState({
                                                                     addPackage:tempArr
@@ -643,6 +648,7 @@
                                                             this.setState({ isNo: true, isYes : false  },()=>{
                                                             // this.onProduct()
                                                                 tempArr[index].belongings = 0
+                                                                new_index = index;
                                                                 this.setState({
                                                                     addPackage:tempArr
                                                                 })
@@ -681,13 +687,14 @@
                                                         formdata["Product_cat"]= this.state.onCategorySelect,
                                                         formdata["Unit_of_measure"]= this.state.scat_measure,
                                                         formdata["Unit_value"]= this.state.scat_unit_val,
-                                                        formdata["Custom_duty"]= this.state.final_cust_duty,
-                                                        formdata["Quantity"]= this.state.Quantity,
+                                                        formdata["Custom_duty"]= this.state.total_Duty,
+                                                        formdata["Quantity"]= this.state.total_quantity,
                                                         formdata["file_name"]= this.state.file_name,
                                                         formdata["isCheck"]= this.state.isCheck,
                                                         formdata["Country_Org"]= this.state.countrySelect
-                                                    //console.log("country is",this.state.countrySelect)
-                                                        this.props.navigation.navigate('Completeform', {Form3:formdata ,sender_info:this.state.sender_deatils,recipent_info:this.state.Recipent_deatils})
+                                                       // fromdata["muitiple_orders"]= this.state.addPackage
+                                                   // console.log("country is",this.state.addPackage)
+                                                        this.props.navigation.navigate('Completeform', {muitiple_orders:this.state.addPackage,Form3:formdata ,sender_info:this.state.sender_deatils,recipent_info:this.state.Recipent_deatils})
                                                     }
 
                                                     recipient = () => {
@@ -789,8 +796,9 @@
                                                 var quant =0;
                                                         for (var i = 0; i < tempArr.length; i++) {
                                                         sum += parseFloat(tempArr[i].custom_dty_price)
-                                                        quant += parseFloat(tempArr[i].quantity)
+                                                        quant += parseInt(tempArr[i].quantity)
                                                         }
+                                                        console.log("type quanrti", quant)
                                                         this.setState({
                                                          total_Duty:(sum).toFixed(2),
                                                          total_quantity:quant
@@ -852,25 +860,38 @@
                                                     //     })
                                                     //  console.log("dty",this.state.total_Duty)
 
-                                                    tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':'' ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
+                                                    tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':0 ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
                                                     this.setState({
                                                         addPackage:tempArr
                                                     })
                                                 
                                                     this.getTotal_Duty()
-                                                    console.log("tem",tempArr.length)
+                                                    console.log("tem",tempArr)
                                                     }
 
 
                             
-                                                        deleteForm=(index)=>{
-                                                            console.log("ind",index)
-                                                            tempArr.splice(index,1);
-                                                            this.setState({ 
-                                                                addPackage:tempArr
-                                                            })    
-                                                            console.log("temdel",tempArr)
-                                                        }
+                                                        // deleteForm=(index)=>{
+
+                                                        //     for (var i = 0; i < tempArr.length; i++) {
+                                                        //         if(index === tempArr.length){
+                                                        //         tempArr.splice(tempArr[i]);
+                                                        //         this.setState({ 
+                                                        //             addPackage:tempArr
+                                                        //         })   
+                                                        //         break;
+                                                        //     }
+                                                        //     this.getTotal_Duty();
+                                                        //         }
+
+
+                                                        //     // console.log("ind",index)
+                                                        //     // tempArr.splice(index,1);
+                                                        //     // this.setState({ 
+                                                        //     //     addPackage:tempArr
+                                                        //     // })    
+                                                        //     // console.log("temdel",tempArr)
+                                                        // }
 
                                                     
                                                     

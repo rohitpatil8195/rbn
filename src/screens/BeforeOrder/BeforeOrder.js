@@ -5,7 +5,7 @@ import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
 import DateTime from '../../components/DateTimePickerModal';
 import moment from 'moment/moment';
-
+import RNPaypal from 'react-native-paypal-lib';
 
 export default class BeforeOrder extends Component {
   constructor(props) {
@@ -25,8 +25,42 @@ export default class BeforeOrder extends Component {
         isArrow: false,
         isDatePickerVisible: false,
         DOB: '',
+       form4_data:this.props.route.params.from4
     };
   }
+
+
+  navi_Forward=()=>{
+    let formdata = {}
+    formdata["all_info"]= this.state.form4_data,
+    this.props.navigation.navigate('OrderComplete', {})
+}
+navi_Backward=()=>{
+    this.props.navigation.navigate('BeforeOrder', {})
+}
+
+  callApi=()=>{
+    RNPaypal.paymentRequest({
+      clientId: 'AWdjxB7ONcUN_bMajfIQsXH3s-DpnJy3eT1Xgtdw1AiAehPrVM0U1z4yGmB-95UhYEePBj2KhNrcQ465',
+      environment: RNPaypal.ENVIRONMENT.NO_NETWORK,
+      intent: RNPaypal.INTENT.SALE,
+      price: 60,
+      currency: 'USD',
+      description: `RBN testing`,
+      acceptCreditCards: true
+  }).then(response => {
+    console.log("before")
+      console.log("this resp",response)
+          alert("Transaction Successful")
+        this.navi_Forward()
+  }).catch(err => {
+    console.log("errorrssss")
+      console.log(err.message)
+      alert("Transaction Cancelled")
+      this.navi_Backward()
+  })
+  }
+
 
   _showDateTimePicker = () => {
     this.setState({ isDatePickerVisible: true });
@@ -206,8 +240,8 @@ completeform = () => {
 
 ordercomplete = () => {
 
-
-    this.props.navigation.navigate('Paypal', {})
+    //console.log("all the data",this.state.form4_data)
+    this.props.navigation.navigate('Paypal',{All_form_data:this.state.form4_data})
 }
 
 completeform = () => {
@@ -301,7 +335,7 @@ completeform = () => {
                     </View>
                     
                     <View style={styles.bottom}>
-                        <TouchableOpacity onPress={this.ordercomplete} style={styles.button}>
+                        <TouchableOpacity onPress={this.callApi} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />
                             <Text style={styles.save}>Pay Now</Text>
                         </TouchableOpacity>

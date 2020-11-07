@@ -962,9 +962,6 @@ var gsDayNames = [
 } 
         />: null }
 
-
-
-
         {(this.state.isAir === true ) ? <FlatList       
           data={ this.state.Air_data } 
         //  ItemSeparatorComponent={this._renderSeparator}
@@ -1004,7 +1001,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                    {item.serv_type==1 ?<Text>Type-Air</Text> : item.serv_type==2 ? <Text>Type-Maritime</Text> :  <Text>Type-Road</Text>  }
                                 </View>
                             </View>
                         </View>

@@ -26,7 +26,8 @@ export default class Completeform extends Component {
             isArrowcstm: false,
             sender_info:this.props.route.params.sender_info,
             Recipent_info:this.props.route.params.recipent_info,
-            form3Data:this.props.route.params.Form3
+            form3Data:this.props.route.params.Form3,
+            multi_products:this.props.route.params.muitiple_orders
         }
     }
 
@@ -145,7 +146,13 @@ export default class Completeform extends Component {
     }
 
     ordercomplete = () => {
-        this.props.navigation.navigate('BeforeOrder', {})
+        let formdata = {}
+        formdata["sender_data"]= this.state.sender_info,
+        formdata["Recipent_info"]= this.state.Recipent_info,
+        formdata["form_data"]= this.state.form3Data,
+        formdata["multi_products"] =this.state.multi_products
+        console.log("formdata compelet form",formdata)
+        this.props.navigation.navigate('BeforeOrder', {from4:formdata})
     }
 
     form3 = () => {

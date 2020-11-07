@@ -2,11 +2,19 @@ import React,{Component} from 'react';
 import {Text,View,Button} from 'react-native';
 import RNPaypal from 'react-native-paypal-lib';
 class Paypal extends Component {
+    constructor(props){
+       super(props);
+       this.state={
+           All_info:this.props.route.param.All_form_data
+       };
+    }
    componentDidMount=()=>{
       console.log("heyyyy",RNPaypal)
    }
 
    navi_Forward=()=>{
+    let formdata = {}
+    formdata["all_info"]= this.state.All_info,
     this.props.navigation.navigate('OrderComplete', {})
 }
 navi_Backward=()=>{

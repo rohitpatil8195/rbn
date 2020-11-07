@@ -158,12 +158,12 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: 10,
-        marginTop: 10,
+        marginTop: 6,
         elevation: 10,
         flexDirection: 'row',
         alignItems:'center',
         justifyContent: 'center',
-        borderColor:'black',
+        borderColor:'blue',
         borderWidth:1
     },
     card1: {
