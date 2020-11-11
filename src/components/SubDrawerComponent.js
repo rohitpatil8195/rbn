@@ -29,6 +29,8 @@ const [Name , setName] = useState('')
     //let finlaAuth = await JSON.parse(js['authReducer'])['loginObj']['data']['result']
    let authreducer = JSON.parse(js['authReducer'])
    let loginobj = authreducer['loginObj'];
+   let loginmediaobj = authreducer['loginMediaObj'];
+   console.log("loginmediaobj",loginmediaobj)
    let logindata = loginobj['data']
     console.log(logindata['result'][0])
    let email = logindata['result'][0]['user_email']

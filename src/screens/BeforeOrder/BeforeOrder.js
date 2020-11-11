@@ -25,6 +25,7 @@ export default class BeforeOrder extends Component {
         isArrow: false,
         isDatePickerVisible: false,
         DOB: '',
+        paypal_Resp:[],
        form4_data:this.props.route.params.from4
     };
   }
@@ -33,7 +34,9 @@ export default class BeforeOrder extends Component {
   navi_Forward=()=>{
     let formdata = {}
     formdata["all_info"]= this.state.form4_data,
-    this.props.navigation.navigate('OrderComplete', {})
+    formdata["paypal_data"] =this.state.paypal_Resp
+    console.log(formdata)
+    this.props.navigation.navigate('OrderComplete', {final_data:formdata})
 }
 navi_Backward=()=>{
     this.props.navigation.navigate('BeforeOrder', {})
@@ -52,6 +55,9 @@ navi_Backward=()=>{
     console.log("before")
       console.log("this resp",response)
           alert("Transaction Successful")
+          this.setState({
+              paypal_Resp:response
+          })
         this.navi_Forward()
   }).catch(err => {
     console.log("errorrssss")
@@ -234,6 +240,8 @@ completeform = () => {
 //         ordr_pay_status: COMPLETED,
 //         ordr_pay_type: PayPal
 
+//    }
+// }
 
 
 
@@ -344,7 +352,3 @@ completeform = () => {
     );
   }
 }
-
-
-
-

@@ -1,12 +1,15 @@
 import { makeAPICall } from '../common';
 import config from '../config';
-
+////urlMediaLogin triggerMediaAuthLogin
 export const TRIGGER_REGISTER = "TRIGGER_REGISTER";
 export const TRIGGER_REGISTER_SUCCESS = "TRIGGER_REGISTER_SUCCESS";
 export const TRIGGER_REGISTER_FAILED = "TRIGGER_REGISTER_FAILED";
 export const TRIGGER_LOGIN = "TRIGGER_LOGIN";
 export const TRIGGER_LOGIN_SUCCESS = "TRIGGER_LOGIN_SUCCESS";
 export const TRIGGER_LOGIN_FAILED = "TRIGGER_LOGIN_FAILED";
+export const TRIGGER_MEDIA_LOGIN = "TRIGGER_MEDIA_LOGIN";
+export const TRIGGER_MEDIA_LOGIN_SUCCESS = "TRIGGER_MEDIA_LOGIN_SUCCESS";
+export const TRIGGER_MEDIA_LOGIN_FAILED = "TRIGGER_MEDIA_LOGIN_FAILED";
 export const TRIGGER_LOGOUT = "TRIGGER_LOGOUT";
 export const TRIGGER_FORGOT = "TRIGGER_FORGOT";
 export const TRIGGER_FORGOT_SUCCESS = "TRIGGER_FORGOT_SUCCESS";
@@ -74,6 +77,25 @@ export function triggerAuthLogin(obj, callback, errCallback) {
             errCallback
         }
         makeAPICall(params)
+    }
+}
+ 
+export function triggerMediaAuthLogin(obj, callback, errCallback) {
+    return dispatch => {
+        const params = {
+            url: `${config.apiBasePath}${config.urlMediaLogin}`,
+            dispatch,
+            defaultAction: TRIGGER_MEDIA_LOGIN,
+            successAction: TRIGGER_MEDIA_LOGIN_SUCCESS,
+            failedAction: TRIGGER_MEDIA_LOGIN_FAILED,
+            type: "POST",
+            headers: {},
+            params: obj,
+            callback,
+            errCallback
+        }
+        makeAPICall(params)
+        console.log("media param",params)
     }
 }
 

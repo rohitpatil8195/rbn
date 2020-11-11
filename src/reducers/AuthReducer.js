@@ -5,6 +5,12 @@ import {
     TRIGGER_LOGIN,
     TRIGGER_LOGIN_SUCCESS,
     TRIGGER_LOGIN_FAILED,
+
+    TRIGGER_MEDIA_LOGIN,
+    TRIGGER_MEDIA_LOGIN_SUCCESS,
+    TRIGGER_MEDIA_LOGIN_FAILED,
+
+    
     TRIGGER_LOGOUT,
     TRIGGER_FORGOT,
     TRIGGER_FORGOT_SUCCESS,
@@ -48,6 +54,11 @@ const initialState = {
         error: null
     },
     loginObj: {
+        loading: false,
+        data: [],
+        error: null
+    },
+    loginMediaObj:{
         loading: false,
         data: [],
         error: null
@@ -162,6 +173,34 @@ const authReducer = function (state = initialState, action) {
             return {
                 ...state,
                 loginObj: {
+                    loading: false,
+                    data: [],
+                    error: action.error
+                }
+            }
+            case TRIGGER_MEDIA_LOGIN:
+            return {
+                ...state,
+                loginMediaObj: {
+                    loading: true,
+                    data: [],
+                    error: action.error
+                }
+            }
+        case TRIGGER_MEDIA_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loginMediaObj: {
+                    loading: false,
+                    data: action.payload,
+                    error: null
+                },
+                isLoggedIn: true
+            }
+        case TRIGGER_MEDIA_LOGIN_FAILED:
+            return {
+                ...state,
+                loginMediaObj: {
                     loading: false,
                     data: [],
                     error: action.error

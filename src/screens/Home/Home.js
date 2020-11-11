@@ -19,7 +19,7 @@ import { triggerAuthCountry, triggerAuthCity, triggerSearch } from '../../action
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
+var tempArr
 const data = [
   {
     imageUrl: require('../../Images/fitting.png'),
@@ -72,6 +72,7 @@ let backPressed = 0;
 class Home extends Component {
   constructor(props) {
     super(props);
+    tempArr = [{ 'Weight': '','Len':'','Dpt':'','Hgt':''}]
     this.state = {
       isHome: true,
       isAbout: false,
@@ -116,7 +117,7 @@ class Home extends Component {
       DOB: '',
       valueArray: [],
       disabled: false,
-      addPackage:[],
+      addPackage:tempArr,
       Array: [
         [
           {
@@ -291,6 +292,17 @@ class Home extends Component {
   // }
 
 
+  addMore = (index) => {
+                                                   
+
+    tempArr.push({ 'Weight': '','Len':'','Dpt':'','Hgt':''})
+    this.setState({
+        addPackage:tempArr
+    })
+
+    this.getTotal_Duty()
+    console.log("tem",tempArr)
+    }
 
   onCitySelect = (val) => {
     this.state.citySelect = val
@@ -351,52 +363,52 @@ class Home extends Component {
     this.setState.Array = array1
   }
 
-  addMore = (key) => {
+  // addMore = (key) => {
       
-    let addPackage =this.state.addPackage;
-    addPackage.push(
+  //   let addPackage =this.state.addPackage;
+  //   addPackage.push(
         
-      <View style={styles.card22}>
+  //     <View style={styles.card22}>
         
-        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
-        {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
-          underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
-          <TouchableOpacity><Text style={styles.textb}>- delete</Text></TouchableOpacity>
-        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-          underlineColorAndroid='grey' designStyle={{ width: '120%', marginLeft: '-15%', height: 50 }} />
-        {/* </View> */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-          <Text style={styles.dim}>Dimensions (cm) :</Text>
-          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
-            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
-            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-          <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
-            underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
-        </View>
+  //       {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
+  //       {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
+  //         underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+  //         <TouchableOpacity><Text style={styles.textb}>- delete</Text></TouchableOpacity>
+  //       <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
+  //         underlineColorAndroid='grey' designStyle={{ width: '120%', marginLeft: '-15%', height: 50 }} />
+  //       {/* </View> */}
+  //       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+  //         <Text style={styles.dim}>Dimensions (cm) :</Text>
+  //         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
+  //           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
+  //         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
+  //           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
+  //         <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
+  //           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+  //       </View>
         
-    </View>
+  //   </View>
 
-    );
-    this.setState({addPackage})
+  //   );
+  //   this.setState({addPackage})
     
 
-    // this.animatedValue.setValue(0);
-    // let newlyAddedValue = { index: this.index }
-    // this.setState({ disabled: true, valueArray: [...this.state.valueArray, newlyAddedValue] }, () => {
-    //   Animated.timing(
-    //     this.animatedValue,
-    //     {
-    //       toValue: 1,
-    //       duration: 500,
-    //       useNativeDriver: true
-    //     }
-    //   ).start(() => {
-    //     this.index = this.index + 1;
-    //     this.setState({ disabled: false });
-    //   });
-    // });
-  }
+  //   // this.animatedValue.setValue(0);
+  //   // let newlyAddedValue = { index: this.index }
+  //   // this.setState({ disabled: true, valueArray: [...this.state.valueArray, newlyAddedValue] }, () => {
+  //   //   Animated.timing(
+  //   //     this.animatedValue,
+  //   //     {
+  //   //       toValue: 1,
+  //   //       duration: 500,
+  //   //       useNativeDriver: true
+  //   //     }
+  //   //   ).start(() => {
+  //   //     this.index = this.index + 1;
+  //   //     this.setState({ disabled: false });
+  //   //   });
+  //   // });
+  // }
    
  
 
@@ -1068,32 +1080,15 @@ class Home extends Component {
                     </View>
                   </View>
                 </View>
-                <View style={styles.cardN}>
-                  <View style={styles.card21}>
-                    <>
-                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
-                      {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
-                        underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
-
-
-{/*                         
-                      <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-                        underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} /> */}
-                     
-                      {/* <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                        <Text style={styles.dim}>Dimensions (cm) :</Text>
-                        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })}  placeholder={i18n.t('L')}
-                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-                        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
-                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-                        <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
-                          underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
-              
-                      </View> */}
+               
                   
-                    
-                    
+
+                  {  this.state.addPackage.map((value, index) => {
+                      return (      
+                        <View style={styles.cardN}>
+                        <View style={styles.card21}>
+                                                         
+                    <>
                       <TextInputComponent onChangeText={text => this.setState({ W: text })} placeholder={i18n.t('Weight(Kg)')}
                         underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
 
@@ -1112,13 +1107,11 @@ class Home extends Component {
 
 
                                   {/* <Text>---{this.setState.L}</Text> */}
-                      {this.state.addPackage.map((value, index) => {
-          return value
-        })}
-        </View>
+                                
+                 </View>
          
                     </>
-               
+                     
            
                     {/* <View>
                       {
@@ -1126,12 +1119,15 @@ class Home extends Component {
                       }
                     </View> */}
                     
-                    <TouchableOpacity onPress={() => this.addMore(this.state.addPackage.length)}>
+                    <TouchableOpacity onPress={(index) => this.addMore(index)}>
                       <Text style={styles.textb}>{i18n.t('+ Add Package')}</Text>
                     </TouchableOpacity>
                    
                   </View>
-                </View>
+                   </View>
+                  );
+                })}
+               
                 <View style={styles.cardM}>
                 <DateTime
                       placeholder='Date'

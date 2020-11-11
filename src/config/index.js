@@ -1,7 +1,8 @@
 const config = {}
 config.apiBasePath = 'http://rbn.sairoses.com/Front/index.php/API/'
 config.urlRegister = 'mAdd/register'
-config.urlLogin = 'mLogin'
+config.urlLogin = 'mLogin',
+config.urlMediaLogin = 'mLogin/media_login'
 config.urlForgot = 'mForgot'
 config.urlCountry = 'fields/country'
 config.urlCity = 'fields/city'

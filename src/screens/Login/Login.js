@@ -12,8 +12,9 @@ import { bindActionCreators } from 'redux';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
 import { validateAll } from "indicative/validator";
-import { triggerAuthLogin } from '../../actions';
+import { triggerAuthLogin,triggerMediaAuthLogin } from '../../actions';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
+import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 GoogleSignin.configure({
   webClientId: '596560908982-giv90tn5os0c66eijqaosgegssbanea9.apps.googleusercontent.com',
@@ -54,7 +55,8 @@ class Login extends Component {
       userDetails: [],
       userName1: '',
       email: '',
-      userId: ''
+      userId: '',
+      fbuserName:''
     }
     this.handleBackButton = this.handleBackButton.bind(this);
   }
@@ -256,13 +258,131 @@ class Login extends Component {
     let language = 'en'
     // this.props.selectLanguage(language)
   }
+ //loginMediaObj triggerMediaAuthLogin
+
+
+ getResponseInfo = (error, result) => {
+  if (error) {
+    //Alert for the Error
+    alert('Error fetching data: ' + error.toString());
+  } else {
+    //response alert
+    console.log(JSON.stringify(result));
+    this.setState({
+            fbuserName: result.name,
+            fbToken: result.id,
+            fbProfilePic:  result.picture.data.url
+    })
+  }
+};
+
+ onLogout = () => {
+  //Clear the state after logout
+  this.setState({
+    fbuserName: null,
+    fbToken: null,
+    fbProfilePic:  null
+})
+};
+
+
+
+
+
+
+
+
+navigateFbAfterLog=({ navigation })=>{
+  this.props.navigation.replace('HomeScreen',  {})
+}
+
+ handleFacebookLogin() {
+  LoginManager.logInWithPermissions(['public_profile']).then(function(result) {
+    if (result.isCancelled) {
+      console.log("Login Cancelled");
+   
+    } else {
+      console.log("Login Success permission granted:" + result.grantedPermissions);
+       this.navigateFbAfterLog();
+    }
+  }, function(error) {
+     console.log("some error occurred!!");
+  })
+}
+
+
+
+    onSocialLog=()=>{
+       let formdata = new FormData();
+      formdata.append("user_f_name",this.state.userGoogleInfo['user']['name'])
+      formdata.append("user_l_name" ,this.state.userGoogleInfo['user']['familyName'])
+      formdata.append("comp_name", "")
+     formdata.append("user_country","")
+     formdata.append("user_city", "")
+     formdata.append("user_pin_code", "")
+      formdata.append("user_s_name", "")
+      formdata.append("user_email", this.state.userGoogleInfo['user']['email'])
+      formdata.append("user_password","")
+      formdata.append("user_mb_no", "")
+      formdata.append("user_img",  this.state.userGoogleInfo['user']['photo'])
+      formdata.append("user_media_id", this.state.userGoogleInfo['idToken'])
+      // formdata.append("comp_privacy", this.state.privacy)
+      console.log('formdatain', JSON.stringify(formdata))
+      this.props.triggerMediaAuthLogin(formdata, this.onMediaLoginSuccess, this.onMediaLoginError)
+   //   this.props.navigation.replace('HomeScreen',  {})
+  }
+  onMediaLoginError=(data)=>{
+    console.log("data",data)
+    this.props.navigation.replace('HomeScreen',  {})
+    }
+  // handleFacebookLogin() {
+  //    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends']).then(
+  //     function (result) {
+  //       if (result.isCancelled) {
+  //         console.log('Login cancelled')
+  //       } else {
+  //         console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+  //       }
+  //     },
+  //     function (error) {
+  //       console.log('Login fail with error: ' + error)
+  //     }
+  //   )
+  // }
 
   signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      this.setState({ userGoogleInfo: userInfo });
-      console.log('ssss', this.state.userGoogleInfo)
+      this.setState({ userGoogleInfo: userInfo})
+      //userInfo.user.email 
+      await AsyncStorage.setItem('USER_ID',this.state.userGoogleInfo['user']['id'].toString())
+      await AsyncStorage.setItem('FIRST_NAME', this.state.userGoogleInfo['user']['name'].toString())
+      await AsyncStorage.setItem('EMAIL', this.state.userGoogleInfo['user']['email'].toString())
+      // this.props.navigation.replace('HomeScreen',  {})
+      // let formdata = new FormData();
+      // formdata.append("user_name",  userInfo.user.id.toLowerCase().trim())
+      // formdata.append("user_password", this.state.password.trim())
+      // this.props.triggerAuthLogin(formdata, this.onLoginSuccess, this.onLoginError);
+
+    //   let formdata = new FormData();
+    //   formdata.append("user_f_name", userInfo.user.name)
+    //   formdata.append("user_l_name",userInfo.user.familyName)
+    //   // formdata.append("comp_name", this.state.CompanyName)
+    // //  formdata.append("user_city", this.state.citySelect)
+    // //  formdata.append("user_pin_code", this.state.cityZip)
+    //   // formdata.append("user_s_name", this.state.Districts)
+    //   formdata.append("user_email", userIhis.state.password)
+    //   //formdata.append("user_mb_no", thisnfo.user.email.toLowerCase())
+    //   //formdata.append("user_password", t.state.code1)
+    //   // formdata.append("comp_terms", this.state.term)
+    //   // formdata.append("comp_privacy", this.state.privacy)
+    //   console.log('formdatain', JSON.stringify(formdata))
+    //   this.props.triggerAuthRegister(formdata, this.onSignUpSuccess, this.onSignUpError)
+    console.log('before', this.state.userGoogleInfo['user']['name'])
+    console.log("before")
+         this.onSocialLog();
+      console.log('ssss', this.state.userGoogleInfo['idToken'])
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -376,9 +496,28 @@ class Login extends Component {
               <View style={styles.line1} />
             </View>
             <View style={styles.social}>
-              <TouchableOpacity>
+         
+      <LoginButton style={styles.fg} 
+        readPermissions={["public_profile"]}
+        onLoginFinished={(error, result) => {
+          if (error) {
+
+          } else if (result.isCancelled) {
+
+          } else {
+            AccessToken.getCurrentAccessToken()
+              .then((data) => {
+                callback(data.accessToken)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+              this.props.navigation.replace('HomeScreen',  {})
+          }
+        }} />
+              {/* <TouchableOpacity onPress={this.handleFacebookLogin}>
                 <Image source={require('../../Images/facbook.png')} style={styles.fg} resizeMode='center' />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={this.signIn}>
                 <Image source={require('../../Images/google.png')} style={styles.fg} resizeMode='center' />
               </TouchableOpacity>
@@ -414,16 +553,16 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   let {
-    loginObj
+    loginObj,loginMediaObj
   } = state.authReducer
 
 
-  return { loginObj }
+  return { loginObj,loginMediaObj }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    triggerAuthLogin
+    triggerAuthLogin,triggerMediaAuthLogin
   }, dispatch)
 }
 

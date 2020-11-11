@@ -16,6 +16,8 @@ target 'rbn' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
   target 'rbnTests' do
     inherit! :complete
     # Pods for testing

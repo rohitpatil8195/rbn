@@ -117,7 +117,7 @@ class Register extends Component {
     const data = this.state;
 
     try {
-      console.log('before')
+      //console.log('before')
       await validateAll(data, this.validationRules, this.validtionMessages);
       console.log('after')
     } catch (error) {

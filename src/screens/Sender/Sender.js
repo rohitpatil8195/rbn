@@ -7,6 +7,7 @@ import TextInputComponent from '../../components/TextInputComponent';
 import DropDown from '../../components/DropDown';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { validateAll } from "indicative/validator";
 import { triggerAuthRegister, triggerAuthCountry, triggerAuthCity, triggerForm1 } from '../../actions';
 
 // create a component
@@ -33,6 +34,7 @@ class Sender extends Component {
             Address: '',
             VAT_Number: '',
             Additional_Info: '',
+            errors: {},
             sender_city:this.props.route.params.sender_city,
             sender_country:this.props.route.params.sender_country,
             reciver_country:this.props.route.params.reciver_country,
@@ -119,7 +121,7 @@ class Sender extends Component {
             cityList: result,
             // cityResponse: data.result
         })
-        console.log("citylist", this.state.cityList)
+       // console.log("citylist", this.state.cityList)
         // console.log("cityResponse", cityResponse)
 
     }
@@ -136,8 +138,73 @@ class Sender extends Component {
                 })
             }
         })
-        console.log('cityZip', this.cityZip)
+        //console.log('cityZip', this.cityZip)
     }
+
+    validationRules = {
+        FirstName: 'required',
+        Company_name: 'required',
+        Surname: 'required',
+       Address: 'required',
+        //countrySelect: 'required',
+       // onCitySelect: 'required',
+        cityZip: 'required',
+        cityDis: 'required',
+        Telephone: 'required',
+        Email: 'required|email',
+         VAT_Number: 'required',
+        Additional_Info: 'required',
+        // // privacy: 'required',
+        // // term: 'required'
+      };
+
+    validtionMessages = {
+        'Company_name.required': '   Enter CompanyName',
+        'FirstName.required': '   Enter FirstName',
+        'Surname.required': '   Enter Surname',
+        'Email.required': 'Enter valid Email',
+       'Address.required': 'Please Enter the Address',
+        'countrySelect.required': 'Select Country',
+        'onCitySelect.required': 'Enter City',
+        'cityZip.required': 'Enter Zip',
+        'cityDis.required': '                             Districts',
+        'Telephone.required': 'Please Enter the Mobile Number',
+        'VAT_Number.required': 'Please Enter VAT_Number',
+        'onCountrySelect.required': 'Please select the Country',
+        'Additional_Info.same': 'Additional_Info',
+        // // 'term.required': 'Please accept the Terms and Conditions Policy',
+        // // 'privacy.required': 'Please accept the Privacy Policy'
+      };
+
+    onSignUpValidation = async () => {
+        const numRegex = /^[6-9][0-9]{9}$/;
+        if (!numRegex.test(this.state.Telephone)) {
+          this.setState({
+            error: "Enter Telephone",
+            show: false
+          })
+        }
+    
+        const data = this.state;
+    
+        try {
+         // console.log('before')
+          await validateAll(data, this.validationRules, this.validtionMessages);
+         // console.log('after')
+        //   this.recipient()
+        } catch (error) {
+          const formattedErrors = {};
+          Array.from(error).forEach(
+            errors => (formattedErrors[errors.field] = [errors.message])
+          );
+          this.setState({ errors: formattedErrors });
+          return;
+        }
+        console.log('signup')
+        this.recipient();
+      };
+
+      
 
     recipient = () => {
     //    let formdata = new FormData();
@@ -199,11 +266,11 @@ this.props.triggerForm1()
                         <View style={styles.card21}>
                             <View style={{ height: '2%' }}></View>
                             <TextInputComponent onChangeText={text => this.setState({ Company_name:text })} placeholder='Company Name'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50}} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50}}   error={this.state.errors['Company_name']}  errorStyle={{ marginTop: '-6%' }} />
                             <TextInputComponent onChangeText={text => this.setState({ FirstName:text})} placeholder='First Name'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} error={this.state.errors['FirstName']}  errorStyle={{ marginTop: '-6%' }}/>
                             <TextInputComponent onChangeText={text => this.setState({ Surname:text })} placeholder='Surname'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} error={this.state.errors['Surname']}  errorStyle={{ marginTop: '-6%' }} />
                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                 {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='+00'
                                     underlineColorAndroid='grey' designStyle={{ width: '25%', marginLeft: '15%', height: 50 }} /> */}
@@ -216,14 +283,22 @@ this.props.triggerForm1()
                                     placeholder='+36'
                                     Ref={input => { this.userName = input }}
                                     underlineColorAndroid='grey'
-                                    editable={false} />
+                                    editable={false}
+                                    error={this.state.errors['countryCode']}  errorStyle={{ marginTop: '-6%' }} 
+                                    />
                                 <TextInputComponent onChangeText={text => this.setState({ Telephone:text})} placeholder='Telephone'
-                                    underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }} />
+                                    underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }}
+                                    error={this.state.errors['Telephone']}  errorStyle={{ marginTop: '-6%' }} 
+                                    />
                             </View>
                             <TextInputComponent onChangeText={text => this.setState({ Email:text })} placeholder='Email'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }}
+                                error={this.state.errors['Email']}  errorStyle={{ marginTop: '-6%' }}
+                                />
                             <TextInputComponent onChangeText={text => this.setState({ Address:text })} placeholder='Address'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} 
+                                error={this.state.errors['Address']}  errorStyle={{ marginTop: '-6%' }}
+                                />
                             <DropDown
                                 placeholder={CategoryPlaceholder}
                                 data={this.state.countryList}
@@ -232,7 +307,9 @@ this.props.triggerForm1()
                                 textInputProps={{ underlineColorAndroid: 'black' }}
                                 value={this.state.countrySelect}
                                 style={{ marginTop: '-9%' }}
-                                errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                //errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} 
+                                error={this.state.errors['onCountrySelect']}  errorStyle={{ marginTop: '-6%' }}
+                                />
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                                 <TextInputComponent
                                     // onChangeText={text => this.setState({ FirstName: text })}
@@ -241,6 +318,7 @@ this.props.triggerForm1()
                                     placeholder='Zipcode'
                                     underlineColorAndroid='grey'
                                     designStyle={{ width: '52%', marginLeft: '-15%', height: 50, color: 'black' }}
+                                    error={this.state.errors['cityZip']}  errorStyle={{ marginTop: '-6%' }}
                                 />
                                 {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='City'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} /> */}
@@ -253,7 +331,9 @@ this.props.triggerForm1()
                                     textInputProps={{ underlineColorAndroid: 'black' }}
                                     value={this.citySelect}
                                     style={{ width: '52%', marginLeft: '-50%', height: 50, marginTop: '-4.5%' }}
-                                    errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                    //errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} 
+                                   
+                                    />
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                                 {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='District'
@@ -265,17 +345,22 @@ this.props.triggerForm1()
                                     placeholder='District'
                                     underlineColorAndroid='grey'
                                     designStyle={{ width: '52%', marginLeft: '15%', height: 50, color: 'black' }}
+                                    error={this.state.errors['cityDis']}  errorStyle={{ marginTop: '-6%' }}
                                 />
                                 <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
-                                    underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} />
+                                    underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} 
+                                    error={this.state.errors['VAT_Number']}  errorStyle={{ marginTop: '-6%' }}
+                                    />
                             </View>
 
                             <TextInputComponent onChangeText={text => this.setState({ Additional_Info:text })} placeholder='Additional Info'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }}
+                                error={this.state.errors['Additional_Info']}  errorStyle={{ marginTop: '-6%' }}
+                                />
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        <TouchableOpacity onPress={this.recipient} style={styles.button}>
+                        <TouchableOpacity onPress={() => this.onSignUpValidation()} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />
                             <Text style={styles.save}>Save & Continue</Text>
                         </TouchableOpacity>
