@@ -34,7 +34,7 @@
                                                 // serv_id: this.state.serv_id,
                                                 // exchange_rate: "["+this.state.favdolor+"]",
                                                 // }
-                                                        tempArr = [{ 'key': 0, 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
+                                                        tempArr = [{ 'key': 0,'cat_List':[], 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
                                                         this.state = {
                                                             isSender: false,
                                                             isRecipient: false,
@@ -87,7 +87,9 @@
                                                             total_quantity:'',   
                                                             new_index_g:new_index,                           
                                                             key:[],
-                                                        
+                                                            Cat_All_data:[],
+                                                            belonging_yesArr:[],
+                                                            belongingNoArr:[],
                                                             reason: [
                                                                 {
                                                                     label: 'Commercial',
@@ -343,6 +345,7 @@
                                                         // console.log("countryList", result)
                                                         this.setState({
                                                             countryList: result,
+    
                                                         })
                                                     }
 
@@ -387,7 +390,12 @@
 
                                                     onCategorySuccess = (data) => {
                                                     // console.log('dataooooo', data)
-                                                                                                                                                                   
+                                                        //             this.setState({
+                                                        //                 Cat_All_data:data,
+                                                                        
+                                                        //             })        
+                                                                    
+                                                        //  console.log("this is tem data",(this.state.Cat_All_data).length)                                                                                       
                                                         var result = data.result.map(function (el) {
                                                             // var o = Object.assign({}, el);
                                                             // var a = Object.assign({}, el);
@@ -400,17 +408,41 @@
                                                     // const a = parseInt(this.state.belonging)
                                                         // console.log("categoryList>>",this.state.belonging)
 
-                                                        //const check_fin = result.filter(x=>x.cat_belonging == this.state.belonging);
-                                                    // console.log("check_fin :- ",check_fin)
+                                                        const check_yes = result.filter(x=>x.cat_belonging == 1);
+                                                        console.log("check_yes",check_yes)
+                                                        const check_no = result.filter(x=>x.cat_belonging == 0);
+                                                      
+                                                   
                                                         this.setState({
-                                                            categoryList: result 
+                                                            categoryList: result,
+                                                            belonging_yesArr:check_yes,
+                                                            belongingNoArr:check_no
                                                         })
+                                                        console.log("check_fin :- ",check_fin)
                                                         
                                                         // this.setState({
                                                         //     categoryList: result,
                                                         // })
-
+                                                      //  this.onFilterd_catList(data);
                                                     }
+
+                                                    // onFilterd_catList=(data)=>{
+                                                        
+                                                    //              //console.log("fintd",data)
+                                                    //     var result = data.result.map(function (el) {
+                                                    //         // var o = Object.assign({}, el);
+                                                    //         // var a = Object.assign({}, el);
+                                                    //         el.label = el.cat_name_en;
+                                                    //         el.value = el.cat_name_en;
+                                                    //         el.id = el.cat_id;
+                                                    //         return el;
+                                                    //     },tempArr[index].cat_List = result)
+                                                        
+                                                   
+                                                    //     this.setState({
+                                                    //         addPackage:tempArr
+                                                    //     })   
+                                                    // }
 
                                                     onCategorySelect = (val,index) => {
 
@@ -605,7 +637,7 @@
 
                                                     isYesPressed = (index) => {
                                                         console.log(index)
-                                                       
+                                                          
                                                         if (!tempArr[index].isYes) {
                                                         //  this.onCategorySuccess();
                                                         
@@ -860,7 +892,7 @@
                                                     //     })
                                                     //  console.log("dty",this.state.total_Duty)
 
-                                                    tempArr.push({ 'key': 0, 'belongings':'' , 'quantity':0 ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
+                                                    tempArr.push({ 'key': 0,'cat_List':[], 'belongings':'' , 'quantity':0 ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
                                                     this.setState({
                                                         addPackage:tempArr
                                                     })
@@ -1213,7 +1245,16 @@
                                                                             
                                                                             
                                                                             {  this.state.addPackage.map((value, index) => {
+                                                                                 //   value.isBel == yes
+                                                                                 
+                                                                                   var tempData; 
+                                                                                   var tempData = (value.isYes === true ?this.state.belonging_yesArr : this.state.belongingNoArr );
+                                                                                 setTimeout(() => {
                                                                                     
+                                                                                    console.log("tnp<data",tempData)
+                                                                                  },300)
+
+                                                                                 
                                                                                     return (
                                                                                     <View style={styles.cardv55}>
                                                                                     <View style={styles.cardv51}>
@@ -1249,7 +1290,7 @@
                                                                                         </View>
                                                                                         <DropDown
                                                                                             // placeholder={ProductCatPlaceholder}
-                                                                                            data={this.state.categoryList}
+                                                                                            data={tempData}
                                                                                             onValueChange={(val)=>this.onCategorySelect(val,index)}
                                                                                             source={require('../../Images/arrow-point-to-right.png')}
                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}

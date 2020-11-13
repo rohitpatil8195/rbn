@@ -170,7 +170,7 @@ class Services extends Component {
       // let authreducer = JSON.parse(js['authReducer'])
       // let loginobj = authreducer['searchObj'];
 //console.log("async_objdata-- "+JSON.stringify(loginobj));
-  
+    
        let logindata =  (chech);
 
            
@@ -194,6 +194,7 @@ class Services extends Component {
         this.setState({
         Home_data:logData
         })
+        // console.log("hommmmmmmmm",this.state.Home_data)
 
 this.getCal();
 
@@ -205,7 +206,7 @@ this.getCal();
 
 
    getCal=()=>{
-
+             console.log("wt on Serv",typeof this.state.Weight[0])
         let tranp_type =this.ser_type;
         let transp_type1 = this.ser_type1;
          let wt = this.state.Weight;
@@ -874,14 +875,25 @@ var gsDayNames = [
                             </View>
                         </View>
                         <View style={styles.morehalf1}>
-                            <View style={styles.small}>
+                          { item.home_colectn==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
                                 <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
+                            </View> :
                             <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
+
+                            { item.home_delv==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
+                                <Text style={{ fontSize: 8 }}>Home Delivery</Text>
+                            </View> :
+                            <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
                                     <Text style={{ fontSize: 10 }}>Available Space:</Text>
@@ -941,14 +953,25 @@ var gsDayNames = [
                             </View>
                         </View>
                         <View style={styles.morehalf1}>
-                            <View style={styles.small}>
+                        { item.home_colectn==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
                                 <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
+                            </View> :
                             <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
+
+                            { item.home_delv==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
+                                <Text style={{ fontSize: 8 }}>Home Delivery</Text>
+                            </View> :
+                            <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
                                     <Text style={{ fontSize: 10 }}>Available Space:</Text>
@@ -1006,14 +1029,25 @@ var gsDayNames = [
                             </View>
                         </View>
                         <View style={styles.morehalf1}>
-                            <View style={styles.small}>
+                        { item.home_colectn==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
                                 <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
+                            </View> :
                             <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
+
+                            { item.home_delv==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
+                                <Text style={{ fontSize: 8 }}>Home Delivery</Text>
+                            </View> :
+                            <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
                                     <Text style={{ fontSize: 10 }}>Available Space:</Text>
@@ -1072,14 +1106,25 @@ var gsDayNames = [
                             </View>
                         </View>
                         <View style={styles.morehalf1}>
-                            <View style={styles.small}>
+                        { item.home_colectn==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
                                 <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
+                            </View> :
                             <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
+
+                            { item.home_delv==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
+                                <Text style={{ fontSize: 8 }}>Home Delivery</Text>
+                            </View> :
+                            <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
                                     <Text style={{ fontSize: 10 }}>Available Space:</Text>
@@ -1138,14 +1183,25 @@ var gsDayNames = [
                             </View>
                         </View>
                         <View style={styles.morehalf1}>
-                            <View style={styles.small}>
+                        { item.home_colectn==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
                                 <Text style={{ fontSize: 8 }}>Home Collection</Text>
-                            </View>
+                            </View> :
                             <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
+
+                            { item.home_delv==0 ? <View style={styles.small}>
                                 <Image source={require('../../Images/product.png')} style={styles.icon} />
-                                <Text style={{ fontSize: 8 }}>At Shippers Warehouse</Text>
-                            </View>
+                                <Text style={{ fontSize: 8 }}>Home Delivery</Text>
+                            </View> :
+                            <View style={styles.small}>
+                            <Image source={require('../../Images/product.png')} style={styles.icon} />
+                            <Text style={{ fontSize: 8 }}>At shipper's warehouse</Text>
+                        </View>
+                        }
                             <View style={styles.remain1}>
                                 <View style={styles.space}>
                                     <Text style={{ fontSize: 10 }}>Available Space:</Text>

@@ -72,7 +72,7 @@ let backPressed = 0;
 class Home extends Component {
   constructor(props) {
     super(props);
-    tempArr = [{ 'Weight': '','Len':'','Dpt':'','Hgt':''}]
+    tempArr = [{ 'Weights':0,'Len':0,'Dpt':0,'Hgt':0}]
     this.state = {
       isHome: true,
       isAbout: false,
@@ -118,6 +118,8 @@ class Home extends Component {
       valueArray: [],
       disabled: false,
       addPackage:tempArr,
+      total_wights:[],
+      dimentions:[],
       Array: [
         [
           {
@@ -295,14 +297,82 @@ class Home extends Component {
   addMore = (index) => {
                                                    
 
-    tempArr.push({ 'Weight': '','Len':'','Dpt':'','Hgt':''})
+    tempArr.push({ 'Weights':0,'Len':0,'Dpt':0,'Hgt':0})
     this.setState({
         addPackage:tempArr
     })
 
-    this.getTotal_Duty()
+  //  this.getTotal_Duty()
+ 
     console.log("tem",tempArr)
+   this.total_WT();
     }
+
+
+    total_WT=(index)=>{
+      
+      // console.log(index)
+      
+      // var sum = 0;
+     var quant =[];
+    var dimention = [];
+            //   for (var i = 0; i < tempArr.length; i++) {
+            //     quant.push(parseInt(tempArr[i]['Weights']))
+            // dimention.push(parseInt(tempArr[i]['Len'])+"||"+parseInt(tempArr[i]['Dpt'])+"||"+parseInt(tempArr[i]['Hgt']))
+            //   }
+
+            
+              for (var i = 0; i < tempArr.length; i++) {
+                if(parseInt(tempArr[i]['Weights']) !== NaN ){
+                quant.push(parseInt(tempArr[i]['Weights']))
+              }else{
+                quant.push(0)
+              }
+              if (parseInt(tempArr[i]['Len'])  !== NaN && parseInt(tempArr[i]['Dpt'])  !== NaN && parseInt(tempArr[i]['Hgt'])  !== NaN) {
+                dimention.push(parseInt(tempArr[i]['Len'])+"||"+parseInt(tempArr[i]['Dpt'])+"||"+parseInt(tempArr[i]['Hgt']));
+              } else if (parseInt(tempArr[i]['Len'])  !== NaN ) {
+                dimention.push(null+"||"+parseInt(tempArr[i]['Dpt'])+"||"+parseInt(tempArr[i]['Hgt']));
+              } else if (parseInt(tempArr[i]['Dpt'])  !== NaN ) {
+                dimention.push(parseInt(tempArr[i]['Len'])+"||"+null+"||"+parseInt(tempArr[i]['Hgt']));
+              } else if (parseInt(tempArr[i]['Hgt'])  !== NaN ) {
+                dimention.push(parseInt(tempArr[i]['Len'])+"||"+parseInt(tempArr[i]['Dpt'])+"||"+null);
+              } 
+              else {
+                dimention.push(parseInt("0")+"||"+parseInt("0")+"||"+parseInt("0"));
+              }
+
+              }
+
+
+              setTimeout(() => {
+                
+                this.setState({
+                  total_wights:quant,
+               dimentions:dimention
+                 });
+                 console.log("type quanrti", dimention);
+                 this.adthis();
+
+              },500)
+              
+         
+          
+             
+             
+            
+    }
+
+     adthis=()=>{
+      console.log("total_wights",this.state.total_wights)
+     }
+
+     delete=(index)=>{
+      tempArr.splice(index, 1);
+       console.log("selected index is",tempArr);
+       this.setState({
+        addPackage:tempArr
+    })
+     }
 
   onCitySelect = (val) => {
     this.state.citySelect = val
@@ -415,6 +485,7 @@ class Home extends Component {
 
   _showDateTimePicker = () => {
     this.setState({ isDatePickerVisible: true });
+  
   }
 
   _hideDateTimePicker = () => this.setState({ isDatePickerVisible: false });
@@ -596,14 +667,47 @@ class Home extends Component {
   //   console.log('success Home', data)
 
   // }
+  Weights=(text,index)=>{
+
+    tempArr[index].Weights=text
+    this.setState({
+        addPackage:tempArr
+    })
+  //  this.total_WT();
+    
+  
+  }
+  L=(text,index)=>{
+
+    tempArr[index].Len=text
+    this.setState({
+        addPackage:tempArr
+    })
+  }
+  D=(text,index)=>{
+
+    tempArr[index].Dpt=text
+    this.setState({
+        addPackage:tempArr
+    })
+  }
+  H=(text,index)=>{
+
+    tempArr[index].Hgt=text
+    this.setState({
+        addPackage:tempArr
+    })
+
+  }
 
   services=()=>{
-
+    this.total_WT();
    let dt = moment(this.state.DOB).format('DD-MM-YYYY')
    this.setState({
      isTime:dt
    })
       
+   
     let reqData = {   
       serv_dept_cntry_id:this.state.countryId,
     //  serv_dept_city_id:this.state.depCityId,
@@ -633,11 +737,15 @@ class Home extends Component {
                       this.setState({
                         Service_ids: tmpArray
                     })
-                         let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
-                        let dimenLDH= []
-                       dimenLDH.push(Dimen);   
-         this.props.navigation.navigate('Services', {serve_type:this.state.service_type,Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.W,Dimen:dimenLDH})
-        
+                     // console.log("total_wights",this.state.dimentions)
+                      //    let Dimen =this.state.L + '||' + this.state.D + "||" + this.state.H;
+                      //   let dimenLDH= []
+                      //  dimenLDH.push(Dimen);   
+                      setTimeout(() => {
+
+                
+         this.props.navigation.navigate('Services', {serve_type:this.state.service_type,Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.total_wights,Dimen:this.state.dimentions})
+        },300)
 
                // check for error response
                if (!response.ok) {
@@ -667,55 +775,55 @@ class Home extends Component {
         outputRange: [-59, 0]
       });
      
-    let newArray = this.state.valueArray.map((item, key) => {
-      if ((key) == this.index) {
-        return (
-          <Animated.View key={key} style={[styles.card21, { opacity: this.animatedValue, transform: [{ translateY: animationValue }] }]}>
-            <>
-              {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
-              {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
-                        underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
-              <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-                underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
-              {/* </View> */}
-              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                <Text style={styles.dim}>Dimensions (cm) :</Text>
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
-              </View>
+    // let newArray = this.state.valueArray.map((item, key) => {
+    //   if ((key) == this.index) {
+    //     return (
+    //       <Animated.View key={key} style={[styles.card21, { opacity: this.animatedValue, transform: [{ translateY: animationValue }] }]}>
+    //         <>
+    //           {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
+    //           {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
+    //                     underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+    //           <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
+    //             underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+    //           {/* </View> */}
+    //           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+    //             <Text style={styles.dim}>Dimensions (cm) :</Text>
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+    //           </View>
               
-            </>
-          </Animated.View>
-        );
-      }
-      else {
-        return (
-          <View key={key} style={styles.card21}>
-            <>
-              {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
-              {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
-                        underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
-              <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
-                underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
-              {/* </View> */}
-              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                <Text style={styles.dim}>Dimensions (cm) :</Text>
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-                <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
-                  underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
-              </View>
-            </>
-          </View>
-        );
-      }
-    });
+    //         </>
+    //       </Animated.View>
+    //     );
+    //   }
+    //   else {
+    //     return (
+    //       <View key={key} style={styles.card21}>
+    //         <>
+    //           {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}> */}
+    //           {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Quantity')}
+    //                     underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50 }} /> */}
+    //           <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('Weight(Kg)')}
+    //             underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+    //           {/* </View> */}
+    //           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
+    //             <Text style={styles.dim}>Dimensions (cm) :</Text>
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('L')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('D')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
+    //             <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={i18n.t('H')}
+    //               underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
+    //           </View>
+    //         </>
+    //       </View>
+    //     );
+    //   }
+    // });
 
 
     const backdrop = {
@@ -1089,40 +1197,34 @@ class Home extends Component {
                         <View style={styles.card21}>
                                                          
                     <>
-                      <TextInputComponent onChangeText={text => this.setState({ W: text })} placeholder={i18n.t('Weight(Kg)')}
+                      <TextInputComponent onChangeText={(text) => this.Weights(text,index)} placeholder={i18n.t('Weight(Kg)')}
                         underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
 
                                   <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                         <Text style={styles.dim}>Dimensions (cm) :</Text>
-                        <TextInputComponent onChangeText={text => this.setState({ L: text })}  placeholder={i18n.t('L')}
+                        <TextInputComponent onChangeText={(text) => this.L(text,index)}  placeholder={i18n.t('L')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-                        <TextInputComponent onChangeText={text => this.setState({ D: text })} placeholder={i18n.t('D')}
+                        <TextInputComponent onChangeText={(text) => this.D(text,index)} placeholder={i18n.t('D')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-                        <TextInputComponent onChangeText={text => this.setState({ H: text })} placeholder={i18n.t('H')}
+                        <TextInputComponent onChangeText={(text) => this.H(text,index)} placeholder={i18n.t('H')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
               
                       </View>
-
-
-
-                                  {/* <Text>---{this.setState.L}</Text> */}
                                 
                  </View>
          
                     </>
-                     
-           
-                    {/* <View>
-                      {
-                        newArray
-                      }
-                    </View> */}
                     
-                    <TouchableOpacity onPress={(index) => this.addMore(index)}>
+                    
+                    <TouchableOpacity onPress={()=>this.addMore()}>
                       <Text style={styles.textb}>{i18n.t('+ Add Package')}</Text>
                     </TouchableOpacity>
-                   
+                   { index > 0 ?
+                    <TouchableOpacity onPress={(value)=>this.delete(index,value)}>
+                      <Text style={styles.textb}> - Remove Package</Text>
+                    </TouchableOpacity>: null
+                   }
                   </View>
                    </View>
                   );

@@ -260,7 +260,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 0,
-        backgroundColor:"white",borderColor:'black',borderWidth:1
+        backgroundColor:"white"
     },
     cardM: {
         height: 150,
