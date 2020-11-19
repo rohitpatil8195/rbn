@@ -6,7 +6,15 @@ import styles from "./Styles";
 
 // create a component
 export default class OrderComplete extends Component {
-
+         constructor(props){
+             super(props);
+             this.state={
+                order_id_No:this.props.route.params.order_id
+             }
+         }
+         componentDidMount=()=>{
+             console.log("this.state.order_id_No",this.state.order_id_No)
+         }
     beforeOrder = () => {
         this.props.navigation.navigate('BeforeOrder')
     }
@@ -42,7 +50,7 @@ export default class OrderComplete extends Component {
                 <Text style={styles.text2}>Thank for your order!</Text>
             </View>
             <View style={styles.container}>
-                <Text>Order Number :<Text style={{color: 'dodgerblue'}}> xxx</Text></Text>
+                <Text>Order Number :<Text style={{color: 'dodgerblue'}}>{this.state.order_id_No}</Text></Text>
             </View>
             <View style={styles.vtext}>
                 <Text numberOfLines={3} ellipsizeMode='middle'>You will receive shortly an e-mail with the order details and with the payment confirmation</Text>

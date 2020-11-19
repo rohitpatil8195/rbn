@@ -194,7 +194,7 @@ class Services extends Component {
         this.setState({
         Home_data:logData
         })
-        // console.log("hommmmmmmmm",this.state.Home_data)
+     // console.log("hommmmmmmmm",this.state.Home_data)
 
 this.getCal();
 
@@ -251,11 +251,14 @@ this.getCal();
                                this.state.Home_data[i]['rbn_transport_fee'] = this.state.logData[i][5]
                            }
                         //    let store = this.state.Home_data
-                           const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
+
+                        
+                        ///   const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
+                           const check_fin = this.state.Home_data;
                              this.setState({
                                  finalData:check_fin
                              })
-                           console.log("Home data", this.state.finalData)
+                           console.log("Home data",this.state.finalData)
 
 
                            let available_capacity = this.state.finalData['available_capacity'];
@@ -846,7 +849,10 @@ var gsDayNames = [
                                 sender_city:this.state.des_city,
                                 reciver_country:this.state.arr_country,
                                 reciver_city:this.state.arr_city,
-                                services_type:this.state.service_type
+                                services_type:this.state.service_type,
+                                home_colectn:item.home_colectn,
+                                home_delv:item.home_delv
+                            
                                   })}
                         >
                        <View style={styles.morehalf}>
@@ -924,7 +930,9 @@ var gsDayNames = [
                                 sender_city:this.state.des_city,
                                 reciver_country:this.state.arr_country,
                                 reciver_city:this.state.arr_city,
-                                services_type:this.state.service_type
+                                services_type:this.state.service_type,
+                                home_colectn:item.home_colectn,
+                                home_delv:item.home_delv
                                   })}
                         >
                        <View style={styles.morehalf}>
@@ -1001,7 +1009,10 @@ var gsDayNames = [
             sender_city:this.state.des_city,
             reciver_country:this.state.arr_country,
             reciver_city:this.state.arr_city,
-            services_type:this.state.service_type
+            services_type:this.state.service_type,   
+            home_colectn:item.home_colectn,
+            home_delv:item.home_delv
+            
               })}>
                        <View style={styles.morehalf}>
                             <View style={styles.half}>
@@ -1077,7 +1088,9 @@ var gsDayNames = [
                             sender_city:this.state.des_city,
                             reciver_country:this.state.arr_country,
                             reciver_city:this.state.arr_city,
-                            services_type:this.state.service_type
+                            services_type:this.state.service_type,
+                            home_colectn:item.home_colectn,
+                            home_delv:item.home_delv
                               })}
                         >
                        <View style={styles.morehalf}>
@@ -1155,7 +1168,9 @@ var gsDayNames = [
             sender_city:this.state.des_city,
             reciver_country:this.state.arr_country,
             reciver_city:this.state.arr_city,
-            services_type:this.state.service_type
+            services_type:this.state.service_type,
+            home_colectn:item.home_colectn,
+            home_delv:item.home_delv
               })}>
                        <View style={styles.morehalf}>
                             <View style={styles.half}>

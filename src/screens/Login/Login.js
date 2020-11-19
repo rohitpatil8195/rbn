@@ -141,11 +141,13 @@ class Login extends Component {
 
   onLoginSuccess = (data) => {
     this.setState({ isProcessing: false });
-    console.log("login data "+JSON.stringify(data))
+    let user_detail =(data['result'][0]['user_id']);
+    let user_ord_id = user_detail['user_id']
+    console.log("login data "+user_detail)
    // console.log(formdata)
      //this.onProfileDetails(data)
 
-    this.props.navigation.replace('HomeScreen',  {})
+    this.props.navigation.replace('HomeScreen',  {user_ord_id:user_detail})
 
   }
 

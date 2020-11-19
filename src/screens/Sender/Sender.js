@@ -43,7 +43,9 @@ class Sender extends Component {
             serv_id:this.props.route.params.servicess_id,
             Weight:this.props.route.params.isWight,
             transp_type:this.props.route.params.transp_type,
-            servi_typ:this.props.route.params.services_type
+            servi_typ:this.props.route.params.services_type,
+            home_collection:this.props.route.params.home_colectn,
+            home_delivary:this.props.route.params.home_delv
 
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
@@ -62,7 +64,9 @@ class Sender extends Component {
 
            
         })
-      console.log("transp_type",this.state.transp_type)
+    //   console.log("transp_type",this.state.transp_type)
+    //   console.log("home_collection",this.state.home_collection)
+    //   console.log("home_delivary",this.state.home_delivary)
      
     }
 
@@ -208,6 +212,8 @@ class Sender extends Component {
 
     recipient = () => {
     //    let formdata = new FormData();
+    // console.log("home_collection",this.state.home_collection)
+    // console.log("home_delivary",this.state.home_delivary)
     let formdata = {}
     formdata["Company_name"]= this.state.Company_name,
     formdata["FirstName"]= this.state.FirstName,
@@ -220,7 +226,11 @@ class Sender extends Component {
     formdata["cityZip"]= this.state.cityZip,
     formdata["District"]= this.state.cityDis,
     formdata["VAT_Number"]= this.state.VAT_Number,
-    formdata["Additional_Info"]= this.state.Additional_Info
+    formdata["Additional_Info"]= this.state.Additional_Info,
+    formdata["serv_id"] = this.state.serv_id,
+    formdata["transp_type"] = this.state.transp_type,
+    formdata["home_collection"] = this.state.home_collection,
+    formdata["home_delivary"] = this.state.home_delivary
    // this.props.triggerForm1(formdata);
     console.log("all data",formdata)
 this.props.triggerForm1()
@@ -360,7 +370,8 @@ this.props.triggerForm1()
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        <TouchableOpacity onPress={() => this.onSignUpValidation()} style={styles.button}>
+                        {/* <TouchableOpacity onPress={() => this.onSignUpValidation()} style={styles.button}> */}
+                        <TouchableOpacity onPress={this.recipient} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />
                             <Text style={styles.save}>Save & Continue</Text>
                         </TouchableOpacity>

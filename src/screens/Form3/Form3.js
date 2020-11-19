@@ -34,7 +34,7 @@
                                                 // serv_id: this.state.serv_id,
                                                 // exchange_rate: "["+this.state.favdolor+"]",
                                                 // }
-                                                        tempArr = [{ 'key': 0,'cat_List':[], 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}],
+                                                        tempArr = [{ 'ordr_belonging':'' ,'ordr_cat_id':'','ordr_scat_id':'','ordr_purc_invc':"",'ordr_country_origin':'', 'cat_List':[], 'isYes':null,'isNo':null, 'quantity':0, 'ordr_unit_measure':'','ordr_unit_value':'','product_lst':[],'ordr_exchange':'','ordr_custom':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_name':'','country_nm':'','productNm':''}],
                                                         this.state = {
                                                             isSender: false,
                                                             isRecipient: false,
@@ -227,27 +227,28 @@
                                                         // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
                                                         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
                                                         this.setState({ isYes: null })
-                                                        console.log("fWight",this.state.fWight)
+                                                        console.log("fWight",this.state.fWight);
+                                                       // console.log("-->>",this.state.addPackage)
                                                     }
                                                 
                                                     submit_form=(index)=>{
-                                                        console.log("quant",tempArr[index].productId)
+                                                      //  console.log("quant",tempArr[index].productId)
                                                 let Api_data ={
                                                 tranport_type: this.state.transp_type,
                                                 service_type :this.state.serv_typ,
                                                 insurance_type: "1",
                                                 weight: "["+this.state.fWight+"]",
                                                 dimension: this.state.Diments,
-                                                belongings: "["+ tempArr[index].belongings+"]",
+                                                belongings: "["+ tempArr[index].ordr_belonging+"]",
                                                 quantity:"["+tempArr[index].quantity+"]",
-                                                unit_of_measure: "["+tempArr[index].scat_measure+"]",
-                                                unit_value: "["+tempArr[index].scat_unit_val+"]",
-                                                currency: "["+tempArr[index].exchange_rt+"]",
+                                                unit_of_measure: "["+tempArr[index].ordr_unit_measure+"]",
+                                                unit_value: "["+tempArr[index].ordr_unit_value+"]",
+                                                currency: "["+tempArr[index].ordr_exchange+"]",
                                                 home_colectn: "0",
                                                 home_delv: "0",
-                                                scat_id: "["+tempArr[index].productId+"]",
+                                                scat_id: "["+tempArr[index].ordr_scat_id+"]",
                                                 serv_id: this.state.serv_id,
-                                                exchange_rate: "["+tempArr[index].exchange_rt+"]",
+                                                exchange_rate: "["+tempArr[index].ordr_exchange+"]",
                                                 }
 
                                                 //unit of measure this.state.unitEx1
@@ -279,7 +280,7 @@
                                                         let float = parseFloat(c_dty) + parseFloat(c_fee)
                                                         let fin = float
                                                     
-                                                        tempArr[index].custom_dty_price = fin.toFixed(2)
+                                                        tempArr[index].ordr_custom = fin.toFixed(2)
                                                     this.setState({
                                                         addPackage:tempArr
                                                         })
@@ -363,7 +364,9 @@
                                                             if (item.value == val) {
                                                                 this.state.countryId = item.id
                                                                 this.state.countryCode = item.code
+                                                                tempArr[index].ordr_country_origin=item.id
                                                                 this.setState({
+                                                                    addPackage:tempArr,
                                                                     countryId: this.state.countryId,
                                                                     countryCode: this.state.countryCode
                                                                 })
@@ -382,7 +385,7 @@
                                                     }
 
                                                     exchange_rts=(val,index)=>{
-                                                        tempArr[index].exchange_rt =val
+                                                        tempArr[index].ordr_exchange =val
                                                         this.setState({
                                                             addPackage:tempArr
                                                         })
@@ -447,7 +450,7 @@
                                                     onCategorySelect = (val,index) => {
 
                                                         current_index = index
-                                                        console.log("blog ++"+tempArr[index].belongings)
+                                                      //  console.log("blog ++"+tempArr[index].belongings)
                                                         //   let cList = JSON.parse(JSON.stringify(this.state.categoryList));
                                                         // const check_fin = cList.filter(x=>x.tempArr[index].belongings == 0);
                                                         //     this.setState({
@@ -463,7 +466,7 @@
                                                             if (item.value == val) {
                                                                 this.state.categoryId = item.id
                                                                 this.state.categoryCode = item.code
-                                                                tempArr[index].product_cat_id=item.id
+                                                                tempArr[index].ordr_cat_id=item.id
                                                                 this.setState({
                                                                     categoryId: this.state.categoryId,
                                                                     categoryCode: this.state.categoryCode,
@@ -473,8 +476,8 @@
                                                         })
                                                         
                                                         console.log('categorySelect>>>>', this.state.categoryId)
-                                                        console.log('categorySelect>>>>', tempArr[index].product_cat_id)
-                                                        this.onProduct(tempArr[index].product_cat_id)
+                                                        console.log('categorySelect>>>>', tempArr[index].ordr_cat_id)
+                                                        this.onProduct(tempArr[index].ordr_cat_id)
                                                     }
 
                                                     onProduct = (productId) => {
@@ -487,7 +490,7 @@
 
                                                     onProductSuccess = (data,val,index) => {
                                                         
-                                                console.log('data_prod', data)
+                                              //  console.log('data_prod', data)
                                                 // (tempArr[index].product_name)
                                                         var result = data.result.map(function (el) {
                                                             // el.tempArr[index].product_name = el.scat_name_en;
@@ -502,7 +505,7 @@
                                                     alert("please Choose Product")
 
                                                     tempArr[current_index].product_lst = result
-                                                        console.log("result.....",tempArr[current_index].product_lst)
+                                                      //  console.log("result.....",tempArr[current_index].product_lst)
                                                 
                                                         this.setState({
                                                             addPackage:tempArr,
@@ -525,12 +528,12 @@
                                                                 // this.state.productCode = item.code
                                                                 // this.state.scat_unit_val = item.scat_unit_val
                                                                 // this.state.scat_measure = item.scat_measure
-                                                                tempArr[index].productId = item.id
+                                                                tempArr[index].ordr_scat_id = item.id
                                                         
                                                                 tempArr[index].productNm = item.label
                                                             // tempArr[index].productCode = item.code
-                                                                tempArr[index].scat_unit_val = item.scat_unit_val
-                                                                tempArr[index].scat_measure = item.scat_measure
+                                                                tempArr[index].ordr_unit_value = item.scat_unit_val
+                                                                tempArr[index].ordr_unit_measure = item.scat_measure
                                                                 this.setState({
                                                                     // productId: this.state.productId,
                                                                     // productCode: this.state.productCode,
@@ -647,7 +650,7 @@
                                                             this.setState({ isYes: true,isNo: false,belonging: 1,},()=>{
                                                             //   this.onProduct()
                                                                new_index = index;
-                                                                tempArr[index].belongings = 1
+                                                                tempArr[index].ordr_belonging = 1
                                                                 this.setState({
                                                                     addPackage:tempArr
                                                                 })
@@ -679,7 +682,7 @@
                                                             //console.log("belonging No"+this.state.categoryList)
                                                             this.setState({ isNo: true, isYes : false  },()=>{
                                                             // this.onProduct()
-                                                                tempArr[index].belongings = 0
+                                                                tempArr[index].ordr_belonging = 0
                                                                 new_index = index;
                                                                 this.setState({
                                                                     addPackage:tempArr
@@ -708,25 +711,48 @@
                                                         this.setState({ addPackage:tempArr})
                                                     
                                                     }
-
+//[{ 'ordr_belonging':'' ,'ordr_cat_id':'','ordr_scat_id':'','ordr_purc_invc':"",'ordr_country_origin':'', 'cat_List':[], 'isYes':null,'isNo':null, 'quantity':0, 'ordr_unit_measure':'','ordr_unit_value':'','product_lst':[],'ordr_exchange':'','ordr_custom':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','product_name':'','country_nm':'','productNm':''}]
                                                     completeform = () => {
+                                                            //  console.log("length_is "+tempArr[0]['ordr_country_origin']);
+                                                            // // let result=[]
+                                                            //    for (var i = 0; i < tempArr.length; i++) {
+                                                            //     // result = tempArr.filter(tempArr[i]['cat_List']);
+                                                            //     delete person.last_name;
+
+                                                            //     if(tempArr.length <0){
+                                                            //          result = tempArr.splice(tempArr[i]['cat_List']);
+                                                            // //    result = tempArr.splice(tempArr[i]['cat_List']);
+                                                            // //     // this.setState({ 
+                                                            // //     //     addPackage:tempArr
+                                                            // //     // })   
+                                                            //     break;
+                                                            // }
+                                                            //     }
+                                                            //     console.log(result)
+ 
+
                                                         // console.log("sender_deatils",this.state.sender_deatils)
                                                         // console.log("Recipent_deatils",this.state.Recipent_deatils)
+                                                      //  let abx =  JSON.stringify(this.state.addPackage)
                                                         let formdata = {}
                                                         formdata["Reason"]= this.state.favColor,
                                                         formdata["Content"]= this.state.Content,
-                                                        formdata["Belonging"]= this.state.belonging,
-                                                        formdata["Product_cat"]= this.state.onCategorySelect,
-                                                        formdata["Unit_of_measure"]= this.state.scat_measure,
-                                                        formdata["Unit_value"]= this.state.scat_unit_val,
+                                                        //formdata["Belonging"]= this.state.belonging,
+                                                        //formdata["Product_cat"]= this.state.onCategorySelect,
+                                                        // formdata["Unit_of_measure"]= this.state.scat_measure,
+                                                        // formdata["Unit_value"]= this.state.scat_unit_val,
                                                         formdata["Custom_duty"]= this.state.total_Duty,
                                                         formdata["Quantity"]= this.state.total_quantity,
                                                         formdata["file_name"]= this.state.file_name,
-                                                        formdata["isCheck"]= this.state.isCheck,
-                                                        formdata["Country_Org"]= this.state.countrySelect
-                                                       // fromdata["muitiple_orders"]= this.state.addPackage
+                                                      //  formdata["isCheck"]= this.state.isCheck,
+                                                        formdata["Country_Org"]= this.state.countrySelect,
+                                                        formdata["muitiple_orders"]  = this.state.addPackage,
+                                                        formdata['sender_info'] = this.state.sender_deatils,
+                                                        formdata['recipent_info'] = this.state.Recipent_deatils
+                                                        //formdata["muitiple_orders"]= this.state.addPackage
                                                    // console.log("country is",this.state.addPackage)
-                                                        this.props.navigation.navigate('Completeform', {muitiple_orders:this.state.addPackage,Form3:formdata ,sender_info:this.state.sender_deatils,recipent_info:this.state.Recipent_deatils})
+                  //  tempArr = [{ 'key': 0,'cat_List':[], 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','ordr_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}]
+                                                        this.props.navigation.navigate('Completeform', {Form3:formdata})
                                                     }
 
                                                     recipient = () => {
@@ -827,10 +853,10 @@
                                                 var sum = 0;
                                                 var quant =0;
                                                         for (var i = 0; i < tempArr.length; i++) {
-                                                        sum += parseFloat(tempArr[i].custom_dty_price)
+                                                        sum += parseFloat(tempArr[i].ordr_custom)
                                                         quant += parseInt(tempArr[i].quantity)
                                                         }
-                                                        console.log("type quanrti", quant)
+                                                     //   console.log("type quanrti", quant)
                                                         this.setState({
                                                          total_Duty:(sum).toFixed(2),
                                                          total_quantity:quant
@@ -892,13 +918,13 @@
                                                     //     })
                                                     //  console.log("dty",this.state.total_Duty)
 
-                                                    tempArr.push({ 'key': 0,'cat_List':[], 'belongings':'' , 'quantity':0 ,'isYes':null,'isNo':null, 'product_cat_name':'','product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_cat_id':'','product_name':'', 'country_nm':'','productId':'','scat_unit_val':'', 'scat_measure':''})
+                                                    tempArr.push({ 'ordr_belonging':'','ordr_cat_id':'','ordr_scat_id':'','ordr_purc_invc':"",'ordr_country_origin':'', 'cat_List':[], 'quantity':0 ,'isYes':null,'isNo':null, 'product_cat_name':'', 'ordr_unit_measure':'','ordr_unit_value':'','product_lst':[],'ordr_exchange':'','ordr_custom':0.0,'upload_doc_detail':null,'upload_doc':'','productNm':'','product_name':'', 'country_nm':''})
                                                     this.setState({
                                                         addPackage:tempArr
                                                     })
                                                 
                                                     this.getTotal_Duty()
-                                                    console.log("tem",tempArr)
+                                                  //  console.log("tem",tempArr)
                                                     }
 
 
@@ -1248,6 +1274,7 @@
                                                                                  //   value.isBel == yes
                                                                                  
                                                                                    var tempData; 
+                                                                                   value.isYes == true
                                                                                    var tempData = (value.isYes === true ?this.state.belonging_yesArr : this.state.belongingNoArr );
                                                                                  setTimeout(() => {
                                                                                     
@@ -1359,14 +1386,14 @@
 
                                                                                                             source={require('../../Images/arrow-point-to-right.png')}
                                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}
-                                                                                                            value={value.scat_measure}
+                                                                                                            value={value.ordr_unit_measure}
                                                                                                             style={{ width: '85%', marginTop: '-10%',marginLeft:'10%' }}
                                                                                                             errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                                                                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
 
                                                                                                             <TextInputComponent
-                                                                                                                onChangeText={value.scat_unit_val}
-                                                                                                                placeholder={value.scat_unit_val}
+                                                                                                                onChangeText={value.ordr_unit_value}
+                                                                                                                placeholder={value.ordr_unit_value}
                                                                                                                 underlineColorAndroid='grey'
                                                                                                                 keyboardType = 'numeric'
                                                                                                                 designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
@@ -1376,11 +1403,11 @@
                                                                                                                 onValueChange={(value) => this.exchange_rts(value,index)}
                                                                                                                 source={require('../../Images/arrow-point-to-right.png')}
                                                                                                                 textInputProps={{ underlineColorAndroid: 'black' }}
-                                                                                                                value={value.exchange_rt}
+                                                                                                                value={value.ordr_exchange}
                                                                                                                 style={{ width: 130, marginLeft: '-55%', marginTop: '-10%' }}
                                                                                                                 errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                                                                     </View>
-                                                                                                                <Text style={{ height: 40, marginLeft: '10%', marginTop: '8%' }}>custom Duty: {value.custom_dty_price}</Text>
+                                                                                                                <Text style={{ height: 40, marginLeft: '10%', marginTop: '8%' }}>custom Duty: {value.ordr_custom}</Text>
                                                                                     {/* <TextInputComponent
                                                                                                             onChangeText={value.custom_dty_price}
                                                                                                         //   placeholder= { value.custom_dty_price }

@@ -120,6 +120,7 @@ class Home extends Component {
       addPackage:tempArr,
       total_wights:[],
       dimentions:[],
+     // User_Unique_ord_id:this.props.route.param.user_ord_id,
       Array: [
         [
           {
@@ -409,6 +410,7 @@ class Home extends Component {
      
   componentDidMount = () => {
     //AsyncStorage.clear();
+   // console.log("User_Unique_ord_id",this.state.User_Unique_ord_id)
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
   }
    

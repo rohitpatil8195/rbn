@@ -35,7 +35,7 @@ export default class Completeform extends Component {
 
 
     componentDidMount = async()=>{
-        console.log("hhhhhh",this.state.form3Data['Country_Org'])
+        console.log("lolol",this.state.form3Data['recipent_info'])
     } 
     isArrowsPressed = () => {
         if (!this.state.isArrows) {
@@ -147,8 +147,8 @@ export default class Completeform extends Component {
 
     ordercomplete = () => {
         let formdata = {}
-        formdata["sender_data"]= this.state.sender_info,
-        formdata["Recipent_info"]= this.state.Recipent_info,
+        // formdata["sender_data"]= this.state.sender_info,
+        // formdata["Recipent_info"]= this.state.Recipent_info,
         formdata["form_data"]= this.state.form3Data,
         formdata["multi_products"] =this.state.multi_products
         console.log("formdata compelet form",formdata)
@@ -161,7 +161,7 @@ export default class Completeform extends Component {
 
     render() {
         const { ismodalVisible } = this.state;
-        console.log("hhhhhh",this.state.sender_info)
+        //console.log("hhhhhh",this.state.sender_info)
         return (
             <SafeAreaView style={styles.safe}>
                 <ImageBackground source={require('../../Images/header-bg-white.jpg')} style={styles.imagebg} resizeMode='cover'>
@@ -194,19 +194,19 @@ export default class Completeform extends Component {
                         this.state.isArrows == true ?
                             <View style={styles.card}>
                                 <View style={styles.cardv1}>
-                                    <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.sender_info['Company_name']}</Text></Text>
-                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.sender_info['FirstName']}</Text></Text>
-                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.sender_info['Surname']}</Text></Text>
-                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.sender_info['Telephone']}</Text></Text>
-                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.sender_info['Email']}</Text></Text>
-                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.sender_info['Address']}</Text></Text>
-                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.sender_info['Country']}</Text></Text>
-                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.sender_info['cityZip']}</Text></Text>
-                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.sender_info['City']}</Text></Text>
-                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.sender_info['District']}</Text></Text>
-                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.sender_info['VAT_Number']}</Text></Text>
+                                    <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Company_name']}</Text></Text>
+                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['FirstName']}</Text></Text>
+                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Surname']}</Text></Text>
+                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Telephone']}</Text></Text>
+                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Email']}</Text></Text>
+                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Address']}</Text></Text>
+                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Country']}</Text></Text>
+                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['cityZip']}</Text></Text>
+                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['City']}</Text></Text>
+                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['District']}</Text></Text>
+                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['VAT_Number']}</Text></Text>
                                     <Text style={styles.Textc1}>Additional Info :</Text>
-                                    <Text style={styles.Textc2}>{this.state.sender_info['Additional_Info']}</Text>
+                                    <Text style={styles.Textc2}>{this.state.form3Data['sender_info']['Additional_Info']}</Text>
                                 </View>
                             </View>
                             :
@@ -230,19 +230,19 @@ export default class Completeform extends Component {
                         this.state.isArrowr == true ?
                             <View style={styles.card}>
                                 <View style={styles.cardv1}>
-                                <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.Recipent_info['Company_name']}</Text></Text>
-                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.Recipent_info['FirstName']}</Text></Text>
-                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.Recipent_info['Surname']}</Text></Text>
-                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.Recipent_info['Telephone']}</Text></Text>
-                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.Recipent_info['Email']}</Text></Text>
-                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.Recipent_info['Address']}</Text></Text>
-                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.Recipent_info['Country']}</Text></Text>
-                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.Recipent_info['cityZip']}</Text></Text>
-                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.Recipent_info['City']}</Text></Text>
-                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.Recipent_info['District']}</Text></Text>
-                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.Recipent_info['VAT_Number']}</Text></Text>
+                                <Text style={styles.Textc1}>Company Name : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Company_name']}</Text></Text>
+                                    <Text style={styles.Textc1}>First Name : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['FirstName']}</Text></Text>
+                                    <Text style={styles.Textc1}>Last Name : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Surname']}</Text></Text>
+                                    <Text style={styles.Textc1}>Telephone : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Telephone']}</Text></Text>
+                                    <Text style={styles.Textc1}>Email : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Email']}</Text></Text>
+                                    <Text style={styles.Textc1}>Address : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Address']}</Text></Text>
+                                    <Text style={styles.Textc1}>Country : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Country']}</Text></Text>
+                                    <Text style={styles.Textc1}>Zip Code : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['cityZip']}</Text></Text>
+                                    <Text style={styles.Textc1}>City : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['City']}</Text></Text>
+                                    <Text style={styles.Textc1}>Districts : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['District']}</Text></Text>
+                                    <Text style={styles.Textc1}>VAT Number : <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['VAT_Number']}</Text></Text>
                                     <Text style={styles.Textc1}>Additional Info :</Text>
-                                    <Text style={styles.Textc2}>{this.state.Recipent_info['Additional_Info']}</Text>
+                                    <Text style={styles.Textc2}>{this.state.form3Data['recipent_info']['Additional_Info']}</Text>
                                 </View>
                             </View>
                             :
