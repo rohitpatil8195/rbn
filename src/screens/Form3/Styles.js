@@ -104,13 +104,13 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     cardx: {
-        height: 220,
+        height: 260,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
         borderRadius: 5,
         marginVertical: 5,
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     card2: {
         height: 80,
@@ -384,9 +384,18 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     card51: {
-        height: '20%',
+        height: '18%',
+        width: '105%',
+        flexDirection: 'row',
+        marginTop:2,
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    card515: {
+        height: '18%',
         width: '100%',
         flexDirection: 'row',
+        marginTop:2,
         justifyContent: 'space-between',
         alignItems: 'center'
     },

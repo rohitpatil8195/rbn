@@ -370,8 +370,8 @@ this.props.triggerForm1()
                         </View>
                     </View>
                     <View style={styles.bottom}>
-                        {/* <TouchableOpacity onPress={() => this.onSignUpValidation()} style={styles.button}> */}
-                        <TouchableOpacity onPress={this.recipient} style={styles.button}>
+                        <TouchableOpacity onPress={() => this.onSignUpValidation()} style={styles.button}>
+                        {/* <TouchableOpacity onPress={this.recipient} style={styles.button}> */}
                             <Image source={require('../../Images/success.png')} style={styles.icon} />
                             <Text style={styles.save}>Save & Continue</Text>
                         </TouchableOpacity>

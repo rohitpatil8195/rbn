@@ -301,7 +301,12 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/madd/service-order", requestO
             Invoice_Order_no:a
         })
         console.log("da6a",this.state.Invoice_Order_no)
-        this.props.navigation.navigate('OrderComplete', {order_id:this.state.Invoice_Order_no})
+        let formdata = {}
+        formdata["order_id"]= this.state.Invoice_Order_no,
+        formdata["Amount"]= this.state.form4_data['form_data']['Custom_duty'],
+        formdata["Payment"]= this.state.paypal_Resp['response'],
+        console.log("formdata",formdata)
+        this.props.navigation.navigate('OrderComplete', {FormData:formdata})
     if (!response.ok) {
         // get error message from body or default to response status
         const error = (data && data.message) || response.status;

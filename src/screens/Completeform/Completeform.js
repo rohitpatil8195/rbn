@@ -12,10 +12,10 @@ export default class Completeform extends Component {
         this.state = {
             isSender: false,
             isCheck: false,
-            isCheck1: false,
-            isCheck2: false,
-            isCheck3: false,
-            isCheck4: false,
+            isCheck1: this.props.route.params.check1,
+            isCheck2: this.props.route.params.check2,
+            isCheck3: this.props.route.params.check3,
+            isCheck4: this.props.route.params.check5,
             isCheck5: false,
             isYes: false,
             ismodalVisible: false,
@@ -35,7 +35,14 @@ export default class Completeform extends Component {
 
 
     componentDidMount = async()=>{
-        console.log("lolol",this.state.form3Data['recipent_info'])
+        console.log("lolol",this.state.form3Data['recipent_info']);
+        this.setState({
+            isArrows:true,
+            isArrowr: true,
+            isArrowc: true,
+            isArrowi: true,
+            isArrowcstm: true
+        }) 
     } 
     isArrowsPressed = () => {
         if (!this.state.isArrows) {
@@ -329,7 +336,7 @@ export default class Completeform extends Component {
                         }
                     </View>
                     {
-                        this.state.isArrowcstm == true ?
+                        this.state.isArrowcstm == true  && this.state.form3Data['isCheck0'] == false ?
                             <View style={styles.card4}>
                                 <View style={styles.card41}>
                                     <View style={styles.card42}>
@@ -342,10 +349,10 @@ export default class Completeform extends Component {
                                         }</TouchableOpacity>
                                         <Text style={styles.align}>I Am Not Interested In Purchasing The Custom Service</Text>
                                     </View>
-                                 { this.state.form3Data['isCheck']  ==false ?  <View style={styles.card43}>
+                                  <View style={styles.card43}>
                                         <View style={styles.card431}>
-                                            <Text style={styles.Textc1}>Product Details :</Text>
-                                            <View style={styles.card432}>
+                                            {/* <Text style={styles.Textc1}>Product Details :</Text> */}
+                                            {/* <View style={styles.card432}>
                                                 <Text style={styles.Textc1}>Belonging :</Text>
                                                 {
                                                     this.state.form3Data['Belonging'] == true ?
@@ -359,17 +366,17 @@ export default class Completeform extends Component {
                                                             <Text style={{ marginHorizontal: 5 }}>Yes</Text>
                                                         </TouchableOpacity>
                                                 }
-                                            </View>
-                                            <Text style={styles.Textc1}>Product Category :<Text style={styles.Textc2}>{ this.state.form3Data['Product_cat']}</Text></Text>
+                                            </View> */}
+                                            {/* <Text style={styles.Textc1}>Product Category :<Text style={styles.Textc2}>{ this.state.form3Data['Product_cat']}</Text></Text> */}
                                             <View style={styles.line}></View>
                                             <Text style={styles.Textc1}>Country Origin :<Text style={styles.Textc2}>{ this.state.form3Data['Country_Org']}</Text></Text>
                                             <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc2}>{ this.state.form3Data['Quantity']}</Text></Text>
-                                            <Text style={styles.Textc1}>Unit of Measure :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_of_measure']}</Text></Text>
-                                            <Text style={styles.Textc1}>Unit Value :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_value']}</Text></Text>
+                                            {/* <Text style={styles.Textc1}>Unit of Measure :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_of_measure']}</Text></Text>
+                                            <Text style={styles.Textc1}>Unit Value :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_value']}</Text></Text> */}
                                             <Text style={styles.Textc1}>Custom Duty $ :<Text style={styles.Textc2}>{ this.state.form3Data['Custom_duty']}</Text></Text>
 
                                         </View>
-                                    </View> : null }
+                                    </View> 
 
                                    { this.state.form3Data['isCheck'] ==false && this.state.form3Data['Belonging'] == false  ? <View style={styles.upload}>
                                         <Image source={require('../../Images/upload.png')} style={styles.down} resizeMode='center' />
@@ -432,7 +439,8 @@ export default class Completeform extends Component {
                     </View> */}
                     <View style={styles.card7}>
                         <View style={styles.card71}>
-                            <TouchableOpacity onPress={this.isCheck3Pressed}>{
+                        {/* onPress={this.isCheck3Pressed} */}
+                            <TouchableOpacity >{
                                 this.state.isCheck3 ?
                                     <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
                                     :
@@ -452,7 +460,8 @@ export default class Completeform extends Component {
                             </View>
                         </View>
                         <View style={styles.card71}>
-                            <TouchableOpacity onPress={this.isCheck4Pressed}>{
+                        {/* onPress={this.isCheck4Pressed} */}
+                            <TouchableOpacity>{
                                 this.state.isCheck4 ?
                                     <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
                                     :
@@ -473,14 +482,14 @@ export default class Completeform extends Component {
                         </View>
 
                     </View>
-                    <View style={styles.card1}>
+                    {/* <View style={styles.card1}>
                         <Text style={styles.sender}>Reminder For Forbidden Good</Text>
                         <Image source={require('../../Images/arrow-point-to-right.png')} style={styles.down} resizeMode='center' />
-                    </View>
-                    {/* <TouchableOpacity style={styles.card1} onPress={() => { this.setModalVisible(true) }}>
+                    </View> */}
+                    <TouchableOpacity style={styles.card1} onPress={() => { this.setModalVisible(true) }}>
                         <Text style={styles.sender}>Send By E-mail</Text>
                         <Image source={require('../../Images/arrow-point-to-right.png')} style={styles.down} resizeMode='center' />
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                     <View style={styles.bottom}>
                         <TouchableOpacity onPress={this.ordercomplete} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />

@@ -5,6 +5,7 @@ import styles from "./Styles";
 import TextInputComponent from '../../components/TextInputComponent';
 import AsyncStorage from '@react-native-community/async-storage';
 
+
 // create a component
 export default class Information extends Component {
     constructor(props){
@@ -18,38 +19,47 @@ export default class Information extends Component {
             Telephone:'',
             Address:'',
             Country:'',
-            City:''
+            City:'',
+            Zipcode:'',
+            user_cntry_code:''
 
         }
     }
     componentDidMount=()=>{
-        this.allData();
+
+    
+        this.allData()
+       
+
     }
 
        allData =async()=>{
                     const chech = await AsyncStorage.getItem('persist:sampleRedux')
                    const js =  JSON.parse(chech);
-                 
- // let authreducer = JSON.parse(js['authReducer'])
+               
+ // let authreducer = JSON.parse(js['authReducer'])  
   let authreducer = JSON.parse(js['authReducer'])
+ 
   let loginobj = authreducer['loginObj'];
-
+  console.log(loginobj['data'])
   let logindata = loginobj['data']
-  // console.log(logindata['result'][0])
+   //console.log(logindata['result'][0])
   let email = logindata['result'][0]['user_email'];
   let fName = logindata['result'][0]['user_f_name'];
   let user_addr = logindata['result'][0]['user_addr'];
    let Country = logindata['result'][0]['user_country'];
     let Telephone =logindata['result'][0]['user_mb_no'];
+    let Zipcode =logindata['result'][0]['user_pin_code'];
+    let user_cntry_code =logindata['result'][0]['user_cntry_code'];
 
-   let City_obj =  authreducer['cityObj'];
+   //let City_obj =  authreducer['cityObj'];
 
-   let city_data = City_obj['data'] 
-         let final_city;
-   for (let i; i <= city_data['result'].length ; i++) {
-    // final_city = city_data['result'].filter(city_data['result'][i]['city_id'] === logindata['result'][0]['user_city']);
+//    let city_data = City_obj['data'] 
+//          let final_city;
+//    for (let i; i <= city_data['result'].length ; i++) {
+//     // final_city = city_data['result'].filter(city_data['result'][i]['city_id'] === logindata['result'][0]['user_city']);
      
-  }
+//   }
 
   //console.log("final_city",final_city)
   //console.log("final_city",typeof final_city)
@@ -57,18 +67,29 @@ export default class Information extends Component {
 
 //const final_city = city_data.filter(word => word.length > 6);
 //console.log(city_data['result'].length)
-    console.log(city_data['result'][1]['city_id'])
+   // console.log(city_data['result'][1]['city_id'])
 
 
    //console.log("city obj",JSON.stringify(City_obj))
   //user_country  user_addr cityObj
+  if(Country == 1){
+    this.setState({
+        Country:'Italy',  
+    })
+  }else{
+      this.setState({
+        Country:'Senegal',  
+      })
+  }
 
   this.setState({
         Email:email,
         FirstName:fName,
         Telephone:Telephone,
         Address:user_addr,
-        Country:'',     
+        Zipcode:Zipcode,
+        user_cntry_code:user_cntry_code
+           
   })
  // console.log("email",email)
    //  console.log("js_parse..",JSON.stringify(Result))
@@ -132,7 +153,7 @@ export default class Information extends Component {
                {
                    this.state.isInfo == true ?
                    <TouchableOpacity onPress={this.isInfoPressed}>
-                   
+
                <Text style={styles.textb}>My Information</Text>
                </TouchableOpacity>
                 : 
@@ -155,7 +176,7 @@ export default class Information extends Component {
                this.state.isInfo == true ?
                <View style={styles.card4}>
                <View style={styles.card41}>
-           <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={this.state.FirstName}
+           <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} value={this.state.FirstName} placeholder={this.state.FirstName}
                     underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40,height: 50,}} />
             {/* <View style={styles.remember}>
                                 <TouchableOpacity onPress={this.isCheckPressed}>{
@@ -171,20 +192,20 @@ export default class Information extends Component {
                             {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Company'
                     underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40,height: 50,}} /> */}
                      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' ,}}>
-                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='+00'
+                    <TextInputComponent value={this.state.user_cntry_code}  onChangeText={text => this.setState({ FirstName: text })} placeholder='+00'
                     underlineColorAndroid='grey' designStyle={{ width: '25%', marginLeft: '15%', height: 50}} />
-                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={this.state.Telephone}
+                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} value={this.state.Telephone} placeholder={this.state.Telephone}
                     underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50}} />
                     </View>
-                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder={this.state.Address}
+                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} value={this.state.Address} placeholder={this.state.Address}
                     underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40,height: 50,}} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Country'
+                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} value={this.state.Country} placeholder='Country' 
                     underlineColorAndroid='grey' designStyle={{ width: '52%', marginLeft: '15%', height: 50}} />
                     <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='City'
                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50}} />
                     </View>
-                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Zipcode'
+                    <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} value={this.state.Zipcode} placeholder='Zipcode' 
                     underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40,height: 50,}} />
                      {/* <TextInputComponent onChangeText={text => this.setState({ FirstName: text })} placeholder='Comments'
                     underlineColorAndroid='grey' designStyle={{paddingBottom: 75, width: '109%', height: 100, right: 40}} /> */}

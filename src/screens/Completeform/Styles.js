@@ -116,7 +116,7 @@ export default StyleSheet.create({
         width: 15,
     },
     card4: {
-        height: 540,
+        height: 510,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -144,7 +144,7 @@ export default StyleSheet.create({
         flexDirection: 'row'
     },
     card43: {
-        height: '40%',
+        height: '20%',
         width: '100%',
         borderWidth: 1,
         borderRadius: 5,
@@ -226,7 +226,9 @@ export default StyleSheet.create({
         height: 70,
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginLeft:20,
+        
     },
     card7s1: {
         height: '100%',
@@ -238,6 +240,7 @@ export default StyleSheet.create({
         width: '90%',
         flexDirection: 'row',
         alignItems: 'center'
+       
     },
     card72: {
         height: 30,

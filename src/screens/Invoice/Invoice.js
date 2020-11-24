@@ -10,14 +10,18 @@ export default class Invoice extends Component {
         super(props);
         this.state={
             isInfo: false,
-            isPass: false
+            isPass: false,
+            all_data:this.props.route.params.invo_data,
+            
         }
     }
 
     login = () => {
         this.props.navigation.navigate('HomeScreen', {})
     }
+   // {"Amount": "", "Payment": {"create_time": "2014-07-18T18:46:55Z", "id": "PAY-18X32451H0459092JKO7KFUI", "intent": "sale", "state": "approved"}, "order_id": "608"}
 
+    
     render() {
         return (
             <SafeAreaView>
@@ -44,23 +48,23 @@ export default class Invoice extends Component {
                </View>
                <View style={styles.grey}>
                    <Text style={styles.textc}>Date : <Text style={styles.textc1}>21-05-2020</Text></Text>
-                   <Text style={styles.textc}>Order Number : <Text style={styles.textc1}>12</Text></Text>
+                   <Text style={styles.textc}>Order Number :{ this.state.all_data != undefined? <Text style={styles.textc1}>{this.state.all_data['order_id']}</Text>:null}</Text>
                </View>
                <View style={styles.cont}>
                     <View style={styles.six}>
-                   <Text style={styles.textcc}>Invoice Number : <Text style={styles.textc2}>54</Text></Text>
+                   <Text style={styles.textcc}>Invoice Number : { this.state.all_data !=  undefined? <Text style={styles.textc2}>{this.state.all_data['order_id']}</Text>:null}</Text>
                     </View>
                     <View style={styles.six}>
-                   <Text style={styles.textcc}>Amount Incl. VAT ($) : <Text style={styles.textc1}>0</Text></Text>
+                   <Text style={styles.textcc}>Amount Incl. VAT ($) :{ this.state.all_data!=undefined? <Text style={styles.textc1}>{this.state.all_data['Amount']}</Text>:null }</Text>
                     </View>
                     <View style={styles.six}>
-                   <Text style={styles.textcc}>Payment Date : <Text style={styles.textc1}>20-03-2017 05:17:44</Text></Text>
+                   <Text style={styles.textcc}>Payment Date ::{ this.state.all_data !=  undefined? <Text style={styles.textc1}>{this.state.all_data['Payment']['create_time']}</Text>:null}</Text>
                     </View>
                     <View style={styles.six}>
                    <Text style={styles.textcc}>Payment Method : <Text style={styles.textc1}>Credit Card</Text></Text>
                     </View>
                     <View style={styles.six}>
-                   <Text style={styles.textcc}>Status : <Text style={styles.textc2}>Paid</Text></Text>
+                   <Text style={styles.textcc}>Status :  { this.state.all_data != undefined? <Text style={styles.textc2}>{this.state.all_data['Payment']['state']}</Text>:null}</Text>
                     </View>
                     <View style={styles.six}>
                    <Text style={styles.textcc}>Auto Declaration Invoice :</Text>

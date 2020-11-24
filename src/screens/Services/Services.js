@@ -250,11 +250,11 @@ this.getCal();
                                this.state.Home_data[i]['servc_from'] = this.state.logData[i][4]
                                this.state.Home_data[i]['rbn_transport_fee'] = this.state.logData[i][5]
                            }
-                        //    let store = this.state.Home_data
+                          // let store = this.state.Home_data
 
-                        
-                        ///   const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
-                           const check_fin = this.state.Home_data;
+                         console.log("this",this.state.Home_data)
+                      const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
+                          // const check_fin = this.state.Home_data;
                              this.setState({
                                  finalData:check_fin
                              })
@@ -876,7 +876,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                    {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type-Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -956,7 +956,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                    {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -1035,7 +1035,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type-Air</Text> : item.serv_type==2 ? <Text>Type-Maritime</Text> :  <Text>Type-Road</Text>  }
+                                    {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -1114,7 +1114,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                    {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>
@@ -1193,7 +1193,7 @@ var gsDayNames = [
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
                                     <Text style={{ fontSize: 8 }}>Include insurance</Text>
                                     <View style={styles.line3}></View>
-                                    {item.serv_type==1 ?<Text>Type - Air</Text> : item.serv_type==2 ? <Text>Type - Maritime</Text> :  <Text>Type - Road</Text>  }
+                                    {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
                             </View>
                         </View>

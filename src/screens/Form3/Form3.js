@@ -216,7 +216,7 @@
 
 
                                                     componentDidMount = () => {
-                                                        console.log("sender_deatils",this.state.sender_deatils['Company_name'])
+                                                     //   console.log("sender_deatils",this.state.sender_deatils['Company_name'])
                                                         // console.log("sender_deatils",this.state.sender_deatils)
                                                         // console.log("Recipent_deatils",this.state.Recipent_deatils)
                                                         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
@@ -227,7 +227,7 @@
                                                         // this.props.triggerAuthCity(formdata, this.onCitySuccess, this.onCityError)
                                                         this.props.triggerCategory(formdata, this.onCategorySuccess, this.onCategoryError)
                                                         this.setState({ isYes: null })
-                                                        console.log("fWight",this.state.fWight);
+                                                      //  console.log("fWight",this.state.fWight);
                                                        // console.log("-->>",this.state.addPackage)
                                                     }
                                                 
@@ -258,13 +258,13 @@
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify(Api_data) 
                                                 };
-                                                console.log("requestOptions",JSON.stringify(requestOptions))
+                                               console.log("requestOptions",JSON.stringify(requestOptions))
 
                                                 fetch("http://rbn.sairoses.com/Front/index.php/API/fields/calculation", requestOptions)
                                                 .then(async response => {
                                                     const data = await response.json();
                                                 
-                                                        console.log("data yee"+JSON.stringify(data['result']))
+                                                      //  console.log("data yee"+JSON.stringify(data['result']))
                                                         //    let formData = data['result'];
                                                         //    console.log("form3Data''' ",formData)
                                                 if(data['result'] != null || '' || undefined){
@@ -313,7 +313,7 @@
 
                                                             return el;
                                                         })
-                                                        console.log("unitList", result)
+                                                        //console.log("unitList", result)
                                                         this.setState({
                                                             unitList: result,
                                                         })
@@ -475,8 +475,8 @@
                                                             }
                                                         })
                                                         
-                                                        console.log('categorySelect>>>>', this.state.categoryId)
-                                                        console.log('categorySelect>>>>', tempArr[index].ordr_cat_id)
+                                                       // console.log('categorySelect>>>>', this.state.categoryId)
+                                                      //  console.log('categorySelect>>>>', tempArr[index].ordr_cat_id)
                                                         this.onProduct(tempArr[index].ordr_cat_id)
                                                     }
 
@@ -593,9 +593,11 @@
                                                     isCheckPressed = () => {
                                                         if (!this.state.isCheck) {
                                                             this.setState({ isCheck: true })
+                                                      
                                                         } else {
                                                             this.setState({ isCheck: false })
                                                         }
+                                                     
                                                     }
 
                                                     isCheck1Pressed = () => {
@@ -604,6 +606,7 @@
                                                         } else {
                                                             this.setState({ isCheck1: false })
                                                         }
+                                                      
                                                     }
 
                                                     isCheck2Pressed = () => {
@@ -734,6 +737,7 @@
                                                         // console.log("sender_deatils",this.state.sender_deatils)
                                                         // console.log("Recipent_deatils",this.state.Recipent_deatils)
                                                       //  let abx =  JSON.stringify(this.state.addPackage)
+                                                      console.log("is check",this.state.isCheck)
                                                         let formdata = {}
                                                         formdata["Reason"]= this.state.favColor,
                                                         formdata["Content"]= this.state.Content,
@@ -744,15 +748,20 @@
                                                         formdata["Custom_duty"]= this.state.total_Duty,
                                                         formdata["Quantity"]= this.state.total_quantity,
                                                         formdata["file_name"]= this.state.file_name,
-                                                      //  formdata["isCheck"]= this.state.isCheck,
+                                                      formdata["isCheck0"]= this.state.isCheck,
                                                         formdata["Country_Org"]= this.state.countrySelect,
                                                         formdata["muitiple_orders"]  = this.state.addPackage,
                                                         formdata['sender_info'] = this.state.sender_deatils,
                                                         formdata['recipent_info'] = this.state.Recipent_deatils
+                                                        // formdata['isCheck1'] = this.state.isCheck1,
+                                                        // formdata['isCheck2'] = this.state.isCheck2
+                                                        // formdata['isCheck3'] = this.state.isCheck3
+                                                        //  formdata['isCheck4'] = this.state.isCheck4
+                                                        //   formdata['isCheck5'] = this.state.isCheck5
                                                         //formdata["muitiple_orders"]= this.state.addPackage
                                                    // console.log("country is",this.state.addPackage)
                   //  tempArr = [{ 'key': 0,'cat_List':[], 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','ordr_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}]
-                                                        this.props.navigation.navigate('Completeform', {Form3:formdata})
+                                                        this.props.navigation.navigate('Completeform', {Form3:formdata,check0:this.state.isCheck,check1:this.state.isCheck1,check2:this.state.isCheck2, check3:this.state.isCheck3,check5:this.state.isCheck5})
                                                     }
 
                                                     recipient = () => {
@@ -1278,7 +1287,7 @@
                                                                                    var tempData = (value.isYes === true ?this.state.belonging_yesArr : this.state.belongingNoArr );
                                                                                  setTimeout(() => {
                                                                                     
-                                                                                    console.log("tnp<data",tempData)
+                                                                                    //console.log("tnp<data",tempData)
                                                                                   },300)
 
                                                                                  
@@ -1319,16 +1328,17 @@
                                                                                             // placeholder={ProductCatPlaceholder}
                                                                                             data={tempData}
                                                                                             onValueChange={(val)=>this.onCategorySelect(val,index)}
-                                                                                            source={require('../../Images/arrow-point-to-right.png')}
+                                                                                            source={value.product_cat_name =='' ? require('../../Images/arrow-point-to-right.png') : null}
                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}
                                                                                             value={value.product_cat_name}
                                                                                             style={{ marginTop: '-9%', width: '85%', alignSelf: 'center' }}
                                                                                             errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
+                                            
                                                                                         <DropDown
                                                                                             // placeholder={ProductPlaceholder}
                                                                                             data={value.product_lst}
                                                                                             onValueChange={(val)=>this.onProductSelect(val,index)}
-                                                                                            source={require('../../Images/arrow-point-to-right.png')}
+                                                                                            source={value.productNm =='' ? require('../../Images/arrow-point-to-right.png'): null}
                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}
                                                                                             value={value.productNm}
                                                                                             style={{ width: '85%', alignSelf: 'center', marginTop: '-15%' }}
@@ -1359,7 +1369,7 @@
                                                                                                             //  placeholder={CountryPlaceholder}
                                                                                                             data={this.state.countryList}
                                                                                                             onValueChange={(val)=>this.onCountrySelect(val,index)}
-                                                                                                            source={require('../../Images/arrow-point-to-right.png')}
+                                                                                                            source={value.country_nm =='' ? require('../../Images/arrow-point-to-right.png'): null}
                                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}
                                                                                                             value={value.country_nm}
                                                                                                             style={{ width: '85%', marginTop: '-1%',marginLeft:'8%' }}
@@ -1384,7 +1394,7 @@
                                                                                                             //    }}
                                                                                                             
 
-                                                                                                            source={require('../../Images/arrow-point-to-right.png')}
+                                                                                                            source={ value.ordr_unit_measure =='' ? require('../../Images/arrow-point-to-right.png'): null}
                                                                                                             textInputProps={{ underlineColorAndroid: 'black' }}
                                                                                                             value={value.ordr_unit_measure}
                                                                                                             style={{ width: '85%', marginTop: '-10%',marginLeft:'10%' }}
@@ -1401,7 +1411,7 @@
                                                                                                                 placeholder={ExchangePlaceholder}
                                                                                                                 data={this.state.exchange}
                                                                                                                 onValueChange={(value) => this.exchange_rts(value,index)}
-                                                                                                                source={require('../../Images/arrow-point-to-right.png')}
+                                                                                                                source={value.ordr_exchange =='' ?  require('../../Images/arrow-point-to-right.png'): null}
                                                                                                                 textInputProps={{ underlineColorAndroid: 'black' }}
                                                                                                                 value={value.ordr_exchange}
                                                                                                                 style={{ width: 130, marginLeft: '-55%', marginTop: '-10%' }}
@@ -1491,7 +1501,7 @@
                                                                                             <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
 
                                                                                     }</TouchableOpacity>
-                                                                                    <Text style={{ color: 'grey', marginHorizontal: 5 }}>I Declare The Information Above-mentioned Is True, Correct And Complete.</Text>
+                                                                                    <Text style={{ color: 'grey', marginHorizontal: 5,marginLeft:25,marginTop:15 }}>I Declare The Information Above-mentioned Is True, Correct And Complete.</Text>
                                                                                 </View>
                                                                                 <View style={styles.checkx2}>
                                                                                     <TouchableOpacity onPress={this.isCheck2Pressed}>{
@@ -1502,7 +1512,7 @@
                                                                                             <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
 
                                                                                     }</TouchableOpacity>
-                                                                                    <Text style={{ color: 'grey', marginHorizontal: 5 }}>I Also Declared To Be Aware That Otherwise, The Goods May Not Be Shipped, Or It May Be Necessary To Integrate The Cost Of Customs Duties</Text>
+                                                                                    <Text style={{ color: 'grey', marginHorizontal: 5 ,marginLeft:25,marginTop:15 }}>I Also Declared To Be Aware That Otherwise, The Goods May Not Be Shipped, Or It May Be Necessary To Integrate The Cost Of Customs Duties</Text>
                                                                                 </View>
                                                                     </View>  }
 
@@ -1529,6 +1539,7 @@
                                                                     <View style={styles.card5}>
                                                                         <View style={styles.declare}>
                                                                             <View style={styles.card51}>
+                                                                            <View style={{marginRight:24,marginBottom:12}}>
                                                                                 <TouchableOpacity onPress={this.isCheck3Pressed}>{
                                                                                     this.state.isCheck3 ?
                                                                                         <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -1537,18 +1548,20 @@
                                                                                         <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
 
                                                                                 }</TouchableOpacity>
+                                                                                </View>
                                                                                 <Text
                                                                                     style={{ color: 'grey', marginHorizontal: 5 }}
                                                                                 >I Declare That My Shipping Does Not Include Any Following Hazardous Products :</Text>
                                                                             </View>
                                                                             <View style={styles.card52}>
-                                                                                <Text style={{ color: 'grey' }}>- Lithium batteries alone (Furthur Details +)</Text>
-                                                                                <Text style={{ color: 'grey' }}>- Electronic Smoking Devices (Furthur Details +)</Text>
-                                                                                <Text style={{ color: 'grey' }}>- Perfumes</Text>
-                                                                                <Text style={{ color: 'grey' }}>- Aerosols, Gas Bottles, Extinguishers</Text>
+                                                                                <Text style={{ color: 'grey' }}>  - Lithium batteries alone (Furthur Details +)</Text>
+                                                                                <Text style={{ color: 'grey' }}>  - Electronic Smoking Devices (Furthur Details+)</Text>
+                                                                                <Text style={{ color: 'grey' }}>  - Perfumes</Text>
+                                                                                <Text style={{ color: 'grey' }}>  - Aerosols, Gas Bottles, Extinguishers</Text>
 
                                                                             </View>
                                                                             <View style={styles.card51}>
+                                                                            <View style={{marginRight:24,marginBottom:12}}>
                                                                                 <TouchableOpacity onPress={this.isCheck4Pressed}>{
                                                                                     this.state.isCheck4 ?
                                                                                         <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -1557,20 +1570,23 @@
                                                                                         <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
 
                                                                                 }</TouchableOpacity>
+                                                                                </View>
                                                                                 <Text
                                                                                     style={{ color: 'grey', marginHorizontal: 5 }}
                                                                                 >I Declare That My Shipping Does Not Include Any forbidden goods</Text>
                                                                             </View>
-                                                                            <View style={styles.card51}>
+                                                                            <View style={styles.card515}>
+                                                                            <View style={{marginRight:24,marginLeft:-8,marginBottom:1}}>
                                                                                 <TouchableOpacity onPress={this.isCheck5Pressed}>{
                                                                                     this.state.isCheck5 ?
                                                                                         <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
                                                                                         :
                                                                                         <Image source={require('../../Images/check-box-empty.png')} style={styles.icon} />
                                                                                 }</TouchableOpacity>
+                                                                                </View>
                                                                                 <Text
                                                                                     style={{ color: 'grey', marginHorizontal: 5 }}
-                                                                                >I accept the terms and conditions of the web site</Text>
+                                                                                >I accept the terms and conditions of the web site </Text>
                                                                             </View>
                                                                         </View>
                                                                     </View>
@@ -1580,7 +1596,8 @@
                                                                             <Text style={styles.save}>Save & Continue</Text>
                                                                         </TouchableOpacity>
                                                                     </View>
-                                                                    <View style={styles.cardv555}></View>
+                                                                      {  this.state.addPackage.map((value, index) => {
+                                                            return (<View style={styles.cardv510}></View> )  })}
                                                                 </ScrollView>
 
                                                             </SafeAreaView>

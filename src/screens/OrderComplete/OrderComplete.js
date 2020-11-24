@@ -9,7 +9,9 @@ export default class OrderComplete extends Component {
          constructor(props){
              super(props);
              this.state={
-                order_id_No:this.props.route.params.order_id
+                all_data:this.props.route.params.FormData
+                
+
              }
          }
          componentDidMount=()=>{
@@ -25,6 +27,10 @@ export default class OrderComplete extends Component {
 
     booking = () => {
         this.props.navigation.navigate('Bookings')
+    }
+
+    invoices = () => {
+        this.props.navigation.navigate('Invoice',{invo_data:this.state.all_data })
     }
 
     render() {
@@ -50,14 +56,17 @@ export default class OrderComplete extends Component {
                 <Text style={styles.text2}>Thank for your order!</Text>
             </View>
             <View style={styles.container}>
-                <Text>Order Number :<Text style={{color: 'dodgerblue'}}>{this.state.order_id_No}</Text></Text>
+                <Text>Order Number :<Text style={{color: 'dodgerblue'}}>{this.state.all_data['order_id']}</Text></Text>
             </View>
             <View style={styles.vtext}>
                 <Text numberOfLines={3} ellipsizeMode='middle'>You will receive shortly an e-mail with the order details and with the payment confirmation</Text>
             </View>
             <View style={styles.buttons}>
-                <TouchableOpacity onPress={this.booking} style={styles.booking}>
+                {/* <TouchableOpacity onPress={this.booking} style={styles.booking}>
                     <Text>My Bookings</Text>
+                </TouchableOpacity> */}
+                <TouchableOpacity onPress={this.invoices} style={styles.booking}>
+                    <Text>My Invoice</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.home} style={styles.Home}>
                     <Text style={{color: 'white'}}>Home</Text>
