@@ -62,7 +62,7 @@ export const makeAPICall = apiData => {
                 response = response.data;
                   //console.log("resp>> "+JSON.stringify(response))
                 // if (response.status == 200) {status":1,"msg":"success"
-                if (response.status == 1 && response.msg == "success") {
+                if (response.status == 1 || response.msg == "success") {
                 
                     if (successAction) {
                         dispatch({

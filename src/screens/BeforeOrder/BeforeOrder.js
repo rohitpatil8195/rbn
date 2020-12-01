@@ -295,7 +295,7 @@ fetch("http://rbn.sairoses.com/Front/index.php/API/madd/service-order", requestO
 .then(async response => {
     const data = await response.json();
 
-        console.log("data yee"+JSON.stringify(data['result']));
+        console.log("data yee"+typeof JSON.stringify(data['result']));
       let a = JSON.stringify(data['result']);
            this.setState({
             Invoice_Order_no:a

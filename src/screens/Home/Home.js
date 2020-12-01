@@ -1201,16 +1201,16 @@ class Home extends Component {
                                                          
                     <>
                       <TextInputComponent onChangeText={(text) => this.Weights(text,index)} placeholder={i18n.t('Weight(Kg)')}
-                        underlineColorAndroid='grey' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
+                        underlineColorAndroid='grey'  keyboardType = 'numeric' designStyle={{ width: '110%', marginLeft: '-15%', height: 50 }} />
 
                                   <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', width: '100%' }}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
                         <Text style={styles.dim}>Dimensions (cm) :</Text>
-                        <TextInputComponent onChangeText={(text) => this.L(text,index)}  placeholder={i18n.t('L')}
+                        <TextInputComponent  keyboardType = 'numeric' onChangeText={(text) => this.L(text,index)}  placeholder={i18n.t('L') }
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '45%', height: 50 }} />
-                        <TextInputComponent onChangeText={(text) => this.D(text,index)} placeholder={i18n.t('D')}
+                        <TextInputComponent  keyboardType = 'numeric' onChangeText={(text) => this.D(text,index)} placeholder={i18n.t('D')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '25%', height: 50 }} />
-                        <TextInputComponent onChangeText={(text) => this.H(text,index)} placeholder={i18n.t('H')}
+                        <TextInputComponent  keyboardType = 'numeric' onChangeText={(text) => this.H(text,index)} placeholder={i18n.t('H')}
                           underlineColorAndroid='grey' designStyle={{ width: 50, marginLeft: '5%', height: 50 }} />
               
                       </View>

@@ -104,7 +104,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     cardx: {
-        height: 260,
+        height: 275,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -167,7 +167,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         marginTop:7,
         marginBottom:6,
-        height: 590,
+        height: 670,
         width: '90%',
         borderRadius: 5,
         borderWidth: 1,
@@ -192,12 +192,16 @@ export default StyleSheet.create({
         height: '90%',
         width: '95%',
     },
+    cardv510:{
+        height: '90%',
+        width: '95%',borderColor:'black',borderWidth:1
+    },
     cardv511: {
         height: '20%',
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',marginTop:20
     },
     cardv5111: {
         height: '100%',
@@ -255,13 +259,13 @@ export default StyleSheet.create({
         top: 60
     } ,
     ship: {
-        marginBottom:'7%',
+        marginBottom:'4%',marginTop:-30,
         marginLeft:'5%',
-        height: '30%',
+        height: '20%',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
     },  
     v1: {
         height: '100%',
@@ -297,7 +301,7 @@ export default StyleSheet.create({
         margin: 10,
     },
     checkx: {
-        marginBottom:"12%",
+        marginBottom:"12%",marginTop:20,
         height: '4%',
         width: '90%',
         justifyContent: 'space-between',
@@ -313,7 +317,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     checkx2: {
-        marginLeft:10,
+        marginLeft:10,marginTop:20,
         height: '6%',
         width: '90%',
         justifyContent: 'space-between',
@@ -387,7 +391,6 @@ export default StyleSheet.create({
         height: '18%',
         width: '105%',
         flexDirection: 'row',
-        marginTop:2,
         justifyContent: 'space-between',
         alignItems: 'center'
     },

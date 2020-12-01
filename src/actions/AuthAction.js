@@ -58,7 +58,7 @@ export function triggerAuthRegister(obj, callback, errCallback) {
             errCallback
         }
         makeAPICall(params)
-        console.log("Auth reg: "+para)
+      //  console.log("Auth reg: "+para)
     }
 }
 

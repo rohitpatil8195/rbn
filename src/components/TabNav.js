@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import i18n from "i18n-js";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class TabNav extends Component {
   constructor(props) {
@@ -12,6 +13,26 @@ export default class TabNav extends Component {
         // isContact: false
     };
   }
+  
+  componentDidMount=async()=>{
+    const chech = await AsyncStorage.getItem('persist:sampleRedux')
+    const js =  JSON.parse(chech);
+  
+// let authreducer = JSON.parse(js['authReducer'])
+let authreducer = JSON.parse(js['authReducer'])
+let loginobj = authreducer['loginObj'];
+
+let logindata = loginobj['data']
+ console.log(logindata['result'][0])
+//let User_ord_id = logindata['result'][0]['user_id'];
+ 
+      this.setState({
+       
+      })
+
+}
+
+
 
 //   isHomePressed=()=> {
 //     if (!this.state.isHome) {
@@ -40,13 +61,26 @@ export default class TabNav extends Component {
 //       this.setState({isHome: false, isAbout: false, isPersonal: true, isContact: false})
 // }
 
+
+
+// isContactPressed=()=> {
+//     if (!this.state.isContact) {
+//         this.setState({isContact: true})
+//       } else {
+//         this.setState({isContact: false})
+//       }
+//       this.setState({isHome: false, isAbout: false, isPersonal: false, isContact: true})
+// }
+
+
+
 isContactPressed=()=> {
-    if (!this.state.isContact) {
-        this.setState({isContact: true})
-      } else {
-        this.setState({isContact: false})
-      }
-      this.setState({isHome: false, isAbout: false, isPersonal: false, isContact: true})
+    // if (!this.state.isContact) {
+    //     this.setState({isContact: true})
+    //   } else {
+    //     this.setState({isContact: false})
+    //   }
+    //   this.setState({isHome: false, isAbout: false, isPersonal: false, isContact: true})
 }
 
   render() {
@@ -54,12 +88,12 @@ isContactPressed=()=> {
       <View style={Styles.bottom}>
           {
               this.props.isHome == true ?
-              <TouchableOpacity style={Styles.blocks} onPress={this.props.onClick}>
+              <TouchableOpacity style={Styles.blocks} onPress={this.isContactPressed()}>
               <Image source={require('../Images/home.png')} style={Styles.img} />
               <Text style={Styles.text1}>{i18n.t('Home')}</Text>
           </TouchableOpacity>
           : 
-          <TouchableOpacity style={Styles.blocks} onPress={this.props.onClick}>
+          <TouchableOpacity style={Styles.blocks} onPress={this.isContactPressed()}>
             <Image source={require('../Images/home.png')} style={Styles.img} />
             <Text style={Styles.text}>{i18n.t('Home')}</Text>
         </TouchableOpacity>

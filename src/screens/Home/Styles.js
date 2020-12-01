@@ -155,13 +155,13 @@ export default StyleSheet.create({
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
         
     },
     card12: {
-        height: '40%',
+        height: '35%',
         width: '90%',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-end'
     },
     card111: {
         height: '100%',

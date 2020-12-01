@@ -51,12 +51,12 @@ export default StyleSheet.create({
         backgroundColor: "white"
     },
     card: {
-        height: '81%',
+        height: '84%',
         width: '90%',
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: 15,
-        marginTop: 20,
+        marginTop: 10,
         elevation: 10,
         alignItems: 'center'
     },

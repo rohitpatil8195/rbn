@@ -1351,7 +1351,7 @@
                                                                                                 <TouchableOpacity style={styles.upload} onPress={(val)=>this.selectFile(val,index)}>
                                                                                                 <View  >
                                                                                                     
-                                                                                        { this.state.file_name == '' ? <Text style={{ marginHorizontal: 36}}>Select document</Text>: <Text style={{ marginHorizontal: 50}}>{this.state.file_name}</Text> }
+                                                                                        { this.state.file_name == '' ? <Text style={{ marginHorizontal: 36}}>  Select File</Text>: <Text style={{ marginHorizontal: 50}}>{this.state.file_name}</Text> }
                                                                                     
                                                                                                 </View>
                                                                                                 </TouchableOpacity>
@@ -1539,7 +1539,7 @@
                                                                     <View style={styles.card5}>
                                                                         <View style={styles.declare}>
                                                                             <View style={styles.card51}>
-                                                                            <View style={{marginRight:24,marginBottom:12}}>
+                                                                            <View style={{marginRight:24,marginBottom:8}}>
                                                                                 <TouchableOpacity onPress={this.isCheck3Pressed}>{
                                                                                     this.state.isCheck3 ?
                                                                                         <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -1550,14 +1550,14 @@
                                                                                 }</TouchableOpacity>
                                                                                 </View>
                                                                                 <Text
-                                                                                    style={{ color: 'grey', marginHorizontal: 5 }}
+                                                                                    style={{ color: 'grey',  marginHorizontal: 5 ,marginLeft:4,marginTop:0 ,marginRight:3 }}
                                                                                 >I Declare That My Shipping Does Not Include Any Following Hazardous Products :</Text>
                                                                             </View>
                                                                             <View style={styles.card52}>
-                                                                                <Text style={{ color: 'grey' }}>  - Lithium batteries alone (Furthur Details +)</Text>
-                                                                                <Text style={{ color: 'grey' }}>  - Electronic Smoking Devices (Furthur Details+)</Text>
-                                                                                <Text style={{ color: 'grey' }}>  - Perfumes</Text>
-                                                                                <Text style={{ color: 'grey' }}>  - Aerosols, Gas Bottles, Extinguishers</Text>
+                                                                                <Text style={{ color: 'gray' ,fontSize:12}}>      - Lithium batteries alone (Furthur Details +)</Text>
+                                                                                <Text style={{ color: 'gray',fontSize:12 }}>      - Electronic Smoking Devices (Furthur Details+)</Text>
+                                                                                <Text style={{ color: 'gray',fontSize:12 }}>      - Perfumes</Text>
+                                                                                <Text style={{ color: 'gray',fontSize:12 }}>      - Aerosols, Gas Bottles, Extinguishers</Text>
 
                                                                             </View>
                                                                             <View style={styles.card51}>
@@ -1572,7 +1572,7 @@
                                                                                 }</TouchableOpacity>
                                                                                 </View>
                                                                                 <Text
-                                                                                    style={{ color: 'grey', marginHorizontal: 5 }}
+                                                                                    style={{ color: 'grey',  marginHorizontal: 5 ,marginLeft:4,marginTop:0,marginRight:3  }}
                                                                                 >I Declare That My Shipping Does Not Include Any forbidden goods</Text>
                                                                             </View>
                                                                             <View style={styles.card515}>
@@ -1585,7 +1585,7 @@
                                                                                 }</TouchableOpacity>
                                                                                 </View>
                                                                                 <Text
-                                                                                    style={{ color: 'grey', marginHorizontal: 5 }}
+                                                                                    style={{ color: 'grey',   marginHorizontal: 5 ,marginLeft:4,marginTop:0,marginRight:3  }}
                                                                                 >I accept the terms and conditions of the web site </Text>
                                                                             </View>
                                                                         </View>

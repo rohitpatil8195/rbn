@@ -20,7 +20,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     card: {
-        height: 350,
+        height: 310,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -49,12 +49,23 @@ export default StyleSheet.create({
         justifyContent: 'space-between'
     },
     card1: {
-        height: 50,
+        height: 50,marginTop:10,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
         borderRadius: 5,
-        marginVertical: 5,
+        marginVertical: 3,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    card01: {
+        height: 50,marginTop:10,
+        width: '90%',
+        backgroundColor: 'white',
+        elevation: 10,
+        borderRadius: 5,
+        marginVertical: 3,
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center'
@@ -116,7 +127,7 @@ export default StyleSheet.create({
         width: 15,
     },
     card4: {
-        height: 510,
+        height: 340,
         width: '90%',
         backgroundColor: 'white',
         elevation: 10,
@@ -125,27 +136,26 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     card41: {
-        height: '95%',
-        width: '90%',
-        alignItems: 'center'
+        height: '15%',
+        width: '95%',
+        alignItems: 'center', flexDirection: 'row'
     },
     card42: {
-        height: '10%',
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center'
+        height: '15%',marginTop:10,
+        width: '95%',
+        flexDirection: 'row',marginBottom:2
     },
     align: {
         marginHorizontal: 10
     },
     card421: {
-        height: '10%',
-        width: '100%',
-        flexDirection: 'row'
+        height: '30%',marginTop:10,
+        width: '95%',
+        flexDirection: 'row',marginBottom:2
     },
     card43: {
         height: '20%',
-        width: '100%',
+        width: '95%',
         borderWidth: 1,
         borderRadius: 5,
         marginVertical: 5,
@@ -153,8 +163,8 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     card431: {
-        height: '90%',
-        width: '90%',
+        height: '100%',
+        width: '85%'
     },
     card432: {
         width: '50%',
@@ -218,7 +228,7 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     card7 : {
-        height: 210,
+        height: 250,
         width: '90%',
         marginVertical: 10
     },
@@ -226,14 +236,13 @@ export default StyleSheet.create({
         height: 70,
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between',borderColor:'blue',borderWidth:1,
         marginLeft:20,
         
     },
     card7s1: {
-        height: '100%',
-        width: '49%',
-        justifyContent: 'space-between'
+        height: 80,marginLeft:35,marginBottom:7,
+        width: '79%'
     },
     card71: {
         height: 50,

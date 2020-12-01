@@ -241,9 +241,10 @@ class Register extends Component {
     console.log('cityZip', this.state.cityZip)
   }
 
-  onSignUpSuccess = () => {
-    console.log('sssss')
+  onSignUpSuccess = (data) => {
+    console.log('sssss',data)
     this.setModalVisible()
+
   }
 
   onSignUpError = () => {
@@ -639,7 +640,7 @@ class Register extends Component {
             </Animated.View>
           </View>
         </Animated.View>
-        <TabNav contactClick={this.handleOpen} />
+        {/* <TabNav contactClick={this.handleOpen} /> */}
       </ImageBackground>
 
     );

@@ -220,7 +220,7 @@ export default class Completeform extends Component {
                             null
                     }
 
-                    <View style={styles.card1}>
+                    <View style={styles.card01}>
                         <Text style={styles.sender}>Recipient Details</Text>
                         {
                             this.state.isArrowr == true ?
@@ -339,7 +339,7 @@ export default class Completeform extends Component {
                         this.state.isArrowcstm == true  && this.state.form3Data['isCheck0'] == false ?
                             <View style={styles.card4}>
                                 <View style={styles.card41}>
-                                    <View style={styles.card42}>
+                                  
                                         <TouchableOpacity onPress={this.isCheckPressed}>{
                                            this.state.form3Data['isCheck'] ?
                                                 <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
@@ -368,7 +368,7 @@ export default class Completeform extends Component {
                                                 }
                                             </View> */}
                                             {/* <Text style={styles.Textc1}>Product Category :<Text style={styles.Textc2}>{ this.state.form3Data['Product_cat']}</Text></Text> */}
-                                            <View style={styles.line}></View>
+                                          
                                             <Text style={styles.Textc1}>Country Origin :<Text style={styles.Textc2}>{ this.state.form3Data['Country_Org']}</Text></Text>
                                             <Text style={styles.Textc1}>Quantity :<Text style={styles.Textc2}>{ this.state.form3Data['Quantity']}</Text></Text>
                                             {/* <Text style={styles.Textc1}>Unit of Measure :<Text style={styles.Textc2}>{ this.state.form3Data['Unit_of_measure']}</Text></Text>
@@ -410,7 +410,7 @@ export default class Completeform extends Component {
                                         }</TouchableOpacity>
                                         <Text style={styles.align}>I Also Declare To Be Aware That Otherwise, The Goods May Not Be Shipped Or It May Be Necessary To Integrate The Cost Of Custom Duties.</Text>
                                     </View>
-                                </View>
+                              
                             </View>
                             :
                             null
@@ -449,16 +449,14 @@ export default class Completeform extends Component {
                             }</TouchableOpacity>
                             <Text style={{ color: 'grey', marginHorizontal: 10 }}>I Declare That My Shipping Does Not Include Any Following Hazardous Products :</Text>
                         </View>
-                        <View style={styles.card7s}>
+                       
                             <View style={styles.card7s1}>
                             <Text>- Lithium batteries alone</Text>
                             <Text>- Perfumes</Text>
-                            </View>
-                            <View style={styles.card7s1}>
                             <Text>- Electronic Smoking Devices</Text>
                             <Text>- Aerosols, Gas Bottles, Extinguishers</Text>
                             </View>
-                        </View>
+                      
                         <View style={styles.card71}>
                         {/* onPress={this.isCheck4Pressed} */}
                             <TouchableOpacity>{
@@ -502,7 +500,8 @@ export default class Completeform extends Component {
                     transparent={true}
                     visible={ismodalVisible}
                     onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
+                        // alert("Modal has been closed.");
+                        this.setState({ ismodalVisible: false })
                     }}
                 >
                     <View style={styles.centeredView}>

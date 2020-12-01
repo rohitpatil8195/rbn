@@ -546,7 +546,7 @@ navigateFbAfterLog=({ navigation })=>{
             </Animated.View>
           </View>
         </Animated.View>
-        <TabNav onClick={this.isHomePressed} contactClick={this.handleOpen} />
+        {/* <TabNav onClick={this.isHomePressed} contactClick={this.handleOpen} /> */}
       </ImageBackground>
 
     );

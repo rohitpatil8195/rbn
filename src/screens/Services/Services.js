@@ -253,11 +253,18 @@ this.getCal();
                           // let store = this.state.Home_data
 
                          console.log("this",this.state.Home_data)
-                      const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight);
+                         let wet = [];
+                         console.log("wt len",this.state.Weight.length)
+                        for(let i=0 ; i<=this.state.Weight.length; i++){
+                      const check_fin = this.state.Home_data.filter(x=>x.available_capacity >= this.state.Weight[i]);
                           // const check_fin = this.state.Home_data;
-                             this.setState({
-                                 finalData:check_fin
-                             })
+                          return this.setState({
+                            finalData:check_fin
+                        })
+                       }
+                            //  this.setState({
+                            //      finalData:check_fin
+                            //  })
                            console.log("Home data",this.state.finalData)
 
 

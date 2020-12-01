@@ -27,15 +27,15 @@ componentDidMount=async()=>{
 
     logoutOptions=async()=>{
     
-
-if(GoogleSignin  != true){
-   this.signOut();
-   console.log("google")
-   this.logout();
-}else{
-    this.logout();
-    console.log("async")
-}
+        this.logout();
+// if(GoogleSignin  != true){
+//   // this.signOut();
+//    console.log("google")
+//    this.logout();
+// }else{
+//     this.logout();
+//     console.log("async")
+// }
 }
 
     signOut = async () => {

@@ -241,7 +241,7 @@ class ForgotScreen extends Component {
             </Animated.View>
           </View>
         </Animated.View>
-        <TabNav contactClick={this.handleOpen} />
+        {/* <TabNav contactClick={this.handleOpen} /> */}
       </ImageBackground>
 
     );
