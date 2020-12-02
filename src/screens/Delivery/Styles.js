@@ -46,6 +46,17 @@ card: {
     alignItems: 'center',
     top: 8
 },
+card01: {
+    height: 230,
+    width: 330,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 5,
+    elevation: 10,
+    marginVertical: 10,
+    alignItems: 'center',
+    top: 8
+},
 card1: {
     height: '30%',
     width: '90%',

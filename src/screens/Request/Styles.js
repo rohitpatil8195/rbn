@@ -36,7 +36,7 @@ back: {
     transform:[{rotate: '90deg'}]
 },
 card: {
-    height: 430,
+    height: 600,
     width: '90%',
     backgroundColor: 'white',
     alignSelf: 'center',
@@ -45,6 +45,17 @@ card: {
     marginVertical: 10,
     alignItems: 'center',
     top: 8
+},
+card00: {
+    height: 150,
+    width: '95%',
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 5,
+    elevation: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+   top: 4
 },
 card1: {
     height: '20%',
@@ -81,7 +92,7 @@ mag: {
     width: 25,
 },
 grey : {
-    height: '11%',
+    height: '25%',
     width: '100%',
     backgroundColor: 'lightgrey',
     alignItems: 'center',
@@ -105,7 +116,7 @@ textc2: {
     marginHorizontal: 20
 },
 cont: {
-    height: '20%',
+    height: '40%',
     width: '90%',
     marginVertical: 15,
     justifyContent: 'space-between',
