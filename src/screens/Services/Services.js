@@ -22,7 +22,8 @@ class Services extends Component {
         super(props);
         
         this.state = {
-            isCheck: false,
+            isCheck: this.props.route.params.checkDep,
+            isCheck0: this.props.route.params.checkDes,
             isSearch: false,
             isFilter: false,
             isAir: false,
@@ -433,6 +434,14 @@ this.getCal();
             this.setState({ isCheck: false })
         }
     }
+    isCheckPressed0 = () => {
+        if (!this.state.isCheck0) {
+            this.setState({ isCheck0: true })
+        } else {
+            this.setState({ isCheck0: false })
+        }
+    }
+
 
     isSearchPressed = () => {
         if (!this.state.isSearch) {
@@ -747,8 +756,8 @@ var gsDayNames = [
                                     <Text style={{ fontSize: 12 }}>{arr_country}</Text>
                             
                                     <View style={styles.remember}>
-                                        <TouchableOpacity onPress={this.isCheckPressed}>{
-                                            this.state.isCheck ?
+                                        <TouchableOpacity onPress={this.isCheckPressed0}>{
+                                            this.state.isCheck0 ?
                                                 <Image source={require('../../Images/black-check-box-with-white-check.png')} style={styles.icon} />
 
                                                 :
@@ -858,7 +867,9 @@ var gsDayNames = [
                                 reciver_city:this.state.arr_city,
                                 services_type:this.state.service_type,
                                 home_colectn:item.home_colectn,
-                                home_delv:item.home_delv
+                                home_delv:item.home_delv,
+                                checkDepAdd:this.state.isCheck,
+                                checkDesAdd:this.state.isCheck0
                             
                                   })}
                         >
@@ -881,7 +892,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type-Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -961,7 +972,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1040,7 +1051,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1119,7 +1130,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1198,7 +1209,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Include insurance</Text>
+                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Popup extends Component {
     constructor(props) {
@@ -12,20 +13,32 @@ export default class Popup extends Component {
         return (
             <View style={styles.pop}>
                 <View style={styles.poprow1}>
+                  
                     <Image source={require('../Images/success2.png')} style={styles.success2} resizeMode='center' />
+                    <TouchableOpacity>
                     <Text style={styles.dodg}>Delivery Tracking</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.poprow2}>
+                  
                     <Image source={require('../Images/success2.png')} style={styles.success2} resizeMode='center' />
+                    <TouchableOpacity>
                     <Text style={styles.dodg}>Cancel Your Order</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.poprow2}>
+             
                     <Image source={require('../Images/success2.png')} style={styles.success2} resizeMode='center' />
+                    <TouchableOpacity>
                     <Text style={styles.dodg}>Modify Your Order</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.poprow3}>
+            
                     <Image source={require('../Images/success2.png')} style={styles.success2} resizeMode='center' />
+                    <TouchableOpacity>
                     <Text style={styles.dodg}>Report An Incident</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

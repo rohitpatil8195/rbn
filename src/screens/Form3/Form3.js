@@ -765,7 +765,7 @@
                                                     }
 
                                                     recipient = () => {
-                                                        this.props.navigation.navigate('Recipient', {})
+                                                        this.props.navigation.navigate('Sender', {})
                                                     }
 
 
@@ -1366,7 +1366,7 @@
                                                                                         }
                                                                                             </View> 
                                                                                             <DropDown
-                                                                                                            //  placeholder={CountryPlaceholder}
+                                                                                                          placeholder={CountryPlaceholder}
                                                                                                             data={this.state.countryList}
                                                                                                             onValueChange={(val)=>this.onCountrySelect(val,index)}
                                                                                                             source={value.country_nm =='' ? require('../../Images/arrow-point-to-right.png'): null}
@@ -1427,26 +1427,26 @@
                                                                             
                                                                                                                 {/* <TouchableOpacity activeOpacity = { .5 }  style={styles.plus} onPress={() => this.addMore(this.state.addPackage.length)}></TouchableOpacity> */}
                                                                                                             
-                                                                                                        <View style={styles.plus}> 
-                                                                                                                                
+                                                                                                        {/* <View style={styles.plus}> 
+                                                                                                             <TouchableOpacity>                   
                                                                                                             <Image source={require('../../Images/add-button-inside-black-circle.png')} style={styles.plus1} resizeMode='center' />
-                                                                                                            
+                                                                                                            </TouchableOpacity>
                                                                                                         
-                                                                                                        </View>
+                                                                                                        </View> */}
                                                                                     
                                                                                                         <View style={{marginBottom:14,flexDirection:'row',justifyContent:'space-between'}}>
                                                                                                         <Button 
                                                                                                         onPress={()=>this.submit_form(index)}
                                                                                                         title="Custom Duty"
-                                                                                                        color="#841584"
+                                                                                                        color="#00bfff"
                                                                                                         accessibilityLabel="Learn more about this purple button"
                                                                                                         /> 
-                                                                                                        <Button 
+                                                                                                        {value.ordr_custom !='' ? <Button 
                                                                                                         onPress={()=>this.addMore()}
                                                                                                         title="Add More"
-                                                                                                        color="#841584"
+                                                                                                        color="#00bfff"
                                                                                                         accessibilityLabel="Learn more about this purple button"
-                                                                                                        />
+                                                                                                        />: null }
                                                                                                         {/* <Button 
                                                                                                         onPress={()=>this.deleteForm(index)}
                                                                                                         title="delete"

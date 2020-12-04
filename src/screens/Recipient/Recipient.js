@@ -44,7 +44,8 @@ class Recipient extends Component {
             iWight:this.props.route.params.sWight,
             transp_type:this.props.route.params.transp_type,
             ser_typ:this.props.route.params.servic_typ,
-            sender_details:this.props.route.params.senders_Data
+            sender_details:this.props.route.params.senders_Data,
+            depAdressRadio:this.props.route.params.depAddRado
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
     }
@@ -305,7 +306,7 @@ class Recipient extends Component {
                                     editable={false}
                                     error={this.state.errors['countryCode']}  errorStyle={{ marginTop: '-6%' }} 
                                     />
-                                <TextInputComponent onChangeText={text => this.setState({ Telephone: text })} placeholder='Telephone'
+                                <TextInputComponent  keyboardType={'phone-pad'} onChangeText={text => this.setState({ Telephone: text })} placeholder='Telephone'
                                     underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }} 
                                     error={this.state.errors['Telephone']}  errorStyle={{ marginTop: '-6%' }} 
                                     />
@@ -366,7 +367,7 @@ class Recipient extends Component {
                                 />
                                 <TextInputComponent onChangeText={text => this.setState({ VAT_Number: text })} placeholder='VAT Number'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }}
-                                    error={this.state.errors['VAT_Number']}  errorStyle={{ marginTop: '-6%' }}
+                                    error={this.state.depAdressRadio ==false ? this.state.errors['VAT_Number'] : null}  errorStyle={{ marginTop: '-6%' }}
                                     />
                             </View>
 

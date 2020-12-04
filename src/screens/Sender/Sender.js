@@ -45,7 +45,11 @@ class Sender extends Component {
             transp_type:this.props.route.params.transp_type,
             servi_typ:this.props.route.params.services_type,
             home_collection:this.props.route.params.home_colectn,
-            home_delivary:this.props.route.params.home_delv
+            home_delivary:this.props.route.params.home_delv,
+            depAddRadio:this.props.route.params.checkDepAdd,
+            desAddRadio:this.props.route.params.checkDesAdd,
+
+            
 
         }
         this.props.triggerAuthCountry(this.onCountrySuccess, this.onCountryError)
@@ -146,6 +150,7 @@ class Sender extends Component {
     }
 
     validationRules = {
+        
         FirstName: 'required',
         Company_name: 'required',
         Surname: 'required',
@@ -189,6 +194,8 @@ class Sender extends Component {
           })
         }
     
+       
+    
         const data = this.state;
     
         try {
@@ -230,13 +237,14 @@ class Sender extends Component {
     formdata["serv_id"] = this.state.serv_id,
     formdata["transp_type"] = this.state.transp_type,
     formdata["home_collection"] = this.state.home_collection,
-    formdata["home_delivary"] = this.state.home_delivary
-   // this.props.triggerForm1(formdata);
+    formdata["home_delivary"] = this.state.home_delivary,
+   // formdata["depAddRado"] = this.state.desAddRadio
+   // this.props.triggerForm1(formdata); desAddRadio
     console.log("all data",formdata)
 this.props.triggerForm1()
         console.log("should be weight",this.state.Weight);
         console.log("data is",this.state.Diments)
-        this.props.navigation.navigate('Recipient', {senders_Data:formdata,servic_typ:this.state.servi_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
+        this.props.navigation.navigate('Recipient', {depAddRado:this.state.desAddRadio,senders_Data:formdata,servic_typ:this.state.servi_typ,transp_type:this.state.transp_type,Diments:this.state.Diments,sWight:this.state.Weight,serv_id:this.state.serv_id,reciver_country:this.state.reciver_country,reciver_city:this.state.reciver_city })
 
     }
 
@@ -296,7 +304,7 @@ this.props.triggerForm1()
                                     editable={false}
                                     error={this.state.errors['countryCode']}  errorStyle={{ marginTop: '-6%' }} 
                                     />
-                                <TextInputComponent onChangeText={text => this.setState({ Telephone:text})} placeholder='Telephone'
+                                <TextInputComponent   keyboardType={'phone-pad'} onChangeText={text => this.setState({ Telephone:text})} placeholder='Telephone'
                                     underlineColorAndroid='grey' designStyle={{ width: '80%', marginLeft: '-25%', height: 50 }}
                                     error={this.state.errors['Telephone']}  errorStyle={{ marginTop: '-6%' }} 
                                     />
@@ -359,7 +367,7 @@ this.props.triggerForm1()
                                 />
                                 <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} 
-                                    error={this.state.errors['VAT_Number']}  errorStyle={{ marginTop: '-6%' }}
+                                    error={this.state.depAddRadio == true ? this.state.errors['VAT_Number'] : null}  errorStyle={{ marginTop: '-6%' }}
                                     />
                             </View>
 

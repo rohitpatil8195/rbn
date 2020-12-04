@@ -16,7 +16,8 @@ export default class Delivery extends Component {
             isPass: false, 
             User_id:0,
             result_data:[],
-            filterd_result_data:[]
+            filterd_result_data:[],
+            order_id:''
         }
     }
     componentDidMount=async()=>{
@@ -36,13 +37,13 @@ export default class Delivery extends Component {
             User_id:User_ord_id
           })
       console.log("useid",this.state.User_id)
-        this.myReq_Api();
+       // this.myReq_Api();
     }
    
     myReq_Api=()=>{
         let a = this.state.User_id;
 var formdata = new FormData();
-formdata.append("track_id", "label-"+612);
+formdata.append("track_id", "label-"+this.state.order_id);
       
   const request_option={
      method :'POST',
@@ -71,41 +72,41 @@ formdata.append("track_id", "label-"+612);
 
 
 
-    searchFilterFunction = (text) => {
-        // Check if searched text is not blank
-      //  let newData =[this.state.result_data]
-        console.log("text",text)
-        if (text != '') {
-          // Inserted text is not blank
-          // Filter the masterDataSource
-          // Update FilteredDataSource
+    // searchFilterFunction = (text) => {
+    //     // Check if searched text is not blank
+    //   //  let newData =[this.state.result_data]
+    //     console.log("text",text)
+    //     if (text != '') {
+    //       // Inserted text is not blank
+    //       // Filter the masterDataSource
+    //       // Update FilteredDataSource
        
-        const newData = this.state.result_data.filter(
-            function (item) {
-              const itemData = item.modify_order_no
-                ? item.modify_order_no.toUpperCase()
-                : ''.toUpperCase();
-              const textData = text.toUpperCase();
-              return itemData.indexOf(textData) > -1;
-          });
-          //console.log("newdata",newData)
-          this.setState({
-            filterd_result_data:newData,
-            Search:text
-          })
-          // setFilteredDataSource(newData);
-          // Search(text);
-        } else {
-          // Inserted text is blank
-          // Update FilteredDataSource with masterDataSource
-          this.setState({
-            filterd_result_data:this.state.result_data,
-            Search:text
-          })
-          // setFilteredDataSource(masterDataSource);
-          // setSearch(text);
-        }
-      };
+    //     const newData = this.state.result_data.filter(
+    //         function (item) {
+    //           const itemData = item.modify_order_no
+    //             ? item.modify_order_no.toUpperCase()
+    //             : ''.toUpperCase();
+    //           const textData = text.toUpperCase();
+    //           return itemData.indexOf(textData) > -1;
+    //       });
+    //       //console.log("newdata",newData)
+    //       this.setState({
+    //         filterd_result_data:newData,
+    //         Search:text
+    //       })
+    //       // setFilteredDataSource(newData);
+    //       // Search(text);
+    //     } else {
+    //       // Inserted text is blank
+    //       // Update FilteredDataSource with masterDataSource
+    //       this.setState({
+    //         filterd_result_data:this.state.result_data,
+    //         Search:text
+    //       })
+    //       // setFilteredDataSource(masterDataSource);
+    //       // setSearch(text);
+    //     }
+    //   };
 
     home = () => {
         this.props.navigation.navigate('HomeScreen')
@@ -127,10 +128,12 @@ formdata.append("track_id", "label-"+612);
            <View style={styles.card}>
                <View style={styles.card1}>
                    <View style={styles.search}>
-                   <TextInputComponent onChangeText={(text)=>this.searchFilterFunction(text)} placeholder='Search by shipment code or tracking no'
+                   <TextInputComponent onChangeText={(text)=>this.setState({order_id:text})} placeholder='Search by shipment code or tracking no'
                      designStyle={{ width: '80%', right: 20, height: 65}} />
                     <View style={styles.blue}>
+                    <TouchableOpacity onPress={this.myReq_Api}>
                         <Image source={require('../../Images/magnifying-glass.png')} style={styles.mag} />
+                        </TouchableOpacity>
                     </View>
                    </View>
                    <TouchableOpacity style={styles.button}>
@@ -144,11 +147,11 @@ formdata.append("track_id", "label-"+612);
         renderItem={({item}) =>
                <View style={styles.card01}>
                <View style={styles.grey}>
-                   <Text style={styles.textc}>Date : <Text style={styles.textc1}>21-05-2020</Text></Text>
+                   <Text style={styles.textc}>Date : <Text style={styles.textc1}>{item.olog_create_date}</Text></Text>
                </View>
                <View style={styles.cont}>
                     <View style={styles.Three}>
-                   <Text style={styles.textcc}>Event : <Text style={styles.textc1}>Lorem Ipsum</Text></Text>
+        <Text style={styles.textcc}>Event : {item.olog_status ==0 ?<Text style={styles.textc1}>Pending</Text>:null}</Text>
                     </View>
                     <View style={styles.Three}>
                     </View>

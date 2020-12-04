@@ -747,7 +747,7 @@ class Home extends Component {
                       setTimeout(() => {
 
                 
-         this.props.navigation.navigate('Services', {serve_type:this.state.service_type,Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.total_wights,Dimen:this.state.dimentions})
+         this.props.navigation.navigate('Services', {checkDep:this.state.isCheck1,checkDes:this.state.isCheck2,serve_type:this.state.service_type,Service_ids:this.state.Service_ids,data:data,dep_country: this.state.countrySelect,dep_city:this.state.citySelect,arr_country:this.state.desCountrySelect,arr_city0:this.state.desCitySelect,time:this.state.DOB,weight:this.state.total_wights,Dimen:this.state.dimentions})
         },300, this.setState({isTime:null}))
 
                // check for error response

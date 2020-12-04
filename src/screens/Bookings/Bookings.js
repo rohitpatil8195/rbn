@@ -120,7 +120,7 @@ formdata.append("user_id", this.state.User_id);
                  <View style={styles.card4}>
                         {
                                     this.state.isDot1 == true ?
-                                    <Popup />
+                                    <Popup data={this.props}/>
                                     :
                                     null
                                 }

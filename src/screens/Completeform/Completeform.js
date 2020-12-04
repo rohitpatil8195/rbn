@@ -484,10 +484,10 @@ export default class Completeform extends Component {
                         <Text style={styles.sender}>Reminder For Forbidden Good</Text>
                         <Image source={require('../../Images/arrow-point-to-right.png')} style={styles.down} resizeMode='center' />
                     </View> */}
-                    <TouchableOpacity style={styles.card1} onPress={() => { this.setModalVisible(true) }}>
+                    {/* <TouchableOpacity style={styles.card1} onPress={() => { this.setModalVisible(true) }}>
                         <Text style={styles.sender}>Send By E-mail</Text>
                         <Image source={require('../../Images/arrow-point-to-right.png')} style={styles.down} resizeMode='center' />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <View style={styles.bottom}>
                         <TouchableOpacity onPress={this.ordercomplete} style={styles.button}>
                             <Image source={require('../../Images/success.png')} style={styles.icon} />
