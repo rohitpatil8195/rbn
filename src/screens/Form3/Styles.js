@@ -193,7 +193,7 @@ export default StyleSheet.create({
         width: '95%',
     },
     cardv510:{
-        height: '90%',
+        height: '90%',marginTop:70,
         width: '95%',borderColor:'black',borderWidth:1
     },
     cardv511: {
