@@ -27,7 +27,8 @@ export default class Completeform extends Component {
             sender_info:this.props.route.params.sender_info,
             Recipent_info:this.props.route.params.recipent_info,
             form3Data:this.props.route.params.Form3,
-            multi_products:this.props.route.params.muitiple_orders
+            multi_products:this.props.route.params.muitiple_orders,
+            custom_D_price:this.props.route.params.cust_dty
         }
     }
 
@@ -159,7 +160,7 @@ export default class Completeform extends Component {
         formdata["form_data"]= this.state.form3Data,
         formdata["multi_products"] =this.state.multi_products
         console.log("formdata compelet form",formdata)
-        this.props.navigation.navigate('BeforeOrder', {from4:formdata})
+        this.props.navigation.navigate('BeforeOrder', {from4:formdata,custom_DP:this.state.custom_D_price})
     }
 
     form3 = () => {

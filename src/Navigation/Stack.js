@@ -24,6 +24,8 @@ import Information from '../screens/Information/Information';
 import Invoice from '../screens/Invoice/Invoice';
 import Request from '../screens/Request/Request';
 import Delivery from '../screens/Delivery/Delivery';
+import PrivacyPolicy from '../screens/PrivacyPolicy/PrivacyPolicy';
+import TermsConditions from '../screens/TermsConditions/TermsConditions';
 import Question from '../screens/Question/Question';
 import Shipping from '../screens/Shipping/Shipping';
 import Payment from '../screens/Payment/Payment';
@@ -127,6 +129,8 @@ function App() {
           <Stack.Screen name="Invoice" component={Invoice} />
           <Stack.Screen name="Request" component={Request} />
           <Stack.Screen name="Delivery" component={Delivery} />
+          <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+          <Stack.Screen name="TermsConditions" component={TermsConditions} />
           <Stack.Screen name="Question" component={Question} />
           <Stack.Screen name="Shipping" component={Shipping} />
           <Stack.Screen name="Payment" component={Payment} />

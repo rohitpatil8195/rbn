@@ -256,13 +256,22 @@ class Recipient extends Component {
     }
 
     render() {
+        const  str = this.state.reciver_city;
+        const newO =  str.replace(/,?\s/, "");
+        const A = newO.replace(/[0-9]/g, '');
+        const splits = A.split(",",3);
+       
+        const az=splits[0];
+        console.log("splss",az)
+
+        
         let CategoryPlaceholder = {
             label: 'Country',
             value: null,
             color: '#9EA0A4',
         };
         let fCityPlaceholder = {
-            label: 'City',
+            label:az,
             value: null,
             color: '#9EA0A4',
         };

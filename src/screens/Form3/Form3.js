@@ -10,7 +10,8 @@
                                                 import { bindActionCreators } from 'redux';
                                                 import { triggerAuthCountry, triggerCategory, triggerProduct, triggerUnits, triggerCustom } from '../../actions';
                                                 import DocumentPicker from 'react-native-document-picker';
-
+                                                import Entypo from 'react-native-vector-icons/Entypo';
+                                                
                                                 // create a component
                                                 var tempArr
                                                 var current_index = 0
@@ -761,7 +762,7 @@
                                                         //formdata["muitiple_orders"]= this.state.addPackage
                                                    // console.log("country is",this.state.addPackage)
                   //  tempArr = [{ 'key': 0,'cat_List':[], 'belongings':'' ,'isYes':null,'isNo':null, 'quantity':0,'product_lst':[],'exchange_rt':'','custom_dty_price':0.0,'upload_doc_detail':null,'product_cat_name':'','upload_doc':'','ordr_cat_id':'','product_name':'','country_nm':'','productNm':'','productId':'','scat_unit_val':'', 'scat_measure':''}]
-                                                        this.props.navigation.navigate('Completeform', {Form3:formdata,check0:this.state.isCheck,check1:this.state.isCheck1,check2:this.state.isCheck2, check3:this.state.isCheck3,check5:this.state.isCheck5})
+                                                        this.props.navigation.navigate('Completeform', {cust_dty:this.state.total_Duty,Form3:formdata,check0:this.state.isCheck,check1:this.state.isCheck1,check2:this.state.isCheck2, check3:this.state.isCheck3,check5:this.state.isCheck5})
                                                     }
 
                                                     recipient = () => {
@@ -938,27 +939,28 @@
 
 
                             
-                                                        // deleteForm=(index)=>{
+                                                        deleteForm=(index)=>{
 
-                                                        //     for (var i = 0; i < tempArr.length; i++) {
-                                                        //         if(index === tempArr.length){
-                                                        //         tempArr.splice(tempArr[i]);
-                                                        //         this.setState({ 
-                                                        //             addPackage:tempArr
-                                                        //         })   
-                                                        //         break;
-                                                        //     }
-                                                        //     this.getTotal_Duty();
-                                                        //         }
+                                                            // for (var i = 0; i < tempArr.length; i++) {
+                                                            //     if(index === tempArr.length){
+                                                            //     tempArr.splice(tempArr[i]);
+                                                            //     this.setState({ 
+                                                            //         addPackage:tempArr
+                                                            //     })   
+                                                            //     break;
+                                                            // }
+                                                            // this.getTotal_Duty();
+                                                            //     }
 
 
-                                                        //     // console.log("ind",index)
-                                                        //     // tempArr.splice(index,1);
-                                                        //     // this.setState({ 
-                                                        //     //     addPackage:tempArr
-                                                        //     // })    
-                                                        //     // console.log("temdel",tempArr)
-                                                        // }
+                                                            console.log("ind",index)
+                                                            tempArr.splice(index,1);
+                                                            this.setState({ 
+                                                                addPackage:tempArr
+                                                            })    
+                                                            console.log("temdel",tempArr);
+                                                            this.getTotal_Duty();
+                                                        }
 
                                                     
                                                     
@@ -1438,21 +1440,25 @@
                                                                                                         <Button 
                                                                                                         onPress={()=>this.submit_form(index)}
                                                                                                         title="Custom Duty"
-                                                                                                        color="#00bfff"
-                                                                                                        accessibilityLabel="Learn more about this purple button"
+                                                                                                        color="dodgerblue"
+                                                                                                        
                                                                                                         /> 
                                                                                                         {value.ordr_custom !='' ? <Button 
                                                                                                         onPress={()=>this.addMore()}
                                                                                                         title="Add More"
-                                                                                                        color="#00bfff"
-                                                                                                        accessibilityLabel="Learn more about this purple button"
+                                                                                                        color="dodgerblue"
+                                                                                                       
                                                                                                         />: null }
                                                                                                         {/* <Button 
                                                                                                         onPress={()=>this.deleteForm(index)}
                                                                                                         title="delete"
-                                                                                                        color="#841584"
-                                                                                                        accessibilityLabel="Learn more about this purple button"
+                                                                                                        color="#00bfff"
+                                                                                                    
                                                                                                         /> */}
+                                                                                                        { index >0 ?
+                                                                                                        <TouchableOpacity  onPress={()=>this.deleteForm(index)}>
+                                                                                                       <Entypo name="circle-with-minus" size={25} color="#900" />
+                                                                                                       </TouchableOpacity>:null}
                                                                                                         </View>
                                                                                                     
                                                                                                         

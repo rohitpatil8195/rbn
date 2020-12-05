@@ -84,11 +84,11 @@ console.log("name issssss"+ Email);
           <Text style={{ marginHorizontal: 10 }}>{i18n.t('Help Center')}</Text>
           <Image source={require('../Images/arrow-point-to-right.png')} style={Styles.arrow} resizeMode='center' />
         </TouchableOpacity>
-        <TouchableOpacity style={Styles.v4}>
+        <TouchableOpacity style={Styles.v4} onPress={() => navigation.navigate('PrivacyPolicy', {})}>
           <Text style={{ marginHorizontal: 10 }}>{i18n.t('Privacy Policy')}</Text>
           <Image source={require('../Images/arrow-point-to-right.png')} style={Styles.arrow} resizeMode='center' />
         </TouchableOpacity>
-        <TouchableOpacity style={Styles.v4}>
+        <TouchableOpacity style={Styles.v4} onPress={() => navigation.navigate('TermsConditions', {})}>
           <Text style={{ marginHorizontal: 10 }}>Terms & Conditions</Text>
           <Image source={require('../Images/arrow-point-to-right.png')} style={Styles.arrow} resizeMode='center' />
         </TouchableOpacity>

@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux';
 import { triggerAuthCountry, triggerAuthCity, triggerSearch } from '../../actions';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 var tempArr
 const data = [
@@ -1220,14 +1221,18 @@ class Home extends Component {
                     </>
                     
                     
-                    <TouchableOpacity onPress={()=>this.addMore()}>
-                      <Text style={styles.textb}>{i18n.t('+ Add Package')}</Text>
+                    <TouchableOpacity style={{marginTop:10,marginLeft:'85%'}}  onPress={()=>this.addMore()}>
+                      <Entypo name="circle-with-plus" size={30} color="dodgerblue" />
                     </TouchableOpacity>
-                   { index > 0 ?
+                   {/* { index > 0 ?
                     <TouchableOpacity onPress={(value)=>this.delete(index,value)}>
                       <Text style={styles.textb}> - Remove Package</Text>
-                    </TouchableOpacity>: null
-                   }
+                    </TouchableOpacity>: null 
+                   } */}
+                   { index >0 ?
+                 <TouchableOpacity style={{marginTop:4,marginLeft:'85%'}} onPress={(value)=>this.delete(index,value)}>
+                     <Entypo name="circle-with-minus" size={30} color="#900" />
+                  </TouchableOpacity>:null}
                   </View>
                    </View>
                   );

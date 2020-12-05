@@ -30,7 +30,8 @@ export default class BeforeOrder extends Component {
         paypal_Resp:[],
         Pony:'',
         Invoice_Order_no:'',
-       form4_data:this.props.route.params.from4
+       form4_data:this.props.route.params.from4,
+       cust_dt:this.props.route.params.custom_DP
     };
   }
 
@@ -74,7 +75,7 @@ navi_Backward=()=>{
       clientId: 'AWdjxB7ONcUN_bMajfIQsXH3s-DpnJy3eT1Xgtdw1AiAehPrVM0U1z4yGmB-95UhYEePBj2KhNrcQ465',
       environment: RNPaypal.ENVIRONMENT.NO_NETWORK,
       intent: RNPaypal.INTENT.SALE,
-      price: 60,
+      price: parseFloat(this.state.cust_dt),
       currency: 'USD',
       description: `RBN testing`,
       acceptCreditCards: true

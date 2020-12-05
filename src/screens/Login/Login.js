@@ -328,6 +328,7 @@ navigateFbAfterLog=({ navigation })=>{
       formdata.append("user_mb_no", "")
       formdata.append("user_img",  this.state.userGoogleInfo['user']['photo'])
       formdata.append("user_media_id", this.state.userGoogleInfo['idToken'])
+      formdata.append("loginType", "Google")
       // formdata.append("comp_privacy", this.state.privacy)
       console.log('formdatain', JSON.stringify(formdata))
       this.props.triggerMediaAuthLogin(formdata, this.onMediaLoginSuccess, this.onMediaLoginError)

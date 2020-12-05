@@ -57,7 +57,7 @@ class Sender extends Component {
    
     componentDidMount() {
         const mystring = this.state.sender_city
-     const splits = mystring.split(",");
+     const splits = mystring.split(",",3);
      var city = splits[1];
      // output: this    
         this.setState({
@@ -68,7 +68,7 @@ class Sender extends Component {
 
            
         })
-    //   console.log("transp_type",this.state.transp_type)
+   console.log("transp_type", this.state.citySelect)
     //   console.log("home_collection",this.state.home_collection)
     //   console.log("home_delivary",this.state.home_delivary)
      
@@ -253,16 +253,23 @@ this.props.triggerForm1()
     }
 
     render() {
-        
+      const  str = this.state.sender_city;
+      const newO =  str.replace(/,?\s/, "");
+      const A = newO.replace(/[0-9]/g, '');
+      const splits = A.split(",",3);
+     
+      const az=splits[0];
+      console.log("splss",az)
+
         let CategoryPlaceholder = {
             label: 'Country',
             value: null,
             color: '#9EA0A4',
         };
         let fCityPlaceholder = {
-            label: 'City',
+            label: az,
             value: null,
-            color: '#9EA0A4',
+            color: 'black',
         };
         return (
             <SafeAreaView style={styles.safe}>

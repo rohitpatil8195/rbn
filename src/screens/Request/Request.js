@@ -42,7 +42,7 @@ export default class Request extends Component {
     myReq_Api=()=>{
            
 var formdata = new FormData();
-formdata.append("user_id", this.state.User_id);
+formdata.append("user_id", 173);
       
   const request_option={
      method :'POST',
