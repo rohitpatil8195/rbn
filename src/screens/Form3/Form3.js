@@ -391,6 +391,13 @@
                                                             addPackage:tempArr
                                                         })
                                                     }
+                                                       
+                                                    order_val=(val,index)=>{
+                                                        tempArr[index].ordr_unit_value =val
+                                                        this.setState({
+                                                            addPackage:tempArr
+                                                        })
+                                                    }
 
                                                     onCategorySuccess = (data) => {
                                                     // console.log('dataooooo', data)
@@ -1403,12 +1410,19 @@
                                                                                                             errorStyle={{ paddingBottom: 7, marginTop: '-2%' }} />
                                                                                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
 
-                                                                                                            <TextInputComponent
+                                                                                                          {  value.isYes == true ? <TextInputComponent
                                                                                                                 onChangeText={value.ordr_unit_value}
                                                                                                                 placeholder={value.ordr_unit_value}
                                                                                                                 underlineColorAndroid='grey'
                                                                                                                 keyboardType = 'numeric'
+                                                                                                                designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} /> : 
+                                                                                                                <TextInputComponent
+                                                                                                                onChangeText={(value)=>this.order_val(value,index)}
+                                                                                                                placeholder={'Unit Value'}
+                                                                                                                underlineColorAndroid='grey'
+                                                                                                                keyboardType = 'numeric'
                                                                                                                 designStyle={{ width: 130, height: 40, marginLeft: '-15%', marginTop: '-3%' }} />
+                                                                                                                }
                                                                                                                     <DropDown
                                                                                                                 placeholder={ExchangePlaceholder}
                                                                                                                 data={this.state.exchange}

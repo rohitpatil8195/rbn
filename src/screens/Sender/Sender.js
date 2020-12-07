@@ -152,7 +152,7 @@ class Sender extends Component {
     validationRules = {
         
         FirstName: 'required',
-        Company_name: 'required',
+      
         Surname: 'required',
        Address: 'required',
         //countrySelect: 'required',
@@ -168,7 +168,7 @@ class Sender extends Component {
       };
 
     validtionMessages = {
-        'Company_name.required': '   Enter CompanyName',
+       
         'FirstName.required': '   Enter FirstName',
         'Surname.required': '   Enter Surname',
         'Email.required': 'Enter valid Email',
@@ -291,7 +291,7 @@ this.props.triggerForm1()
                         <View style={styles.card21}>
                             <View style={{ height: '2%' }}></View>
                             <TextInputComponent onChangeText={text => this.setState({ Company_name:text })} placeholder='Company Name'
-                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50}}   error={this.state.errors['Company_name']}  errorStyle={{ marginTop: '-6%' }} />
+                                underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50}}     errorStyle={{ marginTop: '-6%' }} />
                             <TextInputComponent onChangeText={text => this.setState({ FirstName:text})} placeholder='First Name'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, height: 50, }} error={this.state.errors['FirstName']}  errorStyle={{ marginTop: '-6%' }}/>
                             <TextInputComponent onChangeText={text => this.setState({ Surname:text })} placeholder='Surname'

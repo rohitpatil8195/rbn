@@ -274,27 +274,29 @@ this.getCal();
                             available_capacity:available_capacity,
                            })
 
-                           const check_a = this.state.Home_data.filter(x => x.serv_type == 1 && this.state.Weight <= 10 );
-                          // const check_W_a = check_a.filter(x=>x.available_capacity >= this.state.Weight);
-                           this.setState({
-                            Air_data:check_a,
+                        //    const check_a = this.state.Home_data.filter(x => x.serv_type == 1 && this.state.Weight <= 10 );
+                        //   // const check_W_a = check_a.filter(x=>x.available_capacity >= this.state.Weight);
+                        //    this.setState({
+                        //     Air_data:check_a,
                         
-                        })
+                        // })
 
-                        const check_m = this.state.Home_data.filter(x => x.serv_type == 2 );
-                        const check_W_m = check_m.filter(x=>x.available_capacity >= this.state.Weight);
-                        this.setState({
-                            Marine_data:check_W_m
-                     })
+                    //     const check_m = this.state.Home_data.filter(x => x.serv_type == 2 );
+                    //     const check_W_m = check_m.filter(x=>x.available_capacity >= this.state.Weight);
+                    //     this.setState({
+                    //         Marine_data:check_W_m
+                    //  })
 
-                    
+                        // console.log("Marine_data",this.state.Marine_data)
          
-                     const check_r = this.state.Home_data.filter(x => x.serv_type == 3);
-                    const check_W = check_r.filter(x=>x.available_capacity >= this.state.Weight);
-                      this.setState({
-                          Road_data:check_W
-                   })
-           
+                //      const check_r = this.state.Home_data.filter(x => x.serv_type == 3);
+                //     const check_W = check_r.filter(x=>x.available_capacity >= this.state.Weight);
+                //       this.setState({
+                //           Road_data:check_W
+                //    })
+
+
+                 //  console.log("Road_data",this.state.check_W)
              
                 
                   
@@ -460,6 +462,13 @@ this.getCal();
     }
 
     isAirPressed = () => {
+        
+        const check_a = this.state.Home_data.filter(x => x.serv_type == 1 && this.state.Weight <= 10 );
+        // const check_W_a = check_a.filter(x=>x.available_capacity >= this.state.Weight);
+         this.setState({
+          Air_data:check_a,
+      
+      })
         this.setState({setAvailList: false})
         this.setState({setFilter: false});
         this.userInfo()
@@ -472,13 +481,18 @@ this.getCal();
     }
 
     isMaritimePressed = () => {
-        const newData = this.state.Home_data.filter((item)=>{
-            return item.serv_type == 1;
-          })
-          this.setState({
-            Home_data: newData
-          });
+        // const newData = this.state.Home_data.filter((item)=>{
+        //     return item.serv_type == 1;
+        //   })
+        //   this.setState({
+        //     Home_data: newData
+        //   });
         
+        const check_m = this.state.Home_data.filter(x => x.serv_type == 2 );
+        const check_W_m = check_m.filter(x=>x.available_capacity >= this.state.Weight);
+        this.setState({
+            Marine_data:check_W_m
+     })
 
         
         this.userInfo()
@@ -493,6 +507,12 @@ this.getCal();
     }
 
     isRoadPressed = () => {
+        
+        const check_r = this.state.Home_data.filter(x => x.serv_type == 3);
+        const check_W = check_r.filter(x=>x.available_capacity >= this.state.Weight);
+          this.setState({
+              Road_data:check_W
+       })
         this.userInfo()
         this.setState({setAvailList: false})
         this.setState({setFilter: false});
