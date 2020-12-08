@@ -101,6 +101,7 @@ class Services extends Component {
          available_capacity:'',
          filterd_list:[],
          Final_filterd:[],
+         Final_fil:[]
 
             
 
@@ -622,8 +623,18 @@ this.getCal();
           this.setState({
             Final_filterd:check_del
      });
-           
-
+        const fin_Fil = this.state.Final_filterd
+      if(this.state.isCheck5 === true || this.state.isCheck6 === true){
+     const check_insu = this.state.filterd_list.filter(y =>y.servc_from == 'rbn')
+     this.setState({
+       Final_fil:check_insu
+});
+     }else if(this.state.isCheck5 === false || this.state.isCheck6 === false){
+        this.setState({
+            Final_fil:this.state.Final_filterd
+     })
+     }
+          
    
         //    if(this.state.insurance_filter == "0"){
           
@@ -912,7 +923,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
+                                    {item.servc_from === 'shipper' ? <Text style={{ fontSize: 8 }}>Include insurance</Text> :  <Text style={{ fontSize: 8 }}>Exclude insurance</Text>}
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type-Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -953,7 +964,7 @@ var gsDayNames = [
       
 
         { this.state.setFilter  ? <FlatList       
-          data={ this.state.Final_filterd } 
+          data={ this.state.Final_fil } 
         //  ItemSeparatorComponent={this._renderSeparator}
           keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => 
@@ -992,7 +1003,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
+                                    {item.servc_from === 'rbn' && this.state.isCheck5 === true ? <Text style={{ fontSize: 8 }}>Include insurance</Text> : item.servc_from === 'rbn' && this.state.isCheck6 === true ? <Text style={{ fontSize: 8 }}>Exclude insurance</Text> : null}
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1071,7 +1082,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
+                                    {/* {item.servc_from === 'shipper' ? <Text style={{ fontSize: 8 }}>Include insurance</Text> :  <Text style={{ fontSize: 8 }}>Exclude insurance</Text>} */}
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1150,7 +1161,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
+                                    {/* {item.servc_from === 'shipper' ? <Text style={{ fontSize: 8 }}>Include insurance</Text> :  <Text style={{ fontSize: 8 }}>Exclude insurance</Text>} */}
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>
@@ -1229,7 +1240,7 @@ var gsDayNames = [
                             <View style={styles.remain}>
                                 <View style={styles.charges}>
                                     <Text >{item.transport_fee + item.fee_on_transport}€</Text>
-                                    <Text style={{ fontSize: 8 }}>Exclude insurance</Text>
+                                    {/* {item.servc_from === 'shipper' ? <Text style={{ fontSize: 8 }}>Include insurance</Text> :  <Text style={{ fontSize: 8 }}>Exclude insurance</Text>} */}
                                     <View style={styles.line3}></View>
                                     {item.serv_type==1 ?<Text style={{fontSize:12}}>Type - Air</Text> : item.serv_type==2 ? <Text style={{fontSize:12}}>Type - Maritime</Text> :  <Text style={{fontSize:12}}>Type - Road</Text>  }
                                 </View>

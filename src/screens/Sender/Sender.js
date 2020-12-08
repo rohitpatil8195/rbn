@@ -48,6 +48,7 @@ class Sender extends Component {
             home_delivary:this.props.route.params.home_delv,
             depAddRadio:this.props.route.params.checkDepAdd,
             desAddRadio:this.props.route.params.checkDesAdd,
+            s_city:''
 
             
 
@@ -71,6 +72,7 @@ class Sender extends Component {
    console.log("transp_type", this.state.citySelect)
     //   console.log("home_collection",this.state.home_collection)
     //   console.log("home_delivary",this.state.home_delivary)
+    
      
     }
 
@@ -118,8 +120,8 @@ class Sender extends Component {
     onCitySuccess = (data) => {
 
         var result = data.result.map(function (el) {
-            el.label = el.city_name;
-            el.value = el.city_name;
+            el.label =el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
+            el.value = el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
             el.id = el.city_id;
             el.zip = el.city_zip;
             el.dis = el.city_district;
@@ -159,7 +161,8 @@ class Sender extends Component {
        // onCitySelect: 'required',
         cityZip: 'required',
         cityDis: 'required',
-        Telephone: 'required',
+       // Telephone: 'min:10',
+        Telephone: 'required|min:10',
         Email: 'required|email',
          VAT_Number: 'required',
         Additional_Info: 'required',
@@ -177,7 +180,7 @@ class Sender extends Component {
         'onCitySelect.required': 'Enter City',
         'cityZip.required': 'Enter Zip',
         'cityDis.required': '                             Districts',
-        'Telephone.required': 'Please Enter the Mobile Number',
+       'Telephone.required': 'Please Enter the Mobile Number',
         'VAT_Number.required': 'Please Enter VAT_Number',
         'onCountrySelect.required': 'Please select the Country',
         'Additional_Info.same': 'Additional_Info',
@@ -187,13 +190,13 @@ class Sender extends Component {
 
     onSignUpValidation = async () => {
         const numRegex = /^[6-9][0-9]{9}$/;
+      //  console.log("tel",this.state.Telephone)
         if (!numRegex.test(this.state.Telephone)) {
           this.setState({
-            error: "Enter Telephone",
+            error: "Please Enter the Mobile Number",
             show: false
           })
         }
-    
        
     
         const data = this.state;
@@ -260,7 +263,10 @@ this.props.triggerForm1()
      
       const az=splits[0];
       console.log("splss",az)
-
+        //   this.setState({
+        //       s_city:az
+        //   })
+        //   console.log("s_city",this.state.s_city)
         let CategoryPlaceholder = {
             label: 'Country',
             value: null,
@@ -350,7 +356,7 @@ this.props.triggerForm1()
                                 <DropDown
                                     source={require('../../Images/location.png')}
                                     placeholder={fCityPlaceholder}
-                                    data={this.state.cityList}
+                                    data={this.state.cityList} placeholderTextColor = "black"
                                     onValueChange={this.onCitySelect}
                                     source={require('../../Images/arrow-point-to-right.png')}
                                     textInputProps={{ underlineColorAndroid: 'black' }}
@@ -372,15 +378,20 @@ this.props.triggerForm1()
                                     designStyle={{ width: '52%', marginLeft: '15%', height: 50, color: 'black' }}
                                     error={this.state.errors['cityDis']}  errorStyle={{ marginTop: '-6%' }}
                                 />
-                                <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
+                                { this.state.depAddRadio == true ? <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
                                     underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} 
-                                    error={this.state.depAddRadio == true ? this.state.errors['VAT_Number'] : null}  errorStyle={{ marginTop: '-6%' }}
-                                    />
+                                    error={this.state.errors['VAT_Number']}  errorStyle={{ marginTop: '-6%' }}
+                                />:
+                                <TextInputComponent onChangeText={text => this.setState({ VAT_Number:text })} placeholder='VAT Number'
+                                underlineColorAndroid='grey' designStyle={{ width: '58%', marginLeft: '-3%', height: 50 }} 
+                                 errorStyle={{ marginTop: '-6%' }}
+                            />
+                                }
                             </View>
 
                             <TextInputComponent onChangeText={text => this.setState({ Additional_Info:text })} placeholder='Additional Info'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }}
-                                error={this.state.errors['Additional_Info']}  errorStyle={{ marginTop: '-6%' }}
+                                error={this.state.errors['Additional_Info']}  errorStyle={{ marginTop: '12%' }}
                                 />
                         </View>
                     </View>

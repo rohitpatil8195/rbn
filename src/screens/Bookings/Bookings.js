@@ -136,7 +136,7 @@ formdata.append("user_id", this.state.User_id);
                                 <View style={styles.cardv21}>
                                     <View style={styles.card211}>
                                         <View style={styles.card2111}>
-                                            <Text style={styles.card2111a}>{moment(item.comp_create_date).format('DD-MMM-YYYY')}</Text>
+                                            <Text style={styles.card2111a}>{moment(item.serv_date_of_departure).format('DD-MMM-YYYY')}</Text>
                                             <View style={styles.line}></View>
                                             <Text style={styles.card2111b}> {item.serv_ware_dc_addr}</Text>
                                         </View>
@@ -150,7 +150,7 @@ formdata.append("user_id", this.state.User_id);
                                     </View>
                                     <View style={styles.card211}>
                                     <View style={styles.card2111}>
-                                            <Text style={styles.card2111a}>{moment(item.ordr_create_date).format('DD-MMM-YYYY')}</Text>
+                                            <Text style={styles.card2111a}>{moment(item.serv_date_of_arrival).format('DD-MMM-YYYY')}</Text>
                                             <View style={styles.line}></View>
                                             <Text style={styles.card2111b}> {item.serv_ware_ac_addr}</Text>
                                         </View>

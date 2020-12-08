@@ -133,8 +133,8 @@ class Recipient extends Component {
     onCitySuccess = (data) => {
 
         var result = data.result.map(function (el) {
-            el.label = el.city_name;
-            el.value = el.city_name;
+            el.label =el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
+            el.value =el.city_zip + ', ' + el.city_name + ', ' +el.city_district;
             el.id = el.city_id;
             el.zip = el.city_zip;
             el.dis = el.city_district;
@@ -175,7 +175,7 @@ class Recipient extends Component {
        // onCitySelect: 'required',
         cityZip: 'required',
         cityDis: 'required',
-        Telephone: 'required',
+        Telephone: 'required|min:10',
         Email: 'required|email',
          VAT_Number: 'required',
         Additional_Info: 'required',
@@ -382,7 +382,7 @@ class Recipient extends Component {
 
                             <TextInputComponent onChangeText={text => this.setState({ Additional_Info: text })} placeholder='Additional Info'
                                 underlineColorAndroid='grey' designStyle={{ width: '109%', right: 40, paddingBottom: 75, height: 100 }}
-                                error={this.state.errors['Additional_Info']}  errorStyle={{ marginTop: '-6%' }}
+                                error={this.state.errors['Additional_Info']}  errorStyle={{ marginTop: '12%' }}
                                 />
                         </View>
                     </View>

@@ -51,6 +51,16 @@ const data = [
     imageUrl: require('../../Images/purchase-online.png'),
     title: "Purchase The Service Online",
     id: 6
+  },
+  {
+    imageUrl: require('../../Images/delivery-truck-with-packages-behind.png'),
+    title: "Delivery Tracking",
+    id: 7
+  },
+  {
+    imageUrl: require('../../Images/delivery.png'),
+    title: "Delivery Shipping",
+    id: 8
   }
 ];
 
@@ -412,7 +422,18 @@ class Home extends Component {
   componentDidMount = () => {
     //AsyncStorage.clear();
    // console.log("User_Unique_ord_id",this.state.User_Unique_ord_id)
- 
+       this.setState({
+        depCityId: '',
+        arrCityId: '',
+        depCountryId: '',
+        arrCountryId: '',
+        date: '',
+        servId: '',
+        W:'',
+        L:'',
+        D:'',
+        H:'',
+       })
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
   }
    

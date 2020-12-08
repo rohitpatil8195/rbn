@@ -284,7 +284,7 @@ export default class Completeform extends Component {
                             null
                     }
 
-                    <View style={styles.card1}>
+                    {/* <View style={styles.card1}>
                         <Text style={styles.sender}>Invoicing</Text>
                         {
                             this.state.isArrowi == true ?
@@ -321,7 +321,7 @@ export default class Completeform extends Component {
                             </View>
                             :
                             null
-                    }
+                    } */}
 
                     <View style={styles.card1}>
                         <Text style={styles.sender}>Custom Duties</Text>

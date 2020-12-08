@@ -1310,25 +1310,33 @@
                                                                                                 {
                                                                                                     value.isYes == true ?
                                                                                                         <TouchableOpacity onPress={()=>this.isYesPressed(index)} style={styles.yesno}>
+                                                                                                        <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
                                                                                                             <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
-                                                                                                            <Text style={{ color: 'dodgerblue' }}>Yes</Text>
+                                                                                                            <Text style={{ color: 'dodgerblue',marginLeft:4 }}>Yes</Text>
+                                                                                                            </View>
                                                                                                         </TouchableOpacity>
                                                                                                         :
                                                                                                         <TouchableOpacity onPress={()=>this.isYesPressed(index)} style={styles.yesno}>
+                                                                                                        <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
                                                                                                             <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
-                                                                                                            <Text>Yes</Text>
+                                                                                                            <Text style={{marginLeft:4}}>Yes</Text>
+                                                                                                            </View>
                                                                                                         </TouchableOpacity>
                                                                                                 }
                                                                                                 {
                                                                                                 value.isNo == true ?
                                                                                                         <TouchableOpacity onPress={()=>this.isNoPressed(index)} style={styles.yesno}>
+                                                                                                        <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
                                                                                                             <Image source={require('../../Images/dot-and-circle.png')} style={styles.icon1} />
-                                                                                                            <Text style={{ color: 'dodgerblue' }}>No</Text>
+                                                                                                            <Text style={{ color: 'dodgerblue',marginLeft:4 }}>No</Text>
+                                                                                                            </View>
                                                                                                         </TouchableOpacity>
                                                                                                         :
                                                                                                         <TouchableOpacity onPress={()=>this.isNoPressed(index)} style={styles.yesno}>
+                                                                                                        <View style={{flexDirection:'row',justifyContent: 'space-between'}}>
                                                                                                             <Image source={require('../../Images/dot-and-circle-2.png')} style={styles.icon1} />
-                                                                                                            <Text>No</Text>
+                                                                                                            <Text style={{marginLeft:4}}>No</Text>
+                                                                                                            </View>
                                                                                                         </TouchableOpacity>
                                                                                                 }
                                                                                             </View>
